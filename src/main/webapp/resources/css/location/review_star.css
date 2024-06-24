@@ -1,0 +1,29 @@
+.detail-main .star-rating {
+    display: flex;
+  }
+  
+ .detail-main .star {
+    appearance: none;
+    padding: 1px;
+  }
+  
+  .detail-main .star::after {
+    content: '☆';
+    color: var( --main-color);
+    font-size: 20px;
+  }
+  
+  .detail-main .star:hover::after,
+  .detail-main  .star:has(~ .star:hover)::after,
+  .detail-main .star:checked::after,
+  .detail-main .star:has(~ .star:checked)::after {
+    content: '★';
+  }
+  
+  .detail-main .star:hover ~ .star::after {
+    content: '☆';
+  }
+  .detail-main .starColor{
+   
+   color: var( --main-color);
+  }

@@ -1,0 +1,337 @@
+/*��ü div ū Ʋ*/
+.main_wrapper {
+	width: 100%;
+	margin:0 auto;
+}
+
+/*main�±� */
+.main_main {
+	width: 1280px;
+	margin:0 auto;
+	display: flex;
+    margin-top: 50px;
+}
+
+/*footer�±�*/
+.main_footer {
+	width: 100%;
+	margin: 0 auto;
+}
+
+/*GoogleFont*/
+/*�ΰ� �۾�ü*/
+.gugi-regular {
+	font-family: "Gugi", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+#left {
+    width: 30%;
+    padding-left: 70px;
+    margin-left: 40px;
+}
+
+#right {
+    width: 70%;
+    height: auto;
+    padding-right: 0px;
+    margin-right: 70px;
+}
+
+#main_main_left {
+    width: 240px;
+    float: right;
+    margin-right: 40px;
+}
+
+#main_main_left1 {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#camera {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#profile {
+    border: 1px solid #bababa;
+    border-radius: 100px;
+    width: 140px;
+    height: 140px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: 140px;
+    border-style: none;
+}
+
+#nickName {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#solid {
+    border-bottom: 1px solid #bababa;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#pets {
+    margin-top: 20px;
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+#petProfileName {
+    font-size: 18px;
+    color: #FE8B94;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#main_main_left2 {
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#main_main_left2 div {
+    border-bottom: 1px solid #bababa;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* ���̿� �����ϰ� */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left2 div:hover {
+    color: #FE8B94;
+}
+
+#shortsList {
+    color: #FE8B94;
+    cursor: pointer;
+}
+
+#main_main_left3 {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#chatting {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* ���̿� �����ϰ� */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left3 div:hover {
+    color: #FE8B94;
+}
+
+#main_main_right {
+    width: 820px;
+    height: auto;
+    border-style: none;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+#right1 {
+    width: 100%;
+    height: auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+}
+
+#contentText {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 17px;
+}
+
+#signUp {
+    margin: 30px auto;
+    width: 70%;
+    height: 50px;
+    background-color: #FE8B94;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}
+
+#right2 {
+    width: 100%;
+    height: auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#right2 h1 {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#right2-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap; /* 넘치면 아래로 내려가게 설정 */
+    justify-content: center;
+    gap: 20px; /* left와 right 사이 간격 설정 */
+}
+
+#right2-left,
+#right2-right {
+    width: 45%; /* left와 right의 너비 조정 */
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+#right2-left .delete {
+    margin-top: 30px;
+    width: 300px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #FE8B94;
+    color: white;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}
+
+#petProfile {
+    width: 300px;
+    height: 300px;
+    border-radius: none;
+    cursor: pointer;
+}
+
+.update {
+    margin-top: 30px;
+    width: 300px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: bold;
+    background-color: #FE8B94;
+    color: white;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}
+
+.petName {
+    float: left;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    width: 80%;
+    height: 40px;
+}
+
+.petBirthday {
+    float: left;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    width: 80%;
+    height: 40px;
+}
+
+.petSizeNo {
+    float: left;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    width: 80%;
+    height: 40px;   
+}
+
+#right2-right .gender-input {
+    width: 80%;
+    display: inline;
+    margin-top: 30px;
+}
+
+input[type="radio"] {
+    display: none; /* 동그란 라디오 버튼을 숨깁니다. */
+}
+
+input[type="radio"] + label {
+    width: 110px;
+    height: 40px;
+    border: 1px solid #bababa;
+    display: inline-block;
+    line-height: 40px; /* 텍스트를 수직 가운데로 정렬합니다. */
+    text-align: center; /* 텍스트를 수평 가운데로 정렬합니다. */
+    cursor: pointer; /* 마우스 커서를 포인터로 변경하여 클릭 가능한 요소임을 나타냅니다. */
+    border-radius: 15px;
+    margin: 0 20px; /* men과 women 사이의 여백을 10px로 설정합니다. */
+    cursor: pointer;
+    font-size: 22px;
+    align-items: center;
+}
+
+input[type="radio"] + label:hover {
+    color: #FE8B94;
+    border-color: #FE8B94;
+}
+
+/* 선택된 상태의 라디오 버튼에 대한 스타일 */
+input[type="radio"]:checked + label {
+    border-color: #FE8B94 !important; /* 선택된 경우의 보더 색상 */
+    color: #FE8B94 !important; /* 선택된 경우의 폰트 색상 */
+}
+
+#right3 {
+    width: 100%;
+    height: auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
+#addSignUp {
+    width: 80%;
+    height: 50px;
+    background-color: #FE8B94;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    margin: 30px auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}

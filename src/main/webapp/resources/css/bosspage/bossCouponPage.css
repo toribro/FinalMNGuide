@@ -1,0 +1,114 @@
+*{
+    /* border: 1px rsolid rgb(208, 240, 253); */
+}
+
+table{
+    text-align: center;
+}
+
+.privacy-page *{
+    font-size: 15px;
+}
+
+/* 쿠폰 테이블 컬럼 */
+#coupon-table-title{
+    height: 40px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* 실제 등록된 쿠폰 데이터 행 */
+.coupon-content{
+    height: 60px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.coupon-content>td{
+    padding: 10px;
+}
+
+.coupon-content input{
+    margin: 0px;
+    height: 35px;
+}
+
+.coupon-title{
+    width: 45%;
+    white-space: normal;
+}
+
+.coupon-expiration{
+    width: 18%;
+}
+
+.coupon-count{
+    width: 18%;
+}
+
+.coupon-admin{
+    width: 25%;
+}
+
+.coupon-admin>button{
+    width: 80px;
+    height: 35px;
+    padding: 0px;
+    margin: 5px;
+    font-size: 15px;
+}
+
+/* 등록된 쿠폰 없을 시 */
+#coupon-none{
+    border-bottom: 1px solid var(--border-color);
+}
+
+#coupon-none>td{
+    padding: 20px;
+}
+
+/* 쿠폰 등록 버튼 및 행 */
+#coupon-regist>td{
+    padding: 15px;
+}
+
+#coupon-regist button{
+    width: 500px;
+    height: 40px;
+    padding: 5px;
+    border-radius: var(--outer-border-radius);
+}
+
+#coupon-regist img{
+    width: 30px;
+}
+
+
+/* 쿠폰 삭제 모달창 */
+#delete-coupon{
+    text-align: center;
+    
+}
+
+#delete-coupon-title{
+    font-size: 24px;
+    margin: 20px 0px;
+    
+}
+
+#delete-coupon-content{
+    margin: 20px 0px;
+    font-size: 16px;
+}
+
+#delete-coupon-text{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.modal-body>button{
+    width: 150px;
+    margin: 0px 10px 30px 10px;
+}
+.minibox-input{
+    resize: none;
+}

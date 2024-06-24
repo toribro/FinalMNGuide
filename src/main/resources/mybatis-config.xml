@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  
+ <configuration>
+ 	
+  <settings>
+ 	
+ 	<setting name="jdbcTypeForNull" value="NULL"/>
+ 	</settings>
+ 	  <!-- typeAlias : VO/DTO 클래스들의 풀클래스명을 단순한 클래스명(별칭)으로 사용하기위한 별칭을 등록하는 영역-->
+ 	<typeAliases>
+ 		<typeAlias type="com.kh.mng.member.model.vo.Member" alias="Member" />
+ 		<typeAlias type="com.kh.mng.pet.model.vo.Pet" alias="Pet" />
+ 		<typeAlias type="com.kh.mng.location.model.vo.Picked" alias="Picked"/>
+ 
+ 		<typeAlias type="com.kh.mng.location.model.vo.Review" alias="Review"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.DetailLocationAttachment" alias="DetailLocationAttachment"/>
+ 		<typeAlias type="com.kh.mng.common.model.vo.Attachment" alias="Attachment"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.EnterGrade" alias="EnterGrade"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.Location" alias="Location"/>
+ 		<typeAlias type="com.kh.mng.community.model.vo.Board" alias="Board"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.DetailLocation" alias="DetailLocation"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.LocationOption" alias="LocationOption"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.OperationTime" alias="OperationTime"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.PetKindGrade" alias="PetkindGrade"/>
+ 		<typeAlias type="com.kh.mng.location.model.vo.MasterReply" alias="MasterReply"/>
+ 		<typeAlias type="com.kh.mng.community.model.vo.Shorts" alias="Shorts"/>
+ 		<!-- <typeAlias type="com.kh.spring.board.model.vo.Board" alias="Board" />
+ 		<typeAlias type="com.kh.spring.common.model.vo.Reply" alias="Reply" /> -->
+ 		<typeAlias type="com.kh.mng.community.model.vo.BoardReply" alias="BoardReply" />
+ 			<typeAlias type="com.kh.mng.community.model.vo.BoardReplyReply" alias="BoardReplyReply"/>
+ 		<typeAlias type="com.kh.mng.picture.model.vo.Picture" alias="Picture"/>
+ 		<typeAlias type="com.kh.mng.community.model.vo.TotalShortsInfo" alias="TotalShortsInfo"/>
+ 		<typeAlias type="com.kh.mng.community.model.vo.ShortsReply" alias="ShortsReply"/>
+ 		<typeAlias type="com.kh.mng.community.model.vo.CommunityBoard" alias="CommunityBoard"/>
+
+		<typeAlias type="com.kh.mng.community.model.vo.BoardCategory" alias="BoardCategory"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.BossLocation" alias="BossLocation"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.BossLocationOption" alias="BossLocationOption"/>
+
+	    <typeAlias type="com.kh.mng.common.chat.model.vo.Chat" alias="Chat"/>
+	    <typeAlias type="com.kh.mng.common.chat.model.vo.MasterInfo" alias="MasterInfo"/>
+	    <typeAlias type="com.kh.mng.common.chat.model.vo.UserInfo" alias="UserInfo"/>
+		<typeAlias type="com.kh.mng.bosspage.model.dto.CouponKind" alias="CouponKind"/>
+		<typeAlias type="com.kh.mng.community.model.dto.BoardEnroll" alias="BoardEnroll"/>
+		<typeAlias type="com.kh.mng.community.model.dto.BoardFileInfo" alias="BoardFileInfo"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationOperationTime" alias="LocationOperationTime"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationPetKind" alias="LocationPetKind"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationPetSize" alias="LocationPetSize"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationEnterGrade" alias="LocationEnterGrade"/>
+		<typeAlias type="com.kh.mng.common.phonesms.PhoneSmsVo" alias="PhoneSmsVo"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationEnterGrade" alias="LocationEnterGrade"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationPicture" alias="LocationPicture"/>
+		<typeAlias type="com.kh.mng.location.model.vo.AddressInfo" alias="AddressInfo"/>
+		<typeAlias type="com.kh.mng.common.model.vo.ProfileImg" alias="ProfileImg"/>
+		<typeAlias type="com.kh.mng.location.model.vo.MyPageReview" alias="MyPageReview"/>
+		<typeAlias type="com.kh.mng.bosspage.model.vo.LocationPicture" alias="LocationPicture"/>
+		<typeAlias type="com.kh.mng.common.chat.model.vo.ChatLocationInfo" alias="ChatLocationInfo"/>
+ 	</typeAliases> 
+ 	
+ 	
+
+  	<mappers>
+ 		<mapper resource="/mappers/member-mapper.xml"/>
+ 		<mapper resource="/mappers/pet-mapper.xml"/>
+ 		<mapper resource="/mappers/location/picked-mapper.xml"/>
+ 		<mapper resource="/mappers/location/location-mapper.xml"/>
+ 		<mapper resource="/mappers/location/review-mapper.xml"/>
+ 		<mapper resource="/mappers/location/attachment-mapper.xml"/>
+ 		<mapper resource="/mappers/search-mapper.xml"/>
+ 		<mapper resource="/mappers/main-mapper.xml"/>
+ 		<mapper resource="/mappers/location/location-detail-mapper.xml"/>
+ 		<mapper resource="/mappers/community/shorts-mapper.xml"/>
+ 		<mapper resource="/mappers/picture-mapper.xml"/>
+ 	    <mapper resource="/mappers/community/community-shorts-mapper.xml"/>
+ 	    <mapper resource="/mappers/community/community-board-mapper.xml"/>
+ 	    <mapper resource="/mappers/chat/chat-mapper.xml"/>
+ 	    <mapper resource="/mappers/image-mapper.xml"/>
+ 	</mappers>
+ 	
+    
+ 	
+ </configuration>

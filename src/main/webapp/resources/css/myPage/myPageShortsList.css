@@ -1,0 +1,227 @@
+/*��ü div ū Ʋ*/
+.main_wrapper {
+	width: 100%;
+	margin:0 auto;
+}
+
+/*main�±� */
+.main_main {
+	width: 1280px;
+	margin:0 auto;
+	display: flex;
+    margin-top: 50px;
+}
+
+/*footer�±�*/
+.main_footer {
+	width: 100%;
+	margin: 0 auto;
+}
+
+/*GoogleFont*/
+/*�ΰ� �۾�ü*/
+.gugi-regular {
+	font-family: "Gugi", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+#left {
+    width: 30%;
+    padding-left: 70px;
+    margin-left: 40px;
+}
+
+#right {
+    width: 70%;
+    height: auto;
+    padding-right: 0px;
+    margin-right: 70px;
+}
+
+#main_main_left {
+    width: 240px;
+    float: right;
+    margin-right: 40px;
+}
+
+#main_main_left1 {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#camera {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#profile {
+    border: 1px solid #bababa;
+    border-radius: 100px;
+    width: 140px;
+    height: 140px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: 140px;
+    border-style: none;
+}
+
+#nickName {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#solid {
+    border-bottom: 1px solid #bababa;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#pets {
+    margin-top: 20px;
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+#petProfileName {
+    font-size: 18px;
+    color: #FE8B94;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#main_main_left2 {
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#main_main_left2 div {
+    border-bottom: 1px solid #bababa;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* ���̿� �����ϰ� */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left2 div:hover {
+    color: #FE8B94;
+}
+
+#shortsList {
+    color: #FE8B94;
+    cursor: pointer;
+}
+
+#main_main_left3 {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#chatting {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* ���̿� �����ϰ� */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left3 div:hover {
+    color: #FE8B94;
+}
+
+#main_main_right {
+    width: 820px;
+    height: auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}
+
+#right1 {
+    width: 100%;
+    height: 60px;
+    font-size: 21px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    line-height: 60px; /* ���̿� �����ϰ� */
+    background-color: #FFF9F5;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom: 1px solid #bababa;
+}
+
+#board {
+    cursor: pointer;
+}
+
+#board:hover {
+    color: #FE8B94;
+}
+
+#shorts:hover {
+    color: #FE8B94;
+}
+
+#right2 {
+    width: 25%;
+    height: 300px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    color: white;
+}
+
+#writer {
+    text-align: left;
+    margin-left: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#day {
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: 15px;
+}
+
+#content {
+    text-align: left;
+    margin-top: 20px;
+    margin-left: 5px;
+    font-size: 15px;
+}
+
+#right7 {
+    width: 100%;
+    height: 80px;
+    margin-bottom: 30px;
+}

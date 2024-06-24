@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="chatMapper">
+  
+  <resultMap type="Chat" id="chat">
+  	  <result column="CHAT_NO" property="chatNo"/>
+  	  <result column="USER_ID" property="userId"/>
+  	  <result column="USER_NICKNAME" property="userNickName"/>
+  	  <result column="MESSAGE" property="message"/>
+  	  <result column="ROOM_NO" property="roomNo"/>
+  	  <result column="USER_NO" property="userNo"/>
+  	  <result column="TARGET_ID" property="targetId"/>
+  	  <result column="enroll_time" property="enrollTime"/>
+  </resultMap>
+  
+  
+   <resultMap type="MasterInfo" id="masterInfo">
+   	  <result column="USER_NO" property="masterNo"/>
+   	  <result column="USER_ID" property="masterId"/>
+   </resultMap>
+   
+      <resultMap type="UserInfo" id="userInfo">
+	   	  <result column="USER_NO" property="userNo"/>
+	   	  <result column="USER_ID" property="userId"/>
+	   	  <result column="USER_NICKNAME" property="userNickName"/>
+  	  </resultMap>
+  	  
+  	  <resultMap type="ChatLocationInfo" id="chatLocationInfo">
+  	  	<result column="LOCATION_NAME" property="locationName"/>
+  	  	<result column="LOCATION_NO" property="locationNo"/>
+  	   </resultMap>
+  
+     <insert id="insertChatRoom">
+     		INSERT INTO 
+     		CHAT(
+     		 CHAT_NO,
+     		 USER_ID,
+     		 USER_NICKNAME,
+     		 MESSAGE,
+     		 ROOM_NO,
+     		 USER_NO,
+     		 TARGET_ID,
+     		 TARGET_NO,
+     		 LOCATION_NO,
+     		 STATUS,
+     		 re_chat_no
+     		)
+     		VALUES(
+     		 NEXTVAL('SEQ_CHAT'),
+     		 #{userId},
+     		 #{userNickName},
+     		 #{message},
+     		 #{roomNo},
+     		 #{userNo},
+     		 #{targetId},
+     		 #{targetNo},
+     		 #{locationNo},
+     		 TRUE,
+     		 CURRVAL('SEQ_CHAT')
+     		)
+     
+     </insert>
+     
+      <select id="selectUserChats" resultMap="chat">
+    	SELECT CHAT_NO,
+    		   USER_ID,
+    		   USER_NICKNAME,
+    		   MESSAGE,
+    		   ROOM_NO,
+    		   USER_NO,
+    		   TARGET_NO,
+    		   TARGET_ID,
+    		   to_char(enroll_time,'YYYY-MM-DD HH24:MI:SS') AS enroll_time
+    		   FROM CHAT
+    		   WHERE (USER_NO = #{userNo} and TARGET_NO = #{targetNo})
+    		   or (USER_NO = #{targetNo} and TARGET_NO =#{userNo})
+    		   order by enroll_time
+    
+     </select>
+    
+    <update id="outChatRoom">
+    
+    	UPDATE CHAT SET STATUS= FALSE
+    		WHERE USER_NO = #{userNo}
+    
+    </update>
+    
+        <update id="joinChatRoom">
+    
+    	UPDATE CHAT SET STATUS= TRUE
+    		WHERE USER_NO = #{userNo}
+    
+    </update>
+    
+      <select id ="selectMasterInfo" resultMap="masterInfo">
+           SELECT M.USER_NO, USER_ID  FROM  MEMBER M
+            JOIN  LOCATION L 
+            ON (M.USER_NO = L.USER_NO)
+            WHERE LOCATION_NO = #{locationNo}
+            AND USER_KIND = 'Y'
+    
+    </select>
+     
+ 
+    
+    <select id="selectUserInfo" resultMap="userInfo">
+    	SELECT  distinct 
+    			USER_ID,
+    			USER_NICKNAME ,
+    			USER_NO
+    			from chat
+    			WHERE USER_NO != #{userNo}
+    			AND TARGET_NO = #{userNo}
+    		
+    
+    </select>
+    
+    <select id="selectlocationNo" resultType="_int">
+    		SELECT DISTINCT
+    				LOCATION_NO
+    				FROM CHAT
+    				WHERE USER_NO = #{USER_NO}
+    
+    </select>
+    
+    <select id="locationInfo" resultMap="chatLocationInfo">
+    	SELECT  LOCATION_NO,
+    			LOCATION_NAME
+    			FROM LOCATION
+    			WHERE LOCATION_NO = #{locationNo}
+    
+    </select>
+    
+    
+    
+    <select id="selectlastestMessage"  resultType="map">
+    	SELECT MESSAGE ,to_char(enroll_time,'YYYY-MM-DD HH24:MI:SS') AS ENROLL_TIME 
+    	FROM CHAT
+		WHERE NOTIFY = TRUE AND  USER_NO = #{userNo}  AND TARGET_NO = #{targetNo}
+    	ORDER BY  ENROLL_TIME DESC LIMIT 1
+    </select>
+    
+    <select id="selectNotifyMessageCount" resultType="_int">
+		    
+		SELECT COUNT(MESSAGE) AS messageCount FROM CHAT   
+		WHERE NOTIFY = TRUE AND   USER_NO = #{userNo} AND TARGET_NO = #{targetNo}
+    </select>
+    
+    <update id="updateNotify" >
+    	UPDATE CHAT SET NOTIFY = FALSE
+    	WHERE CHAT_NO=#{chatNo}
+    </update>
+  
+  </mapper>

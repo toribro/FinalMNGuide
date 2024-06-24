@@ -1,0 +1,247 @@
+
+
+/*헤더 이미지*/
+.detail-wrapper .header-img{
+	height:600px;
+    position: relative;
+	display:flex;
+	justify-content: space-between;
+	
+}
+
+.header-img .radio-button{
+	display: none;
+}
+
+.header-img .slide{
+	width:100%;
+	height:600px;
+	overflow: hidden;
+	position: relative;
+}
+.header-img .slide >img{
+	width:100%;
+	height:100%;
+	transition: opacity 500ms;
+	object-fit: cover;
+}
+
+.header-img .navigation-manual{
+	position: absolute;
+	width:100%;
+	height:10%;
+	margin-top:550px;
+	display:flex;
+	justify-content: center;
+	gap:3px;
+
+}
+
+.header-img .navigation-manual .manual-btn{
+   color:white;
+   font-size: 30px;
+   font-weight: bold;
+  
+}
+
+.detail-wrapper .head-img-pre, 
+.detail-wrapper .head-img-next{
+    align-items: center;
+	transform: rotate(90deg);
+	width:80px;
+	height:80px;
+	margin :auto 0;
+
+
+}
+.head-img-pre button,
+.head-img-next button{
+	width:100%;
+	height:100%;
+	transform: rotate(90deg);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	font-size:50px;
+	border-style:none;
+	
+}
+
+.detail-wrapper .overlay {
+    position: absolute;
+    top: 0;
+    left: 100px;
+    width: 40%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.detail-wrapper .overlay h1 {
+    color: white;
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+
+
+
+/*메인*/
+
+.detail-main a{
+	text-decoration-line:none;
+	/* color:black; */
+}
+/*a태그 hover*/
+
+.detail-main .pick-heart{
+	cursor: pointer;
+	color:rgb(255, 215, 222);
+}
+
+.detail-main .pick-heart:hover{
+	color:red;
+}
+
+/*title 영역*/
+.detail-main .space-detail{
+	display:flex;
+	justify-content: space-between;
+	border:solid 1px var(--border-color);
+	border-radius:var(--inner-border-radius);
+	margin-top:30px;
+	margin-bottom:30px;
+	padding:10px;
+}
+
+/*내용 타이틀*/
+.detail-main .title,.good{
+	font-size:20px;
+	font-weight:bold;
+	text-align: left;
+	margin-left:20px;
+}
+
+/*내용 */
+.detail-main .content{
+	text-align: left;
+	margin-left:20px;
+
+}
+
+.detail-main .good{
+    display: flex;
+	justify-content: center;
+	
+}
+
+
+
+/*공통  grid 영역*/
+.detail-main .section{
+	width:100%;
+	display:grid;
+	grid-template-rows: repeat(1, 50px);
+	border:solid 1px var(--border-color);
+	column-gap: 50px;
+	margin-bottom: 30px;
+	padding:30px;
+    white-space: initial;/*영역 넘어가면 자동 줄바꿈*/
+    border-radius:var(--outer-border-radius)
+    /* overflow: auto; */
+
+	/*overflow:auto;*/
+}
+
+
+
+/*상세정보*/
+.detail-main .detail-div{
+	display:flex;
+	justify-content: space-between;
+    height:100%;
+	border-radius:var(--inner-border-radius);
+}
+
+.detail-main .detail-content{
+	display:flex;
+	justify-content:flex-start;
+	gap:10px;
+}
+.detail-main .detail-content div{
+	padding:10px;
+}
+
+.detail-main .detail-area{
+	width:78%;
+}
+
+.detail-main .more-area{
+	width:20%;
+}
+.detail-main  .location-check-in-out{
+	width:100%;
+	
+}
+
+
+
+
+/*시설상세 (이미지)*/
+
+
+.detail-main .img-space{
+	width:100%;
+	height:300px;
+	text-align: center;
+    display:flex;
+    justify-content: space-around;
+	
+}
+
+.detail-main .img-space .img-div>img{
+	width:300px;
+	height:300px;
+	border-radius:var(--inner-border-radius);
+	
+}
+
+/** 장소 종류들*/
+
+/*
+ 상품 정보
+*/
+
+.detail-main .sales{
+	display: flex;
+	justify-content: space-between;
+	gap:20px;
+}
+
+
+
+/**
+  위치 정보
+*/
+
+.detail-main .location-div{
+	display:flex;
+	justify-content: space-between;
+    height:100%;
+	
+}
+
+
+.detail-main .location-area{
+	width:70%;
+}
+
+.detail-main .hospital-area{
+	width:30%;
+}
+
+
+
+
+

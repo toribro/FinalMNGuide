@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="communityBoardMapper">
+	  <resultMap type="CommunityBoard" id="selectBoards">
+	   	 <result column="BOARD_NO" property="boardNo"></result>
+	  	 <result column="BOARD_TITLE" property="boardTitle"></result>
+	  	 <result column="BOARD_CONTENT" property="boardContent"></result>
+	  	 <result column="COUNT" property="count"></result>
+	  	 <result column="CREATE_DATE" property="createDate"></result>
+	  	 <result column="EDIT_DATE" property="editDate"></result>
+	  	 <result column="STATUS" property="status"></result>
+	  	 <result column="USER_NICKNAME" property="userNickName"></result>
+	  	 <result column="CATEGORY_NAME" property="categoryName"></result>
+	  	 <result column="USER_NO" property="userNo"></result>
+	  	 <result column="BOARD_CATEGORY_NO" property="locationCategoryNo"></result>
+	  </resultMap>
+	  
+	   <resultMap type="Attachment" id="boardAttachment">
+	   		<result column="ORIGIN_NAME" property="originName"></result>
+	   		<result column="CHANGE_NAME" property="changeName"></result>
+	   		<result column="FILE_PATH" property="filePath"></result>
+	   </resultMap>
+	   
+	     <resultMap type="Attachment" id="userAttachment">
+	   		<result column="ORIGIN_NAME" property="originName"></result>
+	   		<result column="CHANGE_NAME" property="changeName"></result>
+	   		<result column="FILE_PATH" property="filePath"></result>
+	   </resultMap>
+	   
+	   <resultMap type="BoardCategory" id="boardCategoryList">
+	      <result column="BOARD_CATEGORY_NO" property="categoryNo"></result>
+	      <result column="CATEGORY_NAME" property="categoryName"></result>
+	   </resultMap>
+	   
+	   <resultMap type="BoardReply" id="selectReplys">
+	   		<result column="REPLY_NO"  property="replyNo"></result>
+	   		<result column="REPLY_CONTENT"  property="content"></result>
+	   		<result column="CREATE_DATE"  property="createDate"></result>
+	   		<result column="USER_NICKNAME"  property="userNickName"></result>
+	   		<result column="USER_NO"  property="userNo"></result>
+	   </resultMap>
+	   
+	   	<resultMap type="BoardReplyReply" id="selectReplyReplys">
+	   		<result column="REPLY_NO"  property="replyNo"></result>
+	   		<result column="REPLY_CONTENT"  property="content"></result>
+	   		<result column="CREATE_DATE"  property="createDate"></result>
+	   		<result column="USER_NICKNAME"  property="userNickName"></result>
+	   		<result column="USER_NO"  property="userNo"></result>
+	   </resultMap>
+	   
+	   <resultMap type="BoardEnroll" id="boardEnrollResult">
+         <result column="BOARD_NO" property="boardNo"/>
+         <result column="BOARD_TITLE" property="boardTitle"/>
+         <result column="BOARD_CONTENT" property="boardContent"/>
+         <result column="COUNT" property="count"/>
+         <result column="CREATE_DATE" property="createDate"/>
+         <result column="EDIT_DATE" property="editDate"/>
+         <result column="STATUS" property="status"/>
+         <result column="USER_NO" property="userNo"/>
+         <result column="BOARD_CATEGORY_NO" property="boardCategoryNo"/>
+   	</resultMap>
+   	
+   	<resultMap type="BoardFileInfo" id="boardFileInfoResult">
+         <result column="PIC_NO" property="picNo"/>
+         <result column="ORIGIN_NAME" property="originName"/>
+         <result column="CHANGE_NAME" property="changeName"/>
+         <result column="FILE_PATH" property="filePath"/>
+         <result column="FILE_LEVEL" property="fileLevel"/>
+         <result column="USER_NO" property="userNo"/>
+         <result column="BOARD_NO" property="boardNo"/>
+   	</resultMap>
+  
+  	<select id="selectBoardList" resultMap="selectBoards">
+  	  	SELECT B.BOARD_NO,
+  	  	       B.BOARD_TITLE,
+  	  		   B.BOARD_CONTENT,
+  	  		   B.COUNT,
+  	  		   B.CREATE_DATE,
+  	  		   B.EDIT_DATE,
+  	  		   B.STATUS,
+  	  		   M.USER_NICKNAME,
+  	  		   C.CATEGORY_NAME,
+  	  		   B.USER_NO,
+  	  		   C.BOARD_CATEGORY_NO
+  	  		   FROM BOARD B
+  	  		   JOIN MEMBER M
+  	  		   ON (B.USER_NO = M.USER_NO)
+  	  		   JOIN BOARD_CATEGORY C
+  	  		   ON (B.BOARD_CATEGORY_NO = C.BOARD_CATEGORY_NO)
+  	  		   WHERE B.STATUS = true
+  	  		   <choose>
+  	  		   		<when test='boardCategoryNo!=0 and boardContent=="default"'>
+ 						AND  C.BOARD_CATEGORY_NO = #{boardCategoryNo}
+  	  		   		</when>
+  	  		   		
+  	  		   		<when test='boardCategoryNo!=0 and boardContent!="default"'>
+ 						AND  C.BOARD_CATEGORY_NO = #{boardCategoryNo}
+ 						AND  B.BOARD_CONTENT LIKE CONCAT('%',#{boardContent},'%') OR
+ 						 B.BOARD_Title LIKE CONCAT('%',#{boardContent},'%')
+  	  		   		</when>
+  	  		   
+  	  		   </choose>
+  	  		   ORDER BY   B.BOARD_NO DESC
+  	  		   
+  	 </select>
+  	
+  	
+  	<select id="selectBoardAttachment" resultMap="boardAttachment">
+  	 
+  		        SELECT
+					ORIGIN_NAME,
+					CHANGE_NAME,
+					FILE_PATH
+					FROM PICTURE
+		         WHERE Board_NO = #{boardNo}
+		        AND FILE_LEVEL = 1
+	</select>
+	
+	 <select id="selectUserAttachment" resultMap="userAttachment">
+    		SELECT ORIGIN_NAME,
+    			   CHANGE_NAME,
+    			   FILE_PATH 
+    			   FROM PICTURE
+    			   WHERE USER_NO = #{userNo}
+    			   ORDER BY PIC_NO DESC
+    			   LIMIT 1
+     </select>
+	
+	
+	
+	<select id="selectBoardApplyCount" resultType="_int">
+			SELECT 
+			  COUNT(*) 
+			  FROM REPLY
+			  WHERE BOARD_NO = #{boardNo}
+			
+	</select>
+	
+	<select id="selectBoardCount" resultType="_int">
+	
+		SELECT COUNT(*)
+				FROM BOARD
+				<choose>
+  	  		   		<when test='boardCategoryNo!=0 and boardContent=="default"'>
+ 						WHERE BOARD_CATEGORY_NO = #{boardCategoryNo}
+  	  		   		</when>
+  	  		   		
+  	  		     	<when test='boardCategoryNo!=0 and boardContent!="default"'>
+  	  		   		  WHERE BOARD_CATEGORY_NO = #{boardCategoryNo}
+ 					  AND  BOARD_CONTENT LIKE CONCAT('%',#{boardContent},'%')
+  	  		   		</when>
+  	  		   
+  	  		   </choose>
+  	  		   
+	</select>
+	
+	<select id="selectBoardCategoryList" resultMap="boardCategoryList">
+		SELECT BOARD_CATEGORY_NO ,CATEGORY_NAME
+				FROM BOARD_CATEGORY;
+	</select>
+	
+	<select id="selectDetailBoard" resultMap="selectBoards">
+		SELECT B.BOARD_NO,
+  	  	       B.BOARD_TITLE,
+  	  		   B.BOARD_CONTENT,
+  	  		   B.COUNT,
+  	  		   B.CREATE_DATE,
+  	  		   B.EDIT_DATE,
+  	  		   B.STATUS,
+  	  		   M.USER_NICKNAME,
+  	  		   C.CATEGORY_NAME,
+  	  		   B.USER_NO,
+  	  		   C.BOARD_CATEGORY_NO
+  	  		   FROM BOARD B
+  	  		   JOIN MEMBER M
+  	  		   ON (B.USER_NO = M.USER_NO)
+  	  		   JOIN BOARD_CATEGORY C
+  	  		   ON (B.BOARD_CATEGORY_NO = C.BOARD_CATEGORY_NO)
+  	  		   WHERE B.BOARD_NO = #{bno} AND  B.STATUS = true
+	</select>
+	
+	
+	<select id ="selectDetailBoardReply" resultMap="selectReplys">
+		
+		 SELECT    REPLY_NO,
+				   REPLY_CONTENT,
+				   CREATE_DATE ,
+		           REPLY_RE_NO,
+				   USER_NICKNAME,
+				   R.USER_NO
+				   FROM REPLY R JOIN 
+				   MEMBER M ON (R.USER_NO=M.USER_NO)
+				   WHERE REPLY_RE_NO IS NULL AND  BOARD_NO = #{boardNo}
+				   AND R.STATUS= TRUE ORDER BY  R.CREATE_DATE DESC
+	  </select>
+	  
+	  
+	<select id ="selectDetailBoardReplyReply" resultMap="selectReplyReplys">
+		
+		 SELECT    REPLY_NO,
+				   REPLY_CONTENT,
+				   CREATE_DATE ,
+		           REPLY_RE_NO,
+				   USER_NICKNAME,
+				   R.USER_NO
+				   FROM REPLY R JOIN 
+				   MEMBER M ON (R.USER_NO=M.USER_NO)
+				   WHERE REPLY_RE_NO IS NOT null AND  BOARD_NO = #{boardNo}
+				   AND  REPLY_RE_NO = #{replyNo}  AND R.STATUS = TRUE
+				   ORDER BY  R.CREATE_DATE DESC
+	  </select>
+	  
+	  <insert id="insertReply">
+	  		INSERT INTO REPLY
+	  			   (REPLY_NO,
+	  			    REPLY_CONTENT,
+	  			    CREATE_DATE,
+	  			    USER_NO,
+	  			    BOARD_NO,
+	  			    STATUS,
+	  			    REPLY_RE_NO
+	  			   )
+	  			   VALUES(
+	  			    NEXTVAL('SEQ_REPLY'),
+	  			    #{content},
+	  			    default,
+	  			    #{userNo},
+	  			    #{boardNo},
+	  			    TRUE,
+	  			    null
+	  			   )
+	  
+	  </insert>
+	  
+	  <insert id= "insertReplyReply">
+	  			INSERT INTO REPLY
+	  			   (REPLY_NO,
+	  			    REPLY_CONTENT,
+	  			    CREATE_DATE,
+	  			    USER_NO,
+	  			    BOARD_NO,
+	  			    STATUS,
+	  			    REPLY_RE_NO
+	  			   )
+	  			   VALUES(
+	  			    NEXTVAL('SEQ_REPLY'),
+	  			    #{content},
+	  			    default,
+	  			    #{userNo},
+	  			    #{boardNo},
+	  			    TRUE,
+	  			    #{replyNo}
+	  			   )
+	  
+	  
+	  </insert>
+	  
+	  <select id="selectBoardReplyCount" resultType="_int">
+	  		SELECT COUNT(*)
+	  				 FROM REPLY
+	   				 WHERE REPLY_RE_NO IS NULL
+	   				 AND BOARD_NO = #{boardNo}
+	  </select>
+	  
+	  <select id="checkUserGoodCount" resultType="_int">
+	  		SELECT  COUNT(*)
+	  				FROM GOOD 
+	  				WHERE USER_NO = #{userNo}
+	  				AND BOARD_NO = #{boardNo}
+	  
+	  </select>
+	  
+	  <insert id="insertGoodCount">
+	  		INSERT INTO GOOD
+	  				 (GOOD_NO,
+	  				  COUNT,
+	  				  USER_NO,
+	  				  BOARD_NO
+	  				 )
+	  				VALUES
+	  				(NEXTVAL('SEQ_GOOD'),
+	  				1,
+	  				#{userNo},
+	  				#{boardNo}
+	  				)
+	  
+	  </insert>
+	  
+	  <delete id="deleteGoodCount">
+	      DELETE  FROM GOOD
+	     	   WHERE USER_NO = #{userNo}
+	    	AND BOARD_NO = #{boardNo}
+	  
+	  </delete>
+	  
+	  <select id="selectGoodCount" resultType="_int">
+	 	   SELECT  COUNT(*)
+	  				FROM GOOD 
+	  				WHERE  BOARD_NO = #{boardNo}
+	  
+	  </select>
+	  
+	  <update id="updateBoardViewCount">
+	 	  UPDATE BOARD SET COUNT=COUNT+1
+	 	  		WHERE BOARD_NO = #{boardNo}
+	  
+	  </update>
+	  
+	  <delete id="deletBoardReply">
+	  	  DELETE FROM REPLY
+	  		 WHERE REPLY_NO = #{replyNo}
+	  </delete>
+	  
+	  <select id="checkReplyOwner" resultType="_int">
+	  		SELECT USER_NO REPLY
+	  			FROM REPLY
+	  		   WHERE REPLY_NO = #{replyNo}
+	  
+	  </select>
+	  
+	  
+   
+    <select id="getBoardList" resultMap="selectBoards">
+  		        SELECT
+					B.BOARD_NO,
+					B.BOARD_TITLE,
+					B.BOARD_CONTENT,
+					B.COUNT,
+					B.BOARD_CATEGORY_NO,
+					B.CREATE_DATE,
+					C.CATEGORY_NAME
+					FROM BOARD B
+					JOIN BOARD_CATEGORY C
+					ON (B.BOARD_CATEGORY_NO = C.BOARD_CATEGORY_NO)
+		         WHERE USER_NO = #{userNo}
+		         AND STATUS = true
+		         ORDER BY CREATE_DATE ASC
+	</select>
+	
+	<delete id="deleteBoard" >
+		DELETE FROM BOARD WHERE BOARD_NO = #{boardNo}
+	</delete>
+	
+	<delete id="deleteBoardAttachment">
+	 	DELETE FROM PICTURE WHERE CHANGE_NAME=#{changeName} AND BOARD_NO = #{boardNo}
+	
+	</delete>
+	
+	<select id="checkBoardOwner" resultType="_int">
+		SELECT USER_NO FROM BOARD WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+
+	<update id="updateBoard">
+	   UPDATE BOARD SET BOARD_TITLE = #{boardTitle},
+	   					BOARD_CONTENT = #{boardContent},
+	   					BOARD_CATEGORY_NO = #{boardCategoryNo}
+	   					WHERE BOARD_NO = #{boardNo}
+	   					
+	</update>
+
+	<update id="updateBoardAttachment">
+	  UPDATE PICTURE SET FILE_PATH = #{filePath},
+	  					 ORIGIN_NAME = #{originName},
+	  					 CHANGE_NAME = #{changeName}
+	  					WHERE BOARD_NO = #{boardNo}
+	</update>
+
+	
+	
+	
+	
+	
+	
+	<insert id="insertBoard">
+   		INSERT INTO BOARD(
+   						BOARD_NO,
+   						BOARD_TITLE,
+   						BOARD_CONTENT,
+   						USER_NO,
+   						BOARD_CATEGORY_NO
+   						)
+   					VALUES(
+   						nextval('SEQ_BORD'),
+   						#{boardTitle},
+   						#{boardContent},
+   						#{userNo},
+   						#{boardCategoryNo}
+   						)
+   	</insert>
+   	
+   	<insert id="insertBoardAttachment">
+   		INSERT INTO PICTURE(
+   							PIC_NO, 
+   							ORIGIN_NAME, 
+   							CHANGE_NAME, 
+   							FILE_PATH,
+							BOARD_NO
+							)
+					 VALUES(
+							nextval('SEQ_PIC'),
+							#{originName},
+							#{changeName},
+							#{filePath},
+							currval('SEQ_BORD')
+							)
+							
+   	</insert>
+   	
+   	   	<insert id="insertUpdateBoardAttachment">
+   		INSERT INTO PICTURE(
+   							PIC_NO, 
+   							ORIGIN_NAME, 
+   							CHANGE_NAME, 
+   							FILE_PATH,
+							BOARD_NO
+							)
+					 VALUES(
+							nextval('SEQ_PIC'),
+							#{originName},
+							#{changeName},
+							#{filePath},
+							#{boardNo}
+							)
+							
+   	</insert>
+
+   
+  </mapper>

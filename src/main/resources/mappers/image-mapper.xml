@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="imgMapper">
+	<resultMap type="ProfileImg" id="imgResult">
+		<result column="PIC_NO" property="picNo" />
+		<result column="ORIGIN_NAME" property="originName" />
+		<result column="CHANGE_NAME" property="changeName" />
+		<result column="FILE_PATH" property="filePath" />
+		<result column="FILE_LEVEL" property="fileLevel" />
+		<result column="LOCATION_NO" property="locationNo" />
+		<result column="REVIEW_NO" property="reviewNo" />
+		<result column="USER_NO" property="userNo" />
+		<result column="PET_NO" property="petNo" />
+		<result column="BOARD_NO" property="boardNo" />
+	</resultMap>
+
+	<insert id="insertProfileImg">
+		INSERT INTO PICTURE(
+		PIC_NO,
+		ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH,
+		FILE_LEVEL,
+		USER_NO
+		)
+		VALUES(
+		NEXTVAL('SEQ_PIC'),
+		#{originName},
+		#{changeName},
+		#{filePath},
+		#{fileLevel},
+		#{userNo}
+		)
+	</insert>
+
+	<select id="getProfileImg" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		PIC_NO,
+		CHANGE_NAME,
+		FILE_PATH
+		FROM PICTURE
+		WHERE USER_NO = #{userNo}
+		AND FILE_LEVEL = 0
+		ORDER BY PIC_NO
+		DESC
+		LIMIT 1;
+	</select>
+
+	<update id="updateProfileImg" parameterType="ProfileImg">
+		UPDATE PICTURE
+		SET ORIGIN_NAME = #{originName},
+		CHANGE_NAME = #{changeName},
+		FILE_PATH = #{filePath}
+		WHERE PIC_NO = #{picNo}
+	</update>
+
+	<insert id="insertPetImg">
+		INSERT INTO PICTURE(
+		PIC_NO,
+		ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH,
+		FILE_LEVEL,
+		PET_NO
+		)
+		VALUES(
+		NEXTVAL('SEQ_PIC'),
+		#{originName},
+		#{changeName},
+		#{filePath},
+		#{fileLevel},
+		#{petNo}
+		)
+	</insert>
+	
+	<update id="updatePetImg" parameterType="ProfileImg">
+		UPDATE PICTURE
+		SET ORIGIN_NAME = #{originName},
+		CHANGE_NAME = #{changeName},
+		FILE_PATH = #{filePath}
+		WHERE PIC_NO = #{picNo}
+	</update>
+	
+	<select id="getPetImg" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		PIC_NO,
+		CHANGE_NAME,
+		FILE_PATH
+		FROM PICTURE
+		WHERE PET_NO = #{petNo}
+		AND FILE_LEVEL = 1
+		ORDER BY PIC_NO
+		DESC
+		LIMIT 1;
+	</select>
+	
+	<select id="getImgList" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		PIC_NO,
+		CHANGE_NAME,
+		FILE_PATH,
+		PET_NO
+		FROM PICTURE
+		WHERE PET_NO IS NOT NULL
+		AND FILE_LEVEL = 1
+	</select>
+	
+	<select id="getLocationImg" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		PIC_NO,
+		CHANGE_NAME,
+		FILE_PATH,
+		LOCATION_NO
+		FROM PICTURE
+		WHERE LOCATION_NO = #{locationNo}
+		AND FILE_LEVEL = 1
+		ORDER BY PIC_NO DESC
+		LIMIT 1
+	</select>
+	
+	<select id="getReviewImg" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH
+		FROM PICTURE
+		WHERE REVIEW_NO = #{reviewNo}
+		ORDER BY PIC_NO DESC
+		LIMIT 3
+	</select>
+
+	<select id="getBoardImg" resultMap="imgResult">
+		SELECT ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH
+		FROM PICTURE
+		WHERE BOARD_NO = #{boardNo}
+		ORDER BY PIC_NO DESC
+		LIMIT 3
+	</select>
+
+</mapper>

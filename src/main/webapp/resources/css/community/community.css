@@ -1,0 +1,444 @@
+.community-main .community-short-area,
+.community-main .community-board-area{
+    width:100%;
+    height:100%;
+    white-space: initial;
+    margin-bottom: 20px;
+    border:solid 1px var(--border-color);
+    border-radius:var(--outer-border-radius);
+    margin-bottom: 50px;
+}
+.community-main a{
+    list-style: none;
+    color:black;
+}
+.community-main a:hover{
+    color:var(--main-color);
+}
+
+
+/*검색*/
+.community-main .white-button:hover{
+    border:solid 1px var(--main-color);
+    color:var(--main-color);
+    background-color: white;
+}
+
+
+/*공통 그리드 영역*/
+.community-main .grid-box{
+    width:100%;
+	display:grid;
+	
+	/* column-gap: 50px; */
+	/* margin-bottom: 20px; */
+    white-space: initial;/*영역 넘어가면 자동 줄바꿈*/
+    /* border-radius:var(--outer-border-radius); */
+
+}
+/*공통 타이틀 영역*/
+.community-main .title-box{
+    width:100%;
+    white-space: initial;
+    background-color: var(--background-color);
+    border-style: none;
+    border-radius: var(--outer-border-radius)  var(--outer-border-radius) 0 0;
+    padding:15px;
+  
+}
+.community-main .short-title-height{
+    height:70px;
+}
+
+.community-main .board-title-height{
+    height:150px;
+}
+
+
+.community-main .flex-box{
+    display:flex;
+    white-space: initial;
+    justify-content: space-between;
+}
+.community-main .flex-category-box{
+    display:flex;
+    white-space: initial;
+    overflow: auto;
+    justify-content: space-evenly;
+    gap:10px;
+}
+
+/*카테고리 버튼 영역 한글 꺠짐 해결*/
+.flex-category-box >div>button{
+    white-space:nowrap; 
+}
+
+/*쇼츠영역*/
+.community-main .short-area{
+    grid-template-columns: repeat(5, 200px);
+    column-gap: 50px;
+    row-gap: 80px;
+    align-items: center;
+    padding:30px;
+}
+
+
+
+/*쇼츠 목록*/
+
+.community-main .short-content{
+    width:100%;
+    height:100%;
+}
+
+/*컨텐츠 전체 영역 설정*/
+
+.community-main .short-area .short-img-div{
+   position: relative;
+   cursor : pointer;
+}
+
+
+/*이미지 설정*/
+.community-main .short-area .short-img{
+    max-width:200px;
+    height:300px;
+}
+
+.community-main .short-area .short-img img{
+    width:100%;
+    height:100%;
+    border-radius:var(--inner-border-radius) ;
+}
+
+/*이미지 상세 내용*/
+
+.community-main .img-detail{
+    position: absolute;
+    padding-top:180px;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    /* display: table; */
+    /* background: rgba(228, 212, 212, 0.7); */
+    color: #fff;
+    border-radius: 10px;
+    /* display: flex; */
+    /* justify-content: center; */
+    align-items: center;
+    /* overflow: auto;  */
+    overflow-y: scroll;
+}
+
+.community-main .img-detail::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+.img-detail> div{
+    color:rgb(3, 3, 3);
+}
+
+/*게시판영역*/
+
+.community-main .board-content .board-area{
+    text-align: left;
+    border-bottom: solid 1px black;
+    cursor:pointer
+}
+
+/*flex처리*/
+.community-main .board-content .board-area .board-flex-div{
+    display:flex; 
+    width:100%; 
+    height:100%;
+}
+
+.community-main .board-content .board-area .board-flex-div .content-box{
+    width:80%
+}
+.community-main .board-content .board-area .board-flex-div .img-box{
+    width:20%;
+}
+
+
+/*내용 처리*/
+.community-main .board-content .board-area div{
+    padding:10px;
+    text-align: left;
+}
+
+.community-main  .board-content .profile{
+    display:flex;
+    justify-content: flex-start;
+    gap:3px;
+
+}
+
+.community-main  .board-content .content, .content-title, .reply-count{
+    margin-left: 20px;
+  }
+/*내용 넘치면 안넘어가게*/
+.community-main .content{
+    width:900px;
+    height:80px;
+    -webkit-line-clamp:2;
+    overflow: hidden;
+    /* text-overflow: ellipsis; */
+}
+
+/*이미지 관련 클래스*/
+.community-main  .board-content .profile .img-div {
+    width: 70px;
+    height: 70px;
+}
+
+.community-main  .board-content .profile img{
+    width: 100%;
+    height: 100%;
+    border-radius:50px;
+}
+.community-main  .board-content .img-box{
+    width: 20%;
+}
+
+.community-main  .board-content .img-box img{
+    width: 100%;
+    height: 100%;
+    border-radius:var(--inner-border-radius) ;
+}
+
+
+/*페이징 영역*/
+
+/* .community-main .page-div{
+    display:flex;
+    justify-content: center;
+    gap:20px;
+    padding:10px;
+   
+}
+
+
+.community-main .page-button{
+    color:var(--main-color);
+    cursor: pointer;
+} */
+
+
+/*검색 바*/
+
+.community-main .board-search{
+    width:100%;
+    height:100px;
+    display:flex;
+    justify-content: center;
+    gap:10px;
+    border:solid 1px var(--border-color);
+    border-radius:var(--outer-border-radius);
+    padding:15px;
+}
+
+.community-main .board-search .category-div{
+    
+    width:30%;
+    height:100%;
+    border:solid 1px var(--border-color);
+    border-radius:var(--outer-border-radius);
+}
+
+.community-main .board-search .search-div{
+
+    width:70%;
+    height:100%;
+    border:solid 1px var(--border-color) ;
+    border-radius:var(--outer-border-radius);
+}
+
+.community-main .board-search .select-box{
+    width:100%;
+    height:100%;
+    /* border: 1px solid var(--border-color); */
+    /* border-style: none; */
+    border-radius:var(--outer-border-radius);
+    text-align: left;
+    text-align: center;
+    font-size: 20px;
+}
+
+.community-main .board-search .input-box{
+    width:80%;
+    height:100%;
+    border-style: none;
+    border-radius: var(--inner-border-radius);
+    text-align: left;
+    font-size: 20px;
+    /* display:inline-block; */
+}
+
+
+/* .community-main .board-search .input-box:focus{
+    border: 1px solid var(--main-color);
+} */
+
+
+.community-main .board-search .search-button{
+    width:10%;
+    height:100%;
+    border-style: none;
+    background-color:transparent;
+    border-radius:var(--outer-border-radius);
+    float:right;
+}
+ 
+.community-main .search-div:focus{
+    border: 1px solid var(--main-color);
+}
+
+/*
+    display: block;
+    width: 100%;
+    height: 60px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--inner-border-radius);
+    text-align: left;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+*/
+
+/* 글쓰기 영역 */
+#titleInput::placeholder {
+    color: var(--border-color);
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.community-area{
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    padding: 30px;
+}
+
+#titleInput{
+    width: 1200px;
+    height: 70px;
+    border: none;
+}
+
+#category{
+    height: 30px;
+    border: 1px solid var(--border-color);
+    border-radius: 25px;
+    text-align: center;
+}
+
+#uploadVideo:hover{
+	background-color: var(--border-color) !important;
+    cursor: pointer;
+}
+
+#choicePic:hover{
+	background-color: var(--background-color) !important;
+    cursor: pointer;
+}
+
+.shorts-view {
+    height: 800px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+#loader {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shorts-content {
+    position: absolute;
+    width: 40%;
+    height: 100%;
+    border-radius: 25px;
+    overflow: hidden;
+    z-index: 2;
+    background-color: black;
+}
+
+.shorts-comment {
+    position: absolute;
+    z-index: 1;
+    width: 40%;
+    height: 100%;
+    border-radius: 25px;
+}
+
+.shorts-content video {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+}
+
+.text-overlay{
+    position: absolute;
+    bottom: 0; /* 영상의 맨 아래에 위치 */
+    right: 0; /* 영상의 오른쪽에 위치 */
+}
+
+.comment-button{
+    right: 50px;
+}
+
+.headerbar{
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    background-color: white;
+    height: 140px;
+}
+
+.profile-pic {
+    width: 50px; /* 원의 너비 */
+    height: 50px; /* 원의 높이 */
+    border-radius: 50%; /* 원형으로 만들기 */
+    overflow: hidden; /* 이미지가 원 밖으로 나가지 않도록 하기 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px; /* 오른쪽 여백 추가 */
+}
+
+.profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 원 안에 맞게 조정 */
+}
+
+.comment-container {
+    display: flex;
+    margin-bottom: 10px; /* 댓글 간의 여백 */
+}
+
+.comment-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* 텍스트를 수직 중앙 정렬 */
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 100%;
+    word-break: break-all;
+}
+
+.white-pont{
+    color: white;
+}
+
+.shorts-profile-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}

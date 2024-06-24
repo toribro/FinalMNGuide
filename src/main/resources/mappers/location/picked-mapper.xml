@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+  <mapper namespace="picked">
+  	
+	  <resultMap type="Picked" id="pickResult">
+			<result column="PICK_NO" property="pickNo"/>
+			<result column="USER_NO" property="userNo"/>
+			<result column="LOCATION_NO" property="locationNo"/>
+	 </resultMap>
+	
+		 <insert id="pickedInsert">
+		       INSERT INTO PICK VALUES(nextval('SEQ_PICK'),
+						       		  #{userNo}, 
+						       		  #{locationNo})
+		 </insert>
+		 
+		 <delete id="pickedDelete">
+		 		DELETE FROM PICK WHERE LOCATION_NO = #{locationNo} and USER_NO = #{userNo}
+		 </delete>
+	  
+	  
+		  <select id="pickedCount"  resultType="_int">
+		   	  SELECT COUNT(*) FROM PICK WHERE LOCATION_NO = #{locationNo}
+		  </select>
+		  
+		  <select id="pickedStatus" resultType="_int">
+		     SELECT COUNT(*) FROM PICK WHERE LOCATION_NO = #{locationNo} and USER_NO = #{userNo}
+		  </select>
+		  
+		  <select id="getPickList" resultMap="pickResult">
+		  	 SELECT PICK_NO,
+		  	 		LOCATION_NO
+		  	 FROM PICK
+		  	 WHERE USER_NO = #{userNo};
+		  </select>
+		  
+		  <select id="getPickCount" resultMap="pickResult">
+		  	 SELECT PICK_NO,
+		  	 		LOCATION_NO
+		  	 FROM PICK
+		  	 WHERE LOCATION_NO = #{locationNo};
+		  </select>
+ </mapper>

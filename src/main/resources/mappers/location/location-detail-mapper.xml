@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+   <mapper namespace="detail">
+  	
+    <resultMap type="DetailLocation" id="detailLocation">
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="LOCATION_NAME" property="locationName"/>
+		<result column="LOCATION_PHONE" property="locationPhone"/>
+		<result column="EXPLANATION" property="explanation"/>
+		<result column="LOCATION_STAR" property="locationStar"/>
+		<result column="RESERVATION_LINK" property="reservationLink"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="LOCATION_CATEGORY_NO" property="locationCategoryNo"/>
+		<result column="CATEGORY_NAME" property="categoryName"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_KIND" property="userKind"/>
+		
+   </resultMap>
+   
+   
+   <resultMap type="LocationOption" id="locationOption">
+        <result column="LOCATION_OPTION_NO" property="locationOptionNo"/>
+   		<result column="GOODS" property="goods"/>
+   		<result column="GOODS_PRICE" property="goodPrice"/>
+   		<result column="ROOM_INFO" property="roomInfo"/>
+   		<result column="ROOM_STATUS" property="roomStatus"/>
+   		<result column="CAPACITY" property="capacity"/>
+   </resultMap>
+   
+   
+   
+   <resultMap type="Attachment" id="locationAttachment">
+   		<result column="ORIGIN_NAME" property="originName"/>
+	   	<result column="CHANGE_NAME" property="changeName"/>
+	   	<result column="FILE_PATH" property="filePath"/>
+  </resultMap>
+   
+   
+   
+   <resultMap type="OperationTime" id="operationTime">
+         <result column="START_TIME" property="startTime"/>
+         <result column="END_TIME" property="endTime"/>
+         <result column="DAYS" property="day"/>
+         <result column="REST_STATUS" property="restStatus"/>
+   	</resultMap>
+   
+   
+   <resultMap type="PetKindGrade" id="petKindGrade">
+   			<result column="PET_SIZE_NAME" property="petSizeName"/>
+   </resultMap>
+   
+   <resultMap type="AddressInfo" id="addressInfo">
+   			<result column="ADDRESS" property="address"/>
+   			<result column="LOCATION_NAME" property="locationName"/>
+   </resultMap>
+   
+   
+ 
+ 	<!-- 장소상세 -->
+ 
+   <select id="selectDetailLocation" resultMap="detailLocation">
+	      		SELECT LOCATION_NO,
+	   				LOCATION_NAME,
+	   				LOCATION_PHONE,
+	   				EXPLANATION,
+	   				LOCATION_STAR,
+	   				RESERVATION_LINK,
+	   				ADDRESS,
+	   				L.LOCATION_CATEGORY_NO,
+	   				CATEGORY_NAME,
+	   				L.USER_NO,
+	   				M.USER_KIND
+	            FROM  LOCATION L 
+	            JOIN LOCATION_CATEGORY G
+	            ON (L.LOCATION_CATEGORY_NO=G.LOCATION_CATEGORY_NO)
+	            JOIN MEMBER M
+	            ON(M.USER_NO=L.USER_NO)
+	            WHERE LOCATION_NO = #{locationNo};
+    </select>
+    
+    <select id="selectLocationOptionList" resultMap="locationOption">
+    		SELECT 
+    			   LOCATION_OPTION_NO,
+    		       GOODS,
+    			   GOODS_PRICE,
+    			   ROOM_INFO,
+    			   ROOM_STATUS,
+    			   CAPACITY
+    			   FROM LOCATION_OPTION
+    			   WHERE LOCATION_NO = #{locationNo}
+   </select>
+   
+    <select id="selectOperationTimeList" resultMap="operationTime">
+    	  SELECT  
+    	          START_TIME,
+    	  		  END_TIME,
+    	  		  DAYS,
+    	  		  REST_STATUS
+    	  		  FROM OPERATION_TIME
+    	  		  WHERE LOCATION_NO =#{locationNo}
+    	  		
+    </select>
+    
+    
+    <select id="selectMainAttachMentList" resultMap="locationAttachment">
+    	 SELECT ORIGIN_NAME,
+    			   CHANGE_NAME,
+    			   FILE_PATH 
+    			   FROM PICTURE
+    			   WHERE LOCATION_NO = #{locationNo} AND  FILE_LEVEL = 1
+    </select>
+    
+        
+    <select id="selectDetailAttachMentList" resultMap="locationAttachment">
+    	 SELECT ORIGIN_NAME,
+    			   CHANGE_NAME,
+    			   FILE_PATH 
+    			   FROM PICTURE
+    			   WHERE LOCATION_NO = #{locationNo} AND  FILE_LEVEL = 2
+    </select>
+    
+    <select id="selectPetKindGradeList" resultMap="petKindGrade">
+          SELECT PET_SIZE_NAME
+          		 FROM PET_SIZE S
+          		 JOIN ENTER_GRADE G
+          		 ON(G.PET_SIZE_NO=S.PET_SIZE_NO)
+          		 WHERE G.LOCATION_NO = #{locationNo}
+    </select>
+    
+    <update id="updateLocationTotalScore">
+    
+    	UPDATE LOCATION SET LOCATION_STAR = #{score}
+    			WHERE LOCATION_NO = #{locationNo}
+    
+    </update>
+    
+    <select id="getAddress" resultMap="addressInfo">
+    	SELECT ADDRESS , LOCATION_NAME FROM LOCATION L
+    	JOIN LOCATION_CATEGORY C
+    	ON(L.LOCATION_CATEGORY_NO=C.LOCATION_CATEGORY_NO)
+    	 <choose>
+				<when test='type == "식당/카페"'>
+						 WHERE C.CATEGORY_NAME LIKE CONCAT('%','카페','%') 
+						 OR  C.CATEGORY_NAME LIKE CONCAT('%','식당','%')
+				</when>
+				
+				<when test='type == "숙소"'>
+					 WHERE C.CATEGORY_NAME LIKE CONCAT('%','숙소','%')
+				</when>
+				<when test='type == "행사/테마파크"'>
+					 WHERE C.CATEGORY_NAME LIKE CONCAT('%','행사','%')
+					 OR C.CATEGORY_NAME LIKE CONCAT('%','테마파크','%')
+				</when>
+				<when test='type == "병원"'>
+					 WHERE C.CATEGORY_NAME LIKE CONCAT('%','병원','%')
+				</when>
+				
+				<when test='type == "기타"'>
+					 WHERE 	C.CATEGORY_NAME LIKE CONCAT('%','기타','%')
+				</when>
+				
+		</choose>
+    	
+    </select>
+    
+    
+   </mapper>
+ 
+ 

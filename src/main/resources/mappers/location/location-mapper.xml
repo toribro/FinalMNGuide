@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="location">
+
+    <!-- Result Maps -->
+    <resultMap type="BossLocation" id="bossLocationResult">
+        <result column="LOCATION_NO" property="locationNo"/>
+        <result column="LOCATION_NAME" property="locationName"/>
+        <result column="LOCATION_PHONE" property="locationPhone"/>
+        <result column="LOCATION_STAR" property="locationStar"/>
+        <result column="CATEGORY_NAME" property="locationCategoryNo"/>
+        <result column="RESERVATION_LINK" property="reservationLink"/>
+        <result column="BUSINESS_NO" property="businessNo"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="ENROLL_DATE" property="enrollDate"/>
+        <result column="EXPLANATION" property="explanation"/>
+        <result column="MODIFY_DATE" property="modifyDate"/>
+        <result column="STATUS" property="status"/>
+        <result column="USER_NO" property="userNo"/>
+    </resultMap>
+
+    <resultMap type="BossLocationOption" id="bosslocationOption">
+        <result column="LOCATION_OPTION_NO" property="locationOptionNo"/>
+        <result column="GOODS" property="goods"/>
+        <result column="GOODS_PRICE" property="goodPrice"/>
+        <result column="ROOM_INFO" property="roomInfo"/>
+        <result column="ROOM_STATUS" property="roomStatus"/>
+        <result column="CAPACITY" property="capacity"/>
+        <result column="LOCATION_NO" property="locationNo"/>
+    </resultMap>
+
+    <resultMap type="LocationOperationTime" id="locationOperationTime">
+        <result column="OPERATION_NO" property="operationNo"/>
+        <result column="START_TIME" property="startTime"/>
+        <result column="END_TIME" property="endTime"/>
+        <result column="DAYS" property="day"/>
+        <result column="REST_STATUS" property="restStatus"/>
+        <result column="LOCATION_NO" property="locationNo"/>
+    </resultMap>
+
+    <resultMap type="LocationPetKind" id="locationPetKind">
+        <result column="PET_KIND_NO" property="petKindNo"/>
+        <result column="PET_KIND_NAME" property="petKindName"/>
+    </resultMap>
+
+    <resultMap type="LocationPetSize" id="locationPetSize">
+        <result column="PET_SIZE_NO" property="petSizeNo"/>
+        <result column="PET_SIZE_NAME" property="petSizeName"/>
+        <result column="PET_KIND_NO" property="petKindNo"/>
+    </resultMap>
+
+    <resultMap type="LocationEnterGrade" id="locationEnterGrade">
+        <result column="ENTER_NO" property="enterNo"/>
+        <result column="LOCATION_NO" property="locationNo"/>
+        <result column="PET_SIZE_NO" property="petSizeNo"/>
+        <result column="PET_SIZE_NAME" property="petSizeName"/>
+    </resultMap>
+    
+    <resultMap type="LocationPicture" id="locationPicture">
+    	
+    </resultMap>
+
+    <!-- SQL Queries -->
+    <select id="getLocation" resultMap="bossLocationResult">
+        SELECT LOCATION_NO,
+               LOCATION_NAME,
+               LOCATION_PHONE,
+               CATEGORY_NAME,
+               LOCATION_STAR,
+               RESERVATION_LINK,
+               BUSINESS_NO,
+               ADDRESS,
+               ENROLL_DATE,
+               EXPLANATION,
+               MODIFY_DATE
+        FROM LOCATION L
+        JOIN LOCATION_CATEGORY C 
+        ON (L.LOCATION_CATEGORY_NO = C.LOCATION_CATEGORY_NO)
+        WHERE L.USER_NO = #{userNo}
+    </select>
+
+    <select id="getLocationOption" resultMap="bosslocationOption">
+        SELECT LOCATION_OPTION_NO,
+               LOCATION_NO,
+               GOODS,
+               GOODS_PRICE,
+               ROOM_INFO,
+               ROOM_STATUS,
+               CAPACITY
+        FROM LOCATION_OPTION O
+        JOIN LOCATION L 
+        ON (O.LOCATION_NO = L.LOCATION_NO)
+        WHERE L.USER_NO = #{userNo}
+    </select>
+
+    <insert id="insertLocation" parameterType="BossLocation">
+        INSERT INTO LOCATION
+            (LOCATION_NO, 
+             LOCATION_NAME, 
+             LOCATION_PHONE, 
+             EXPLANATION, 
+             BUSINESS_NO, 
+             ADDRESS, 
+             USER_NO, 
+             LOCATION_CATEGORY_NO)
+        VALUES
+            (NEXTVAL('SEQ_LOC'), 
+             #{locationName}, 
+             #{locationPhone}, 
+             #{explanation}, 
+             #{businessNo}, 
+             #{address}, 
+             #{userNo}, 
+             CAST(#{locationCategoryNo} AS INTEGER))
+    </insert>
+
+    <update id="updateLocation" parameterType="BossLocation">
+        UPDATE LOCATION
+        SET LOCATION_PHONE = #{locationPhone},
+            EXPLANATION = #{explanation},
+            RESERVATION_LINK = #{reservationLink}
+        WHERE STATUS = true
+          AND USER_NO = #{userNo}
+    </update>
+
+    <select id="getOperationTimes" resultMap="locationOperationTime">
+        SELECT OPERATION_NO,
+               START_TIME,
+               END_TIME,
+               DAYS,
+               REST_STATUS,
+               LOCATION_NO
+        FROM OPERATION_TIME
+        WHERE LOCATION_NO = #{locationNo}
+    </select>
+
+    <insert id="insertOperationTime" parameterType="LocationOperationTime">
+        INSERT INTO OPERATION_TIME (OPERATION_NO, LOCATION_NO, DAYS, START_TIME, END_TIME, REST_STATUS)
+        VALUES (NEXTVAL('seq_oper'), #{locationNo}, #{day}, #{startTime}, #{endTime}, #{restStatus})
+    </insert>
+
+    <update id="updateOperationTime" parameterType="LocationOperationTime">
+        UPDATE OPERATION_TIME
+        SET START_TIME = #{startTime},
+            END_TIME = #{endTime},
+            REST_STATUS = #{restStatus}
+        WHERE LOCATION_NO = #{locationNo} AND DAYS = #{day}
+    </update>
+
+    <delete id="deleteOperationTimes" parameterType="int">
+        DELETE FROM OPERATION_TIME 
+        WHERE LOCATION_NO = #{locationNo}
+    </delete>
+
+    <delete id="deletePetSizesByLocation" parameterType="int">
+        DELETE FROM ENTER_GRADE 
+        WHERE LOCATION_NO = #{locationNo}
+    </delete>
+    
+    <select id="getPetSizeByName" parameterType="string" resultMap="locationPetSize">
+        SELECT PET_SIZE_NO, PET_SIZE_NAME
+        FROM PET_SIZE
+        WHERE PET_SIZE_NAME = #{petSizeName}
+    </select>
+    
+    <insert id="insertPetKind" parameterType="map">
+        INSERT INTO PET_KIND (PET_KIND_NO, PET_KIND_NAME)
+        VALUES (NEXTVAL('seq_pki'), #{petKind})
+    </insert>
+    
+    <insert id="insertPetSize" parameterType="map">
+        INSERT INTO PET_SIZE (PET_SIZE_NO, PET_SIZE_NAME)
+        VALUES (NEXTVAL('seq_ps'), #{petSize})
+    </insert>
+
+    <select id="getPetSizes" parameterType="int" resultType="string">
+        SELECT PET_SIZE_NAME
+        FROM PET_SIZE
+        WHERE LOCATION_NO = #{locationNo}
+    </select>
+
+    <insert id="insertLocationEnterGrade" parameterType="LocationEnterGrade">
+        INSERT INTO ENTER_GRADE (ENTER_NO, LOCATION_NO, PET_SIZE_NO)
+        VALUES (NEXTVAL('seq_ent'), #{locationNo}, #{petSizeNo})
+    </insert>
+
+    <select id="getLocationEnterGrades" parameterType="int" resultMap="locationEnterGrade">
+        SELECT ENTER_NO, LOCATION_NO, PET_SIZE_NO
+        FROM ENTER_GRADE
+        WHERE LOCATION_NO = #{locationNo}
+    </select>
+    
+    <select id="getPetKindSizesAndGradesByLocation" parameterType="int" resultType="map">
+        SELECT pk.PET_KIND_NAME,
+               ps.PET_SIZE_NAME,
+               leg.PET_SIZE_NO
+        FROM LOCATION_ENTER_GRADE leg
+        JOIN PET_SIZE ps ON leg.PET_SIZE_NO = ps.PET_SIZE_NO
+        JOIN PET_KIND pk ON ps.PET_KIND_NO = pk.PET_KIND_NO
+        WHERE leg.LOCATION_NO = #{locationNo}
+    </select>
+    
+    <select id="getLocationList" resultMap="bossLocationResult">
+        SELECT LOCATION_NO,
+               LOCATION_NAME,
+               LOCATION_PHONE,
+               CATEGORY_NAME,
+               LOCATION_STAR,
+               RESERVATION_LINK,
+               BUSINESS_NO,
+               ADDRESS,
+               ENROLL_DATE,
+               EXPLANATION,
+               MODIFY_DATE
+        FROM LOCATION L
+        JOIN LOCATION_CATEGORY C
+        ON (L.LOCATION_CATEGORY_NO = C.LOCATION_CATEGORY_NO)
+    </select>
+    
+    <!-- Insert Picture -->
+	<insert id="insertPicture" parameterType="LocationPicture">
+	    INSERT INTO PICTURE (PIC_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, FILE_LEVEL, LOCATION_NO)
+	    VALUES (NEXTVAL('seq_pic'), #{originName}, #{changeName}, #{filePath}, #{fileLevel}, #{locationNo})
+	</insert>
+
+
+    <!-- Select Pictures By Location -->
+    <select id="getPicturesByLocation" parameterType="int" resultType="LocationPicture">
+        SELECT PIC_NO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, FILE_LEVEL, LOCATION_NO
+        FROM PICTURE
+        WHERE LOCATION_NO = #{locationNo}
+    </select>
+    
+    <delete id="deletePicturesByLocation" parameterType="int">
+	    DELETE FROM PICTURE WHERE LOCATION_NO = #{locationNo}
+	</delete>
+    
+    <select id="getEnterList" resultMap="locationEnterGrade">
+    	SELECT ENTER_NO,
+    		   LOCATION_NO,
+    		   E.PET_SIZE_NO,
+    		   P.PET_SIZE_NAME
+    	FROM ENTER_GRADE E
+    	JOIN PET_SIZE P
+    	ON (E.PET_SIZE_NO = P.PET_SIZE_NO)
+    	WHERE LOCATION_NO = #{locationNo}
+    </select>
+    
+    <insert id="insertProduct" parameterType="BossLocationOption">
+	    INSERT INTO LOCATION_OPTION (LOCATION_OPTION_NO, LOCATION_NO, GOODS, GOODS_PRICE)
+	    VALUES (NEXTVAL('SEQ_LOPT'), #{locationNo}, #{goods}, #{goodPrice})
+	</insert>
+</mapper>

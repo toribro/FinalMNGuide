@@ -1,0 +1,202 @@
+
+/*가상선택자를 이용한 css 변수 선언*/
+:root {
+	/*font설정*/
+    --font-family: Noto Sans KR, sans-serif;
+
+	--font-Gugi:  Gugi, sans-serif;
+    
+    /*메인컬러(포인트)핑크*/
+    --main-color:#FE8B94;
+
+    /*서브컬러 (색칠 밑바탕)옅은 노랑*/
+    --serve-color:#FFF9F5;
+    
+    /*테두리  찐한회색*/
+    --border-color:#BABABA;
+    
+    /*색칠 밑바탕  밝은회색*/
+    --background-color:#EFEFEF;
+
+	/*하얀색*/
+	--white-color:#FFFFFF;
+    
+    /*공통 넓이*/
+    --wrapper-width:1920px;
+    --main-width:1280px;
+    
+	/*공통 테두리*/
+	--outer-border-radius:10px;
+	--inner-border-radius:15px;
+}
+
+*,
+*::before, *::after {
+	box-sizing: border-box;
+	/*font-optical-sizing: auto;
+	font-weight: weight;
+	font-style: normal;*/
+	outline: none;
+	resize: none;
+	text-decoration:none;
+	font-family:var(--font-family);
+	margin: 0;
+	padding: 0;
+}
+
+/*태그 스타일 적용*/
+ol,ul,li{
+	list-style:none
+}
+
+/*공통 영역 적용*/
+
+/*전체 큰틀*/
+.wrapper {
+	width: var(--wrapper-width);
+	margin:30px auto;
+	/* white-space: nowrap; */
+}
+
+/*main태그 */
+.main{
+	/*width:calc(100% - 600px);*/
+	width: var(--main-width);
+	margin:0 auto;
+	/* white-space: nowrap; */
+	
+}
+
+/*----------------------*/
+
+
+/*구글 폰트*/
+.gugi-regular {
+	font-family: var(--font-Gugi);
+	font-weight: 400;
+	font-size:50px;
+	color:#FE8B94;
+}
+
+/*font-awesome*/
+.fa-brands {
+	font-family: 'Font Awesome 5 Brands';
+	font-style: normal;
+}
+
+/*------------버튼-----------------*/
+
+/*버튼 공통 디자인*/
+
+.common-button{
+	padding: 10px 20px; 
+	font-size: 16px;
+	font-weight: bold; 
+	cursor: pointer; 
+	text-align: center;
+	display: inline-block; 
+	border: solid 1px var(--border-color); 
+}
+
+/*상세 버튼들*/
+
+/*예약하기,리뷰작성,댓글등록 버튼 (핑크)*/
+
+.pink-button {
+	background-color:var(--main-color);
+	color:#FFFFFF;
+	border-radius: 50px;
+}
+
+/*더보기 ,정렬기준버튼(하얀색)*/
+.white-button {
+	background-color:var(--white-color);
+	color: black;
+	border-radius: 50px;
+}
+
+/*찜목록 버튼*/
+.picked-button {
+	background-color:var(--white-color);
+	color: black;
+	border-radius: 15px;	
+}
+
+/*카테고리 버튼*/
+.category-button {
+	background-color:var(--white-color);
+	color: var(--main-color);
+	border: solid 1px var(--main-color); 
+	border-radius: 15px;
+}
+
+/*-----------------------------*/
+
+/*버튼 효과주기*/
+
+.pink-button:hover{
+	background-color: #ff5c70; /* 마우스를 올릴 때 약간 어두운 핑크색 */
+}
+.category-button:hover{
+	background-color: #dba8a8;
+}
+
+.white-button:hover,
+.picked-button:hover{
+	background-color:#cfcfcf;
+}
+
+/*--------------------*/
+
+/*기타 공통 css*/
+.flex-box{
+	display: flex;
+	align-items:center;
+	justify-content:center;
+}
+
+.tmp-box{
+	border:solid 1px black;
+	
+}
+
+.row-box{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+.col-box{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.right-box{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+/*페이징 처리 공통 css*/
+.page-div{
+    display:flex;
+    justify-content: center;
+    gap:20px;
+    padding:10px;
+   
+}
+
+.page-disabled{
+	display:none;
+}
+
+.page-button{
+    color:var(--main-color);
+	cursor: pointer;
+}
+.page-link{
+	cursor: pointer;
+}

@@ -1,0 +1,312 @@
+
+
+.bossmainpage{
+    width: 100%;
+    height: auto;
+    padding-left: 20%;
+    padding-right: 20%;
+    display: flex;
+    
+    }
+    
+    
+    /*사업자 메뉴바*/
+    #bossmanubar div{
+        border: 1px solid #BABABA ;
+        height: 53px;
+        width: 207px;
+        padding-top: 15px;
+        font-size: 15px;
+    }
+    .chatlist{
+        margin-top: 12px;
+        border-radius: 15px;
+    }
+    
+    
+    /*사업자 정보*/
+    .privacy-page {
+        border: 1px solid #BABABA;
+        width: 653px;
+        height: auto;
+        margin-left: 5%;
+        border-radius: 15px;
+        text-align: center;
+    }
+
+    .title {
+        height: 70px;
+        background: #EFEFEF;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        font-weight: 700;
+        font-size: 21px;
+        line-height: 70px;
+        border-bottom: 1px solid #BABABA;
+        
+    }
+
+    #reviews {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #reviewsProfile {
+        width: 35px;
+        height: 35px;
+        float: left;
+    }
+
+    #top1 button{
+        width: 100px;
+        height: 35px;
+        margin-right: 20px;
+        border: 1px solid #BABABA;
+        border-radius: 15px;
+        background-color: #FE8B94;
+        color: white;
+        
+        
+    }
+
+    #mid {
+        margin-top: 20px;
+        margin-left: 20px;
+    }
+
+    #mid img {
+        width: 150px;
+        height: 150px;
+        float: left;
+        margin-right: 20px;
+    }
+
+    #bottom {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    
+    #reply {
+        display: none;
+    }
+
+    #replyArea {
+        resize: none;
+        width: 502px;
+        height: 114px;
+        float: left;
+        border: 1px solid #bababa;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    #replySubmit {
+        width: 91px;
+        height: 114px;
+        border: 1px solid #bababa;
+        background-color: #FE8B94;
+        color: white;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 15px;
+    }
+
+    #modal-background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* 검은색 배경에 투명도 조절 */
+        z-index: 1; /* 모달보다 앞에 위치 */
+        display: none; /* 처음에는 안 보이도록 설정 */
+      }
+      
+      #modal-visible {
+        display: block; /* 모달이 보일 때 배경을 보이게 함 */
+      }
+
+    #modal {
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border-radius: 15px;
+    }
+
+    #modal-body {
+        width: 653px;
+        height: auto;
+        border: 1px solid #BABABA;
+        border-radius: 15px;
+    }
+    
+    #modal-body-top {
+        width: 100%;
+        height: 53px;
+        border-bottom: 1px solid #BABABA;
+        font-size: 15px;
+        font-weight: bold;
+        line-height: 53px;
+        text-align: center;
+    }
+
+    #cancelButton {
+        width: 25px;
+        height: 25px;
+        margin-top: 10px;
+        margin-right: 0px;
+        float: right;
+        line-height: 20px;
+        border: 3px solid #bababa;
+        font-size: 20px;
+        font-weight: bold;
+        color: #BABABA;
+        text-align: center;
+    }
+    
+    #modal-body-mid {
+        width: 100%;
+        height: auto;
+        font-size: 15px;
+    }
+
+    #coupon-table-title {
+        width: 100%;
+        height: 53px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        border-bottom: 1px solid #BABABA;
+        line-height: 53px;
+        
+    }
+
+    #coupon-title {
+        width: 44%;
+        height: 100%;
+        text-align: right;
+        padding-right: 70px;
+    }
+
+    #coupon-expiration {
+        width: 14%;
+        height: 100%;
+    }
+
+    #coupon-count {
+        width: 14%;
+        height: 100%;
+    }
+
+    #coupon-admin {
+        width: 28%;
+        height: 100%;
+    }
+
+    #coupon-table-content {
+        width: 100%;
+        height: 85px;
+        display: flex;
+        border-bottom: 1px solid #BABABA;
+        line-height: 85px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    #checkbox {
+        width: 16px;
+        height: 16px;
+        float: left;
+        margin-right: 30px;
+    }
+
+    #content-title {
+        width: 200px;
+        font-size: 15px;
+    }
+
+    #content-expiration {
+        width: 37px;
+        font-size: 15px;
+        margin-left: 35px;
+        margin-right: 55px;
+    }
+
+    #coupon-table-content button{
+        width: 35px;
+        height: 35px;
+        margin-top: 25px;
+        border: 1px solid #bababa;
+        border-radius: 100%;
+        background-color: white;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    #modal-body-end {
+        width: 100%;
+        height: 85px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    #modal-body-end button {
+        width: 237px;
+        height: 41px;
+        border: 1px solid #bababa;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 15px;
+    }
+    #rpple-complete{
+        display: flex;
+        padding: 20px;
+        
+        
+    }
+    .rpple-date{
+        resize: none;
+        width: 502px;
+        height: 114px;
+        margin-right: auto;
+        border: 1px solid #bababa;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        padding: 20px;
+        background: #EFEFEF;
+        text-align: left;
+    }
+    .rpple-removal{
+        width: 94px;
+        height: 114px;
+        border: 1px solid #bababa;
+        background: #FE8B94;
+        border-radius: 15px;
+        text-align: center;
+        color: white;
+        font-weight: 700;
+    }
+    
+    .complete-message{
+        width: 100px;
+        height: 35px;
+        margin-right: 20px;
+        border: 1px solid #BABABA;
+        border-radius: 15px;
+        background-color: #bababa;
+        color: white;
+        
+    }
+    
+    #content-admin{
+        width: 30px;
+        text-align: center;
+    }

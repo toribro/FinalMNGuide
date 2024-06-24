@@ -1,0 +1,181 @@
+#location-details {
+  padding: 50px;
+}
+#location-details p{
+  text-align: left;
+  font-weight: 500;
+  margin-top: 15px;
+  margin-bottom: 2px;
+}
+.location-category, .locationName{
+  width: 100%;
+  height: 40px;
+  border-radius: 15px;
+  padding-left: 20px;
+  padding-top: 7px;
+  text-align: left;
+  border: 1px solid #BABABA;
+  background: #EFEFEF;
+}
+input{
+  width: 100%;
+  height: 40px;
+  border-radius: 15px;
+  padding-left: 20px;
+  text-align: left;
+  border: 1px solid #BABABA;
+  background: #EFEFEF;
+}
+
+/*운영시간*/
+#operating {
+  display: flex;
+  flex-direction: column;
+}
+.operating-hours {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0%;
+}
+.operating-hours p{
+  margin-right: 14px;
+  font-weight: 600;
+}
+.operating-hours input{
+  width: 16px;
+  height: 16px;
+  margin-top: 16px;
+  margin-right: 10px;
+  margin-left: -11px
+}
+.operating-hours select{
+  width: 35%;
+  height: 40px;
+  border-radius: 15px;
+  padding-left: 20px;
+  border: 1px solid #BABABA;
+  margin-left: 24px;
+  margin-top: 3%;
+}
+
+/*상세 설명*/
+#storeinfo textarea{
+  padding: 20px;
+  width: 100%;
+  height: 189px;
+  resize: none;
+  text-align: left;
+  border: 1px solid #BABABA;
+  border-radius: 15px;
+}
+
+/*동물종류 선택*/
+#animal-check{
+  display: flex;
+  margin-top: -10px;
+}
+#animal-check input[type="checkbox"]{
+  width: 16px;
+  height: 16px;
+  margin-top: 21px;
+  margin-right: 30px;
+  margin-left: 5px;
+}
+
+/*예약링크*/
+#reservation-link input[type="text"]{
+  background: white;
+}
+
+/*업체 사진등록*/
+#photo-registration{
+  text-align: left;
+  display: flex;
+  gap: 10px;
+}
+#photo-registration img{
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.registration-upload {
+  width: 117px;
+  height: 117px;
+  background: white;
+  border: 1px solid #BABABA;
+  border-radius: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.registration-upload img {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.registration-upload:hover {
+  background: #b1b0b0;
+  color: white;
+}
+
+.company-file[type="file"] {
+  display: none;
+}
+
+/*상품추가 / 제거*/
+.product-registration{
+  text-align: left;
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.product-name{
+  width: 292px;
+  height: 40px;
+  background: white;
+  margin-right: 10px;
+}
+.commodity-price{
+  width: 197px;
+  height: 40px;
+  background: white;
+  margin-right: 10px;
+}
+.delete-product{
+  width: 40px;
+  height: 40px;
+  border: 1px solid #BABABA;
+  border-radius: 15px;
+  background: #EFEFEF;
+}
+#add-product{
+  width: 100%;
+  height: 40px;
+  border: 1px solid #BABABA;
+  background: #EFEFEF;
+  border-radius: 15px;
+}
+.add-productimg{
+  width: 28px;
+  height: 28px;
+}
+
+/*장소정보 업로드*/
+#upload-location{
+  margin-top: 30px;
+}
+
+.upload-bt{
+  width: 100%;
+  height: 40px;
+  border-radius: 15px;
+  background: #FE8B94;
+  border: 1px solid #BABABA;
+  color: white;
+  font-weight: 700;
+}
