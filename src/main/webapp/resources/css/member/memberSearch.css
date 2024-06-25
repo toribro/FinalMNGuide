@@ -1,0 +1,45 @@
+*{
+    text-align: center;
+    /* border: 1px solid rgb(208, 240, 253); */
+}
+
+#check-number{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+#check-number>input{
+    width: 65%;
+    margin-bottom: 10px;
+}
+
+#check-number>button{
+    height: 60px;
+}
+
+#check-number>div{
+    color: red;
+    font-weight: 500;
+    position: absolute;
+    right: 190px;
+    top: 17px;
+}
+
+#plus-time{
+    text-align: right;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#plus-time:hover{
+    color: var(--main-color);
+}
+
+/* #enroll-button{
+    color: var(--border-color);
+    background-color: inherit;
+    cursor: inherit;
+} */

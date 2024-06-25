@@ -1,0 +1,139 @@
+/*객실 정보 관련*/
+.detail-main .room .room-section{
+
+	width:100%;
+	display:grid;
+	grid-template-rows: repeat(1, 50px);
+	border:solid 1px var(--border-color);
+	column-gap: 50px;
+	margin-bottom: 30px;
+	padding:30px;
+    white-space: initial;/*영역 넘어가면 자동 줄바꿈*/
+    border-radius:var(--outer-border-radius)
+
+}
+.detail-main .room .room-information{
+    display: flex;
+    justify-content: center;
+    gap:10px;
+}
+
+
+/* .detail-main .room .room-information .img-div{
+    width:700px;
+    height:400px;
+    margin:20px;
+} */
+
+.detail-main .room .room-information .img-space{
+	width:80%;
+	height:330px;
+	text-align: center;
+    display:flex;
+    justify-content: space-around;
+	
+}
+
+.detail-main  .room .room-information .img-space> .img-div{
+	width:250px;
+	height:100%;
+	border-radius:var(--inner-border-radius);
+	cursor: pointer;
+}
+
+.detail-main .room .room-information .img-div>img{
+    width:100%;
+    height:100%;
+    border-radius: var(--inner-border-radius);
+}
+
+.detail-main  .room .room-information .room-info {
+    padding:0px;
+}
+
+
+.detail-main  .room .room-information .room-info div{
+    text-align: left;
+    margin:20px;
+}
+
+.detail-main  .room .room-information .room-info .detail-show{
+    float:right;
+}
+
+
+/*모달 창!*/
+/* Modal container */
+.detail-main .modal-content {
+    text-align: center;
+    background-color: #fefefe;
+    /* margin: auto; */
+    border: 1px solid #888;
+    /* width: 100%; */
+    width: 653px;;
+    height:auto;
+    padding:10px;
+
+}
+
+.detail-main .room-modal{
+     text-align: center;
+     width:100%;
+     height:100%;
+     white-space: initial;
+}
+
+.detail-main .room-modal >.title{
+    width:100%;
+    height:50px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: solid 1px var(--background-color); 
+    border-radius: var(--inner-border-radius);
+    background-color: var(--background-color);
+    margin-left:5px;
+    padding:10px;
+}
+
+.detail-main .room-modal .img-modal-div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    gap:3px;    
+
+}
+.detail-main  .room-modal .img-modal-div .img-modal{
+    width:181px;
+    height:181px;
+    padding:10px;
+}
+
+.detail-main  .room-modal .img-modal-div .img-modal  img{
+    width:100%;
+    height:100%;
+    border-radius: var(--inner-border-radius);
+}
+
+.detail-main .room-modal table{
+    width: 500px;
+    height:500px;
+}
+
+.detail-main .room-modal tr{
+    width:100%;
+    text-align: left;
+}
+
+.detail-main .room-modal tr td{
+    text-align: left;
+    width:70%;
+   
+}
+
+.detail-main .room-modal  tr th{
+    width:20%;
+   
+}
+
+
+

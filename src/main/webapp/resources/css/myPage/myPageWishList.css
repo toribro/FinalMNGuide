@@ -1,0 +1,439 @@
+/*전체 div 큰 틀*/
+.main_wrapper {
+	width: 100%;
+	margin:0 auto;
+}
+
+/*main태그 */
+.main_main {
+	width: 1280px;
+	margin:0 auto;
+	display: flex;
+    margin-top: 50px;
+}
+
+/*footer태그*/
+.main_footer {
+	width: 100%;
+	margin: 0 auto;
+}
+
+/*GoogleFont*/
+/*로고 글씨체*/
+.gugi-regular {
+	font-family: "Gugi", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+#left {
+    width: 30%;
+    padding-left: 70px;
+    margin-left: 40px;
+}
+
+#right {
+    width: 70%;
+    padding-right: 0px;
+    margin-right: 70px;
+}
+
+#main_main_left {
+    width: 240px;
+    float: right;
+    margin-right: 40px;
+}
+
+#main_main_left1 {
+    width: 100%;
+    height: 320px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#camera {
+    float: right;
+    margin-right: 20px;
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#profile {
+    border: 1px solid #bababa;
+    border-radius: 100px;
+    width: 140px;
+    height: 140px;
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    background-size: 140px;
+    border-style: none;
+}
+
+#nickName {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#solidMain {
+    border-bottom: 1px solid #bababa;
+    width: 80%;
+    margin: 0 auto;
+}
+
+#pets {
+    margin-top: 20px;
+    font-size: 15px;
+    margin-bottom: 0px;
+}
+
+#petProfileName {
+    font-size: 18px;
+    color: #FE8B94;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+#main_main_left2 {
+    margin-top: 20px;
+    width: 100%;
+    height: 300px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+}
+
+#main_main_left2 div {
+    border-bottom: 1px solid #bababa;
+    width: 100%;
+    height: 50px;
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* 높이와 동일하게 */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left2 div:hover {
+    color: #FE8B94;
+}
+
+#wishList {
+    color: #FE8B94;
+}
+
+#main_main_left3 {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+    justify-content: center;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#chatting {
+    font-size: 15px;
+    display: flex;
+    justify-content: center;
+    line-height: 50px; /* 높이와 동일하게 */
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#main_main_left3 div:hover {
+    color: #FE8B94;
+}
+
+#main_main_right {
+    width: 820px;
+    height: auto;
+    border: 1px solid #bababa;
+    border-radius: 15px;
+}
+
+#right1 {
+    width: 100%;
+    height: 60px;
+    font-size: 21px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    line-height: 60px; /* 높이와 동일하게 */
+    background-color: #FFF9F5;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom: 1px solid #bababa;
+}
+
+#right2 {
+    width: 90%;
+    height: 320px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#right2-left {
+    width: 35%;
+    height: 80%;
+    justify-content: center;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+#cafe {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+}
+
+#rigth2-right {
+    height: 80%;
+    width: 65%;
+}
+
+#rigth2-right1 {
+    height: 60%;
+    width: 100%;
+}
+
+#top {
+    display: flex;
+}
+
+#title {
+    font-size: 23px;
+    color: #FE8B94;
+    font-weight: bold;
+    margin-right: 70px;
+    float: left;
+}
+
+.wishIcon {
+    font-size: 23px;
+    font-weight: bold;
+    margin-right: 10px;
+    cursor: pointer;
+    float: left;
+}
+
+#count {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+#category {
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+
+#category1 {
+    margin-right: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    float: left;
+}
+
+#category2 {
+    font-size: 17px;
+    float: left;
+}
+
+#score {
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+
+#score1 {
+    margin-right: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    float: left;
+}
+
+#score2 {
+    font-size: 17px;
+    float: left;
+    margin-right: 20px;
+}
+
+#score3 {
+    font-size: 17px;
+    float: left;
+    color: #FE8B94;
+}
+
+#type {
+    width: 100%;
+    margin-top: 10px;
+    float: left;
+}
+
+#type1 {
+    margin-right: 20px;
+    font-size: 17px;
+    font-weight: bold;
+    float: left;
+}
+
+#type2 {
+    font-size: 17px;
+    float: left;
+}
+
+#solid {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+}
+
+#solid2 {
+    border-bottom: 1px solid #bababa;
+    width: 95%;
+    margin: 0 auto;
+    float: left;
+}
+
+#rigth2-right2 {
+    height: 40%;
+    width: 100%;
+}
+
+#address {
+    width: 100%;
+    float: left;
+    margin-top: 20px;
+}
+
+#address1 {
+    float: left;
+    width: 14px;
+    height: 14px;
+    margin-right: 17px;
+}
+
+#address2 {
+    float: left;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+#phone {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+}
+
+#phone1 {
+    float: left;
+    width: 14px;
+    height: 14px;
+    margin-right: 17px;
+}
+
+#phone2 {
+    float: left;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+#time {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+}
+
+#time1 {
+    float: left;
+    width: 14px;
+    height: 14px;
+    margin-right: 17px;
+}
+
+#time2 {
+    float: left;
+    font-size: 14px;
+    line-height: 14px;
+    margin-right: 17px;
+    color: aquamarine;
+}
+
+#time3 {
+    float: left;
+    font-size: 14px;
+    line-height: 14px;
+    margin-right: 17px;
+}
+
+#time4 {
+    float: left;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+#right3 {
+    width: 90%;
+    height: 320px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#right4 {
+    width: 90%;
+    height: 320px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#right5 {
+    width: 90%;
+    height: 320px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#right6 {
+    width: 90%;
+    height: 320px;
+    border: 1px solid #bababa;
+    margin: 0 auto;
+    margin-top: 40px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+}
+
+#right7 {
+    height: 80px;
+    margin-bottom: 30px;
+}
+

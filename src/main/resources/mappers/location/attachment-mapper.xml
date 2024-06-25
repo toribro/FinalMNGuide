@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+   <mapper namespace="attachment">
+  	  <resultMap type="DetailLocationAttachment" id="detailAttachMent">
+  	  		<result column = "ORIGIN_NAME" property="originName"/>
+  	  		<result column = "CHANGE_NAME" property="changeName"/>
+  	  		<result column = "FILE_PATH" property="filePath"/>
+  	  </resultMap>
+   
+   	  <select id="selectMainAttachment" resultMap="detailAttachMent">
+   	  		SELECT
+   	  			   ORIGIN_NAME,
+   	  			   CHANGE_NAME,
+   	  			   FILE_PATH
+   	  			   FROM PICTURE 
+   	  			   WHERE FILE_LEVEL = 1 and LOCATION_NO = #{space_no}
+   	  </select>
+   	  
+   	  <select id="selectdetailAttachment" resultMap="detailAttachMent">
+   	  		SELECT
+   	  			   ORIGIN_NAME,
+   	  			   CHANGE_NAME,
+   	  			   FILE_PATH
+   	  			   FROM PICTURE 
+   	  			   WHERE FILE_LEVEL = 2  and LOCATION_NO = #{space_no}
+   	  </select>
+ 	
+ 	  <insert id="insertPic">
+ 	  		INSERT INTO PICTURE (
+ 	  			PIC_NO,
+ 	  			ORIGIN_NAME,
+ 	  			CHANGE_NAME,
+ 	  			FILE_PATH,
+ 	  			FILE_LEVEL,
+ 	  			USER_NO,
+ 	  			PET_NO
+ 	  			)
+ 	  			VALUES (
+ 	  			NEXTVAL('SEQ_PIC'),
+ 	  			#{originName},
+ 	  			#{changeName},
+ 	  			#{filePath},
+ 	  			default,
+ 	  			#{userNo},
+ 	  			#{petNo}
+ 	  			)
+ 	  </insert>
+ 	 
+
+ 	</mapper>
+ 
+ 

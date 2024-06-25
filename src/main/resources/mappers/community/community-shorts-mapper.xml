@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="communityShortsMapper">
+	  <resultMap type="Shorts" id="selectShorts">
+	  	 <result column="SHORTS_NO" property="shortsNo"></result>
+	  	 <result column="SHORTS_CONTENT" property="shortsContent"></result>
+	  	 <result column="COUNT" property="count"></result>
+	  	 <result column="ENROLL_DATE" property="enrollDate"></result>
+	  	 <result column="MODIFY_DATE" property="modifyDate"></result>
+	  	 <result column="STATUS" property="status"></result>
+	  	 <result column="USER_NICKNAME" property="userNo"></result>
+	  </resultMap>
+	  
+	   <resultMap type="Attachment" id="shortsAttachment">
+	   		<result column="ORIGIN_NAME" property="originName"></result>
+	   		<result column="CHANGE_NAME" property="changeName"></result>
+	   		<result column="FILE_PATH" property="filePath"></result>
+	   </resultMap>
+  
+  	<select id="communityShortsSelectList" resultMap="selectShorts">
+  	      SELECT 
+  	          SHORTS_NO,
+  	          SHORTS_CONTENT,
+  	          S.COUNT,
+  	          S.ENROLL_DATE,
+  	          S.MODIFY_DATE,
+  	          S.STATUS,
+  	          USER_NICKNAME
+  	          FROM SHORTS S
+  	          JOIN MEMBER M
+  	          ON (S.USER_NO = M.USER_NO)
+  	          WHERE S.STATUS = TRUE
+  	          ORDER BY S.ENROLL_DATE DESC
+  	</select>
+  	
+  	
+  	<select id="selectOneShortAttachment" resultMap="shortsAttachment">
+  	 
+  		        SELECT
+					ORIGIN_NAME,
+					CHANGE_NAME,
+					FILE_PATH
+					FROM PICTURE
+		         WHERE SHORTS_NO = #{shortNo}
+		        AND FILE_LEVEL = 1
+	</select>
+	
+	<select id="selectShortsCount" resultType="_int">
+	
+		SELECT COUNT(*)
+				FROM SHORTS
+	</select>
+	
+	<insert id="insertShortContents">
+	
+		   INSERT INTO 
+				  SHORTS
+				  (
+				   SHORTS_NO,
+				   SHORTS_CONTENT,
+				   ENROLL_DATE,
+				   COUNT,
+			       MODIFY_DATE,
+			       USER_NO,
+			       STATUS
+				  )
+				  VALUES(
+				  	NEXTVAL('SEQ_SHORT'),
+				  	#{shortsContent},
+				  	CURRENT_DATE,
+				  	DEFAULT,
+				  	NULL,
+				  	#{userNo},
+				  	 <choose>
+					  	<when test='showRange == "public"'>
+					  		TRUE
+					  	</when>
+					  	<when test='showRange == "private"'>
+					  		FALSE
+					  	</when>
+				  	</choose>
+				  )
+			  
+	</insert>
+   
+	 
+	 <insert id="insertShortsVideo">
+   	
+   		INSERT INTO 
+   			 	VIDEO(
+   			  	    VIDEO_NO,
+   			  	    SHORTS_NO,
+   			  	    ORIGIN_NAME,
+   			  	    CHANGE_NAME,
+   			  	    FILE_PATH
+   			  		
+   			 	)VALUES(
+   			 	  NEXTVAL('SEQ_VIDEO'),
+   			 	  CURRVAL('SEQ_SHORT'),
+   			 	  #{originName},
+   			 	  #{changeName},
+   			 	  #{filePath}
+   				)
+   			
+   
+   	 </insert>
+   	 
+   	  
+	 <insert id="insertShortsAttachment">
+   	
+           INSERT INTO 
+   			 	PICTURE(
+   			  	    PIC_NO,
+   			  	    SHORTS_NO,
+   			  	    ORIGIN_NAME,
+   			  	    CHANGE_NAME,
+   			  	    FILE_PATH
+   			  	)VALUES(
+   			 	  NEXTVAL('SEQ_PIC'),
+   			 	  CURRVAL('SEQ_SHORT'),
+   			 	  #{originName},
+   			 	  #{changeName},
+   			 	  #{filePath}
+   				)
+   			
+   
+   	 </insert>
+   	   
+   	
+  	
+   
+   
+  </mapper>

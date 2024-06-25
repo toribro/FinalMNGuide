@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="petMapper">
+	<resultMap type="Pet" id="petResult">
+		<result column="PET_NO" property="petNo" />
+		<result column="PET_NAME" property="petName" />
+		<result column="PET_BIRTHDAY" property="petBirthday" />
+		<result column="PET_GENDER" property="petGender" />
+		<result column="USER_NO" property="userNo" />
+		<result column="PET_SIZE_NO" property="petSizeNo" />
+	</resultMap>
+
+	<select id="selectPet" resultMap="petResult">
+		SELECT
+		PET_NO,
+		PET_NAME,
+		PET_BIRTHDAY,
+		PET_GENDER,
+		PET_SIZE_NO
+		FROM PET
+		WHERE USER_NO = #{userNo}
+		ORDER BY PET_NO ASC;
+	</select>
+
+	<update id="updatePet">
+		UPDATE PET
+		SET PET_NAME = #{petName},
+		PET_BIRTHDAY = #{petBirthday},
+		PET_GENDER = #{petGender},
+		PET_SIZE_NO = #{petSizeNo}
+		WHERE USER_NO = #{userNo}
+		AND PET_NO = #{petNo}
+	</update>
+
+	<insert id="insertPet">
+		INSERT INTO PET (
+		PET_NO,
+		PET_NAME,
+		PET_BIRTHDAY,
+		PET_GENDER,
+		USER_NO,
+		PET_SIZE_NO
+		)
+		VALUES (
+		NEXTVAL('SEQ_PET'),
+		#{petName},
+		#{petBirthday},
+		#{petGender},
+		#{userNo},
+		#{petSizeNo}
+		)
+	</insert>
+	
+	<delete id="deletePet">
+		DELETE FROM PET
+		WHERE PET_NO = #{petNo}
+	</delete>
+</mapper>

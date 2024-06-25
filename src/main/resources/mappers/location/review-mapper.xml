@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  
+   <mapper namespace="review">
+  	
+    <!-- 리뷰 -->
+      
+   <resultMap type="Review" id="detailReview">
+   	  <result column="REVIEW_NO" property="reviewNo"/>
+   	  <result column="REVIEW_STAR" property="reviewStar"/>
+   	  <result column="REVIEW_CONTENT" property="reviewContent"/>
+   	  <result column="ENROLL_DATE" property="enrollDate"/>
+   	  <result column="USER_NICKNAME" property="userNickName"/>
+   	  <result column="LOCATION_STAR" property="locationStar"/>
+   	  <result column="USER_NO" property="userNo"/>
+   	   <result column="LOCATION_NO" property="locationNo"/>
+   </resultMap>
+   
+   <resultMap type="MyPageReview" id="myPageReview">
+   	  <result column="REVIEW_NO" property="reviewNo"/>
+   	  <result column="REVIEW_STAR" property="reviewStar"/>
+   	  <result column="REVIEW_CONTENT" property="reviewContent"/>
+   	  <result column="MODIFY_DATE" property="modifyDate"/>
+   	  <result column="USER_NICKNAME" property="userNickName"/>
+   	  <result column="USER_NO" property="userNo"/>
+   	  <result column="LOCATION_NO" property="locationNo"/>
+   	  <result column="LOCATION_NAME" property="locationName"/>
+   </resultMap>
+   
+   
+   <resultMap type="Attachment" id="reviewAttachment">
+	   		<result column="ORIGIN_NAME" property="originName"/>
+	   		<result column="CHANGE_NAME" property="changeName"/>
+	   		<result column="FILE_PATH" property="filePath"/>
+  </resultMap>
+  
+   <resultMap type="Attachment" id="userAttachment">
+	   		<result column="ORIGIN_NAME" property="originName"/>
+	   		<result column="CHANGE_NAME" property="changeName"/>
+	   		<result column="FILE_PATH" property="filePath"/>
+  </resultMap>
+  
+  <resultMap type="MasterReply" id="masterReply">
+  		<result column="OWNER_REPLY_NO" property="ownerReplyNo"></result>
+  		<result column="ENROLL_DATE" property="enrollDate"></result>
+ 		<result column="REVIEW_NO" property="reviewNo"></result>
+ 		<result column="OWNER_REPLY_CONTENT" property="ownerReplyContent"></result>
+  </resultMap>
+   
+   
+   <select id="selectDetailReviewList" resultMap="detailReview">
+     SELECT   R.REVIEW_NO,
+	    	   	    REVIEW_STAR,
+	    	        REVIEW_CONTENT,
+    			    R.ENROLL_DATE,
+    			    USER_NICKNAME,
+    			    L.LOCATION_STAR,
+    			    R.USER_NO,
+    			    R.LOCATION_NO
+		    	    FROM REVIEW R
+		    	    JOIN LOCATION L
+		    	    ON (R.LOCATION_NO = L.LOCATION_NO)
+		    	    JOIN MEMBER M
+		    	    ON (R.USER_NO = M.USER_NO)
+		    	    WHERE L.LOCATION_NO = #{locationNo}
+		    	    ORDER BY R.REVIEW_NO DESC
+   </select>
+    
+    <select id="selectAttachment" resultMap="reviewAttachment">
+    		SELECT ORIGIN_NAME,
+    			   CHANGE_NAME,
+    			   FILE_PATH 
+    			   FROM PICTURE
+    			   WHERE REVIEW_NO = #{reviewNo}
+   </select>
+   
+     <select id="selectUserAttachment" resultMap="userAttachment">
+    		SELECT ORIGIN_NAME,
+    			   CHANGE_NAME,
+    			   FILE_PATH 
+    			   FROM PICTURE
+    			   WHERE USER_NO = #{userNo}
+    			   ORDER BY PIC_NO DESC
+    			   LIMIT 1
+    </select>
+    
+      <insert id="insertReview">
+    		INSERT INTO 
+    		REVIEW 
+    		  (REVIEW_NO,
+    		  REVIEW_STAR,
+    		  REVIEW_CONTENT,
+    		  ENROLL_DATE,
+    		  MODIFY_DATE,
+    		  USER_NO,
+    		  LOCATION_NO
+    		  )
+    		VALUES(
+    			NEXTVAL('SEQ_REV'),
+    			#{starCount},
+    			#{content},
+    			DEFAULT,
+    			DEFAULT,
+    			#{userNo},
+    			#{locationNo}
+    		);
+    </insert>
+    
+     <insert id="insertAttachment" >
+         INSERT INTO
+         PICTURE(
+         	PIC_NO,
+         	ORIGIN_NAME,
+         	CHANGE_NAME,
+         	FILE_PATH,
+         	FILE_LEVEL,
+         	REVIEW_NO
+         )
+         VALUES
+           (NEXTVAL('SEQ_PIC'),
+           #{originName},
+           #{changeName},
+           #{path},
+           DEFAULT,
+           CURRVAL('SEQ_REV')
+          )
+         
+    </insert>
+    
+    <delete id="deleteReview" >
+    	
+    	DELETE FROM REVIEW 
+    		         WHERE (USER_NO = #{userNo}
+    				  AND LOCATION_NO = #{locationNo})
+    				  AND REVIEW_NO = #{reviewNo}
+    
+    </delete>
+    
+    <select id="reviewCount" resultType="_int">
+    	SELECT COUNT(*) FROM REVIEW
+    		WHERE LOCATION_NO = #{locationNo}
+    
+    </select>
+    
+    <insert id="insertReply">
+    	INSERT INTO
+    	       OWNER_REPLY
+    	       (OWNER_REPLY_NO,
+    	        REVIEW_NO,
+    	        ENROLL_DATE,
+    	        OWNER_REPLY_CONTENT
+    	        )
+    	        VALUES
+    	        (NEXTVAL('SEQ_OWRE'),
+    	         #{reviewNo},
+    	         DEFAULT,
+    	         #{content}
+    	        )
+    
+    </insert>
+    
+    
+  
+    
+    
+    <select id="selectCategoryReviewList" resultMap="detailReview">
+    		   SELECT  R.REVIEW_NO,
+	    	   	    REVIEW_STAR,
+	    	        REVIEW_CONTENT,
+    			    R.ENROLL_DATE,
+    			    USER_NICKNAME,
+    			    L.LOCATION_STAR,
+    			    R.USER_NO,
+    			    R.LOCATION_NO,
+    			    O.ENROLL_DATE AS OWNER_ENROLL,
+    			    O.OWNER_REPLY_CONTENT
+		    	    FROM REVIEW R
+		    	    JOIN LOCATION L
+		    	    ON (R.LOCATION_NO = L.LOCATION_NO)
+		    	    JOIN MEMBER M
+		    	    ON (R.USER_NO = M.USER_NO)
+		    	    LEFT JOIN OWNER_REPLY O
+		    	    ON (R.REVIEW_NO = O.REVIEW_NO)
+		    	    WHERE L.LOCATION_NO = #{locationNo}
+		    	   <choose>
+						<when test='type == "o"'>
+							<!-- ORDER BY O.ENROLL_DATE DESC-->
+							 ORDER BY R.REVIEW_NO DESC
+						</when>
+						<when test='type == "h"'>
+							 ORDER BY REVIEW_STAR DESC
+						</when>
+						<when test='type == "l"'>
+							 ORDER BY REVIEW_STAR
+						</when>
+				  </choose>
+				   
+		    	    
+		    	  
+    </select>
+    
+    <select id="selectReply" resultMap="masterReply">
+    		SELECT OWNER_REPLY_NO,
+    			   OWNER_REPLY_CONTENT,
+    			   ENROLL_DATE,
+    			   REVIEW_NO
+    			   FROM OWNER_REPLY
+    			   WHERE REVIEW_NO = #{reviewNo}
+    
+    </select>
+    
+    <update id="updateReply">
+    	UPDATE OWNER_REPLY SET OWNER_REPLY_CONTENT = #{content},
+    	 		ENROLL_DATE = CURRENT_DATE
+    			WHERE  REVIEW_NO = #{reviewNo}
+    </update>
+
+    <select id="selectMyPageReview" resultMap="myPageReview">
+     SELECT	REVIEW_NO,
+     		REVIEW_STAR,
+     		REVIEW_CONTENT,
+     		R.MODIFY_DATE,
+     		M.USER_NICKNAME,
+     		R.LOCATION_NO,
+     		L.LOCATION_NAME
+     		FROM REVIEW R
+     		JOIN LOCATION L
+     		ON (R.LOCATION_NO = L.LOCATION_NO)
+     		JOIN MEMBER M
+     		ON (R.USER_NO = M.USER_NO)
+     		WHERE R.USER_NO = #{userNo}
+     		ORDER BY MODIFY_DATE DESC
+    </select>
+    
+    
+    <select id="selectReviewStars" resultType="_int">
+    	SELECT REVIEW_STAR 
+    		   FROM REVIEW WHERE LOCATION_NO = #{locationNo}
+    
+    </select>
+    
+    <delete id="deleteMyReview">
+    	DELETE FROM REVIEW WHERE REVIEW_NO = #{reviewNo}
+    </delete>
+    
+    <update id="updateReview">
+    	UPDATE REVIEW SET
+    		USER_NO = #{userNo},
+    		MODIFY_DATE = DEFAULT,
+    		REVIEW_CONTENT = #{reviewContent}
+    		WHERE REVIEW_NO = #{reviewNo}
+    </update>
+    
+ 	</mapper>
+ 	
+ 

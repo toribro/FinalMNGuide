@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ 
+<mapper namespace="memberMapper">
+	<resultMap type="Member" id="memberResult">
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="USER_GENDER" property="userGender"/>
+		<result column="USER_EMAIL" property="userEmail"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="USER_BIRTHDAY" property="userBirthday"/>
+		<result column="USER_PHONE" property="userPhone"/>
+		<result column="USER_KIND" property="userKind"/>
+</resultMap>
+
+<resultMap type="Attachment" id="attachmentResult">
+		<result column="PIC_NO" property="picNo"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		<result column="FILE_PATH" property="filePath"/>
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="LOCATION_OPTION_NO" property="locationOptionNo"/>
+		<result column="REVIEW_NO" property="reviewNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="PET_NO" property="petNo"/>
+		<result column="BOARD_NO" property="boardNo"/>
+   </resultMap>
+
+<resultMap type="PhoneSmsVo" id="phoneResult">
+     	<result column="PHONE" property="phone"/>
+       	<result column="CERTIFY_CODE" property="certifyCode"/>
+</resultMap>
+    
+	<select id="loginMember" resultMap="memberResult">
+		SELECT USER_NO,
+			   USER_ID,
+			   USER_PWD,
+			   USER_NAME,
+			   USER_NICKNAME,
+			   USER_GENDER,
+			   USER_EMAIL,
+			   ENROLL_DATE,
+			   MODIFY_DATE,
+			   USER_BIRTHDAY,
+			   USER_PHONE,
+			   USER_KIND
+		  FROM MEMBER
+		 WHERE USER_ID = #{userId}
+		   AND STATUS = 'true'
+	</select>	
+	
+<!-- 	<select id="selectMemberProfile" resultMap="attachmentResult">
+		SELECT PIC_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH
+		FROM PICTURE
+		WHERE USER_NO = #{userNo}
+		AND FILE_LEVEL = 0
+	</select> -->
+	
+	<select id="checkMemberId" resultType="_int">
+		SELECT COUNT(*)
+		FROM MEMBER
+		WHERE USER_ID = #{checkId}	
+	</select>
+	
+	<insert id="insertCommonMember">
+		INSERT INTO MEMBER
+			(
+			USER_NO,
+			USER_ID,
+			USER_PWD,
+			USER_NAME,
+			USER_NICKNAME,
+			USER_GENDER,
+			USER_EMAIL,
+			USER_BIRTHDAY,
+			USER_PHONE,
+			USER_KIND
+			)
+		VALUES
+			(
+			NEXTVAL('SEQ_USER'),
+			#{userId},
+			#{userPwd},
+			#{userName},
+			#{userNickname},
+			#{userGender},
+			#{userEmail},
+			#{userBirthday},
+			#{userPhone},
+			#{userKind}
+			)
+	</insert>
+	
+	<insert id="insertBossMember">
+		INSERT INTO MEMBER
+			(
+			USER_NO,
+			USER_ID,
+			USER_PWD,
+			USER_NAME,
+			USER_GENDER,
+			USER_EMAIL,
+			USER_BIRTHDAY,
+			USER_PHONE,
+			USER_KIND
+			)
+		VALUES
+			(
+			NEXTVAL('SEQ_USER'),
+			#{userId},
+			#{userPwd},
+			#{userName},
+			#{userGender},
+			#{userEmail},
+			#{userBirthday},
+			#{userPhone},
+			#{userKind}
+			)
+			<!--<selectKey keyColumn="USER_NO" keyProperty="userNo" resultType="int" order="AFTER">
+				SELECT CURRVAL('USER_NO') FROM MEMBER;
+				LAST_INSERT_ID : 포함된 insert문 실행 후 PK값을 keyProperty에 저장하라는 뜻
+				SELECT USER_NO_SEQ.CURRVAL FROM MEMBER
+			</selectKey> -->
+	</insert>
+	<select id="selectUserNo" resultType="_int">
+        	SELECT CURRVAL('SEQ_USER')
+    </select>
+    
+    
+    <!-- 핸드폰 문자 인증 -->
+    <select id="checkPhoneNumber" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+   		FROM MEMBER
+   		WHERE USER_PHONE = #{userPhone}
+   	</select>
+   	
+   	<select id="selectCertifyCode" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+   		FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</select>
+   	
+   	<delete id="deleteCertifyCode">
+   		DELETE FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</delete>
+   	
+   	<insert id="insertCertifyCode">
+   		INSERT INTO CERTIFY_CODE (PHONE, CERTIFY_CODE)
+   		VALUES (#{phone}, #{certifyCode})
+   	</insert>
+   	
+   	 <select id="checkCertifyCode" resultMap="phoneResult">
+   		SELECT PHONE,
+   			   CERTIFY_CODE
+   		FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</select>
+   	
+   	
+   	
+
+	<update id="updateMember">
+		UPDATE MEMBER
+		   SET USER_ID = #{userId},
+		       USER_NAME = #{userName},
+		       USER_NICKNAME = #{userNickname},
+		       USER_GENDER = #{userGender},
+		       USER_BIRTHDAY = #{userBirthday},
+		       USER_EMAIL = #{userEmail},
+		       MODIFY_DATE = current_timestamp
+		WHERE STATUS = true
+		AND USER_NO = #{userNo}
+	</update>
+	
+	<update id="updatePhonNo">
+		UPDATE MEMBER
+		   SET USER_PHONE = #{phoneNumber}
+		 WHERE STATUS = true
+	 	   AND USER_NO = #{userNo}
+	</update>
+	
+	<update id="updateEmail">
+		UPDATE MEMBER
+		   SET USER_EMAIL = #{email}
+		 WHERE STATUS = true
+		   AND USER_NO = #{userNo}
+	</update>
+	
+	<update id="updatePwd">
+		UPDATE MEMBER
+		   SET USER_PWD = #{bossPwd}
+		 WHERE STATUS = true
+		   AND USER_NO = #{userNo}
+	</update>
+	<update id="deactivateBossUser">
+    	UPDATE MEMBER
+       	   SET STATUS = false
+         WHERE USER_ID = #{bossId}
+	</update>
+
+	<update id="deleteMember">
+		UPDATE MEMBER
+			SET STATUS = false
+		WHERE USER_NO = #{userNo}
+	</update>
+
+</mapper>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="shortsMapper">
+  
+  	<resultMap type="TotalShortsInfo" id="shortsInfo">
+		<result column="SHORTS_NO" property="shortsNo"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="SHORTS_CONTENT" property="shortsContent"/>
+		<result column="VIDEO_FILE_PATH" property="shortsPath"/>
+		<result column="VIDEO_CHANGE_NAME" property="shortsName"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="PROFILE_FILE_PATH" property="profilePath"/>
+		<result column="PROFILE_CHANGE_NAME" property="profileName"/>
+   </resultMap>
+   
+   <resultMap type="ShortsReply" id="shortsReply">
+   		<result column="SHORTS_NO" property="shortsNo"/>
+		<result column="REPLY_NO" property="replyNo"/>
+		<result column="CREATE_DATE" property="enrollDate"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REPLY_RE_NO" property="replyReNo"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="PROFILE_FILE_PATH" property="filePath"/>
+		<result column="PROFILE_CHANGE_NAME" property="changeName"/>
+   </resultMap>
+   
+   
+  
+  	<select id="getVideoInfo" resultMap="shortsInfo">
+  		SELECT *
+		FROM (
+		    SELECT 
+		        S.SHORTS_NO,
+		        S.ENROLL_DATE,
+		        S.SHORTS_CONTENT,
+		        V.FILE_PATH AS VIDEO_FILE_PATH,
+		        V.CHANGE_NAME AS VIDEO_CHANGE_NAME,
+		        M.USER_NICKNAME,
+		        COALESCE(P.FILE_PATH, 'resources/img/default/') AS PROFILE_FILE_PATH,
+		        COALESCE(P.CHANGE_NAME, 'default_profile.jpg') AS PROFILE_CHANGE_NAME,
+		        ROW_NUMBER() OVER (ORDER BY S.SHORTS_NO DESC) AS RN
+		    FROM SHORTS S
+		    JOIN VIDEO V ON S.SHORTS_NO = V.SHORTS_NO
+		    JOIN MEMBER M ON S.USER_NO = M.USER_NO
+		    LEFT JOIN PICTURE P ON S.USER_NO = P.USER_NO
+		) AS SUB
+		WHERE RN = #{number};
+
+
+
+  	</select>
+  	
+  	<select id="getVideoLikeCount" resultType="_int">
+  		SELECT 
+		    COUNT(G.USER_NO) AS LIKE_COUNT
+		FROM 
+		    SHORTS S
+		JOIN 
+		    GOOD G ON S.SHORTS_NO = G.SHORTS_NO
+		WHERE 
+		    S.SHORTS_NO = #{shortsNo};
+  	</select>
+  	
+  	<select id="getVideoReplyCount" resultType="_int">
+  		SELECT 
+		    COUNT(R.REPLY_NO) AS REPLY_COUNT
+		FROM 
+		    SHORTS S
+		JOIN 
+		    REPLY R ON S.SHORTS_NO = R.SHORTS_NO
+		WHERE 
+		    S.SHORTS_NO = #{shortsNo};
+  	</select>
+  	
+  	<select id="loadReply" resultMap="shortsReply">
+  		SELECT S.SHORTS_NO,
+				R.REPLY_NO,
+				R.CREATE_DATE,
+				R.REPLY_CONTENT,
+				R.REPLY_RE_NO,
+				M.USER_NICKNAME,
+				COALESCE(P.FILE_PATH, 'resources/img/default/') AS PROFILE_FILE_PATH,
+			    COALESCE(P.CHANGE_NAME, 'default_profile.jpg') AS PROFILE_CHANGE_NAME
+		FROM SHORTS S
+		JOIN REPLY R ON S.SHORTS_NO = R.SHORTS_NO
+		JOIN MEMBER M ON S.USER_NO = M.USER_NO
+		LEFT JOIN PICTURE P ON M.USER_NO = P.USER_NO
+		WHERE R.SHORTS_NO = #{shortsNum}
+		ORDER BY R.CREATE_DATE DESC, R.REPLY_NO DESC;
+  	</select>
+    
+    <insert id="shortsCommentEnroll">
+    	INSERT INTO REPLY
+    		( 
+    		REPLY_NO,
+    		USER_NO,
+    		SHORTS_NO,
+    		REPLY_CONTENT,
+    		CREATE_DATE
+    		)
+    	VALUES
+    		(
+    		#{replyNo},
+    		#{userNo},
+    		#{shortsNo},
+    		#{comment},
+    		DEFAULT
+    		)
+    </insert>
+    
+    <select id="getShortsNo" resultType="_int">
+    	SELECT SHORTS_NO
+    	FROM SHORTS
+    	ORDER BY SHORTS_NO DESC
+    			LIMIT 1 OFFSET (#{videoId} - 1);
+    </select>
+    
+    <select id="getReplyNo" resultType="int">
+	    SELECT NEXTVAL('SEQ_REPLY');
+	</select>
+	
+	<select id="getRecentReply" resultMap="shortsReply">
+		SELECT S.SHORTS_NO,
+				R.REPLY_NO,
+				R.CREATE_DATE,
+				R.REPLY_CONTENT,
+				R.REPLY_RE_NO,
+				M.USER_NICKNAME,
+				COALESCE(P.FILE_PATH, 'resources/img/default/') AS PROFILE_FILE_PATH,
+			    COALESCE(P.CHANGE_NAME, 'default_profile.jpg') AS PROFILE_CHANGE_NAME
+		FROM SHORTS S
+		JOIN REPLY R ON S.SHORTS_NO = R.SHORTS_NO
+		JOIN MEMBER M ON R.USER_NO = M.USER_NO
+		LEFT JOIN PICTURE P ON M.USER_NO = P.USER_NO
+		WHERE R.REPLY_NO = #{replyNo};
+	</select>
+	
+	<select id="getIsLike" resultType="int">
+		SELECT GOOD_NO
+		FROM GOOD
+		WHERE USER_NO = #{userNo} AND SHORTS_NO = #{shortsNo};
+	</select>
+	
+	<insert id="enrollLike">
+    	INSERT INTO GOOD
+    		( 
+    		GOOD_NO,
+    		USER_NO,
+    		SHORTS_NO
+    		)
+    	VALUES
+    		(
+    		NEXTVAL('seq_good'),
+    		#{userNo},
+    		#{shortsNo}
+    		)
+    </insert>
+    
+    <delete id="deleteLike">
+	    DELETE FROM GOOD
+	    WHERE USER_NO = #{userNo} AND SHORTS_NO = #{shortsNo}
+	</delete>
+  </mapper>

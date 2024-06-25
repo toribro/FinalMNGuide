@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+
+<mapper namespace="pictureMapper">
+	<resultMap type="picture" id="pictureResult">
+		<result column="PIC_NO" property="petNo" />
+		<result column="ORIGIN_NAME" property="petName" />
+		<result column="CHANGE_NAME" property="petBirthday" />
+		<result column="FILE_PATH" property="petGender" />
+		<result column="FILE_LEVEL" property="userNo" />
+		<result column="LOCATION_NO" property="petSizeNo" />
+		<result column="LOCATION_OPTION_NO" property="petSizeNo" />
+		<result column="REVIEW_NO" property="petSizeNo" />
+		<result column="USER_NO" property="petSizeNo" />
+		<result column="PET_NO" property="petSizeNo" />
+		<result column="BOARD_NO" property="petSizeNo" />
+		
+	</resultMap>
+
+	<select id="selectPicture" resultMap="pictureResult">
+		SELECT
+		ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH,
+		FILE_LEVEL
+		FROM PICTURE
+		WHERE USER_NO = #{userNo}
+		AND PET_NO = #{petNo}
+	</select>
+
+	<update id="updatePicture">
+		UPDATE PET
+		SET ORIGIN_NAME = #{originName},
+		CHANGE_NAME = #{changeName},
+		FILE_PATH = #{filePath},
+		FILE_LEVEL = #{fileLevel}
+		WHERE USER_NO = #{userNo}
+		AND PET_NO = #{petNo}
+	</update>
+
+	<insert id="insertPicture">
+		INSERT INTO PICTURE (
+		PIC_NO,
+		ORIGIN_NAME,
+		CHANGE_NAME,
+		FILE_PATH,
+		FILE_LEVEL,
+		USER_NO,
+		PET_NO
+		)
+		VALUES (
+		NEXTVAL('SEQ_PIC'),
+		#{originName},
+		#{changeName},
+		#{filePath},
+		#{fileLevel},
+		#{userNo},
+		#{petNo}
+		)
+	</insert>
+</mapper>

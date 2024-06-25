@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ 
+<mapper namespace="searchMapper">
+    <resultMap type="Location" id="locationResult">
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="LOCATION_NAME" property="locationName"/>
+		<result column="LOCATION_PHONE" property="locationPhone"/>
+		<result column="EXPLANATION" property="explanation"/>
+		<result column="LOCATION_STAR" property="locationStar"/>
+		<result column="RESERVATION_LINK" property="reservationLink"/>
+		<result column="ADDRESS" property="address"/>
+		<result column="CATEGORY_NAME" property="locationCategoryNo"/>
+		<result column="START_TIME" property="startTime"/>
+		<result column="END_TIME" property="endTime"/>
+		<result column="REST_STATUS" property="restStatus"/>
+		<result column="DAYS" property="day"/>
+		<result column="PICK_COUNT" property="pickCount"/>
+   </resultMap>
+   <resultMap type="Attachment" id="attachmentResult">
+		<result column="PIC_NO" property="picNo"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		<result column="FILE_PATH" property="filePath"/>
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="LOCATION_OPTION_NO" property="locationOptionNo"/>
+		<result column="REVIEW_NO" property="reviewNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="PET_NO" property="petNo"/>
+		<result column="BOARD_NO" property="boardNo"/>
+   </resultMap>
+   <resultMap type="EnterGrade" id="enterGradeResult">
+		<result column="ENTER_NO" property="enterNo"/>
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="PET_SIZE_NAME" property="petSizeNo"/>
+		<result column="PET_KIND_NAME" property="petKindName"/>
+   </resultMap>
+   <resultMap type="OperationTime" id="operationTime">
+         <result column="START_TIME" property="startTime"/>
+         <result column="END_TIME" property="endTime"/>
+         <result column="DAYS" property="day"/>
+         <result column="REST_STATUS" property="restStatus"/>
+   	</resultMap>
+   
+   	<select id="selectLocationListCount" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+		FROM LOCATION LO
+		WHERE LO.STATUS = true
+		AND LOCATION_NAME LIKE '%' || #{keyword} || '%'
+   	</select>
+   	<select id="selectSearchLocationList" resultMap="locationResult">
+   		SELECT LO.LOCATION_NO,
+   			   LOCATION_NAME,
+   			   LOCATION_PHONE,
+   			   LOCATION_STAR,
+   			   ADDRESS,
+   			   CATEGORY_NAME,
+   			   PICK_COUNT
+   		FROM LOCATION LO
+   		
+   		JOIN LOCATION_CATEGORY LC
+   		ON LO.LOCATION_CATEGORY_NO = LC.LOCATION_CATEGORY_NO
+   		LEFT JOIN (SELECT COUNT(*) AS PICK_COUNT,
+							P.LOCATION_NO
+				  FROM PICK P
+				  GROUP BY P.LOCATION_NO) PC
+		ON LO.LOCATION_NO = PC.LOCATION_NO
+		
+   		WHERE LO.STATUS = true
+   		AND LOCATION_NAME LIKE '%${keyword}%'
+   		
+   		ORDER BY LOCATION_STAR DESC
+   	</select>
+   
+   	<select id="selectFilterLocationListCount" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+		FROM (
+				SELECT DISTINCT LO.LOCATION_NO
+				FROM LOCATION LO
+				
+				JOIN LOCATION_CATEGORY LC
+				ON LO.LOCATION_CATEGORY_NO = LC.LOCATION_CATEGORY_NO
+				JOIN ENTER_GRADE E
+				ON LO.LOCATION_NO = E.LOCATION_NO
+				
+				WHERE LO.STATUS = true
+				AND LOCATION_NAME LIKE '%' || #{keyword} || '%'
+				AND E.LOCATION_NO NOT IN (SELECT DISTINCT E.LOCATION_NO
+											FROM ENTER_GRADE E 
+											WHERE PET_SIZE_NO IN 
+									   		<foreach collection='petList' item="pet" open="(" separator="," close=")">
+									        	#{pet}
+									   		</foreach>
+											)
+				AND LO.LOCATION_CATEGORY_NO NOT IN
+				<foreach collection='locList' item="loc" open="(" separator="," close=")">
+		        	#{loc}
+		   		</foreach>
+		)
+   	</select>
+   	<select id="selectFilterLocationList" resultMap="locationResult">
+   	SELECT DISTINCT *
+	FROM (
+			SELECT LO.LOCATION_NO,
+				   LOCATION_NAME,
+				   LOCATION_PHONE,
+				   LOCATION_STAR,
+				   ADDRESS,
+				   CATEGORY_NAME,
+				   PICK_COUNT,
+				   ENROLL_DATE
+			FROM LOCATION LO
+			
+			JOIN LOCATION_CATEGORY LC
+			ON LO.LOCATION_CATEGORY_NO = LC.LOCATION_CATEGORY_NO
+			LEFT JOIN ENTER_GRADE E
+			ON LO.LOCATION_NO = E.LOCATION_NO
+			LEFT JOIN PICK P
+			ON LO.LOCATION_NO = P.LOCATION_NO
+			LEFT JOIN (SELECT COUNT(*) AS PICK_COUNT,
+							P.LOCATION_NO
+				  FROM PICK P
+				  GROUP BY P.LOCATION_NO) PC
+			ON LO.LOCATION_NO = PC.LOCATION_NO
+			
+			WHERE LO.STATUS = true
+			AND LOCATION_NAME LIKE '%' || #{keyword} || '%'
+			AND E.LOCATION_NO NOT IN (SELECT DISTINCT E.LOCATION_NO
+										FROM ENTER_GRADE E 
+										WHERE PET_SIZE_NO IN 
+								   		<foreach collection='petList' item="pet" open="(" separator="," close=")">
+								        	#{pet}
+								   		</foreach>
+										)
+			AND LO.LOCATION_CATEGORY_NO NOT IN
+			<foreach collection='locList' item="loc" open="(" separator="," close=")">
+	        	#{loc}
+	   		</foreach>
+	)
+	<choose>
+		<when test="order == 1">
+			ORDER BY ENROLL_DATE DESC
+		</when>
+		<when test="order == 2">
+			ORDER BY LOCATION_STAR DESC
+		</when>
+		<when test="order == 3">
+			ORDER BY PICK_COUNT DESC NULLS LAST
+		</when>
+	</choose>
+	</select>
+	
+   <!-- 
+   <select id="selectEnterGradeList" resultMap="enterGradeResult">
+		SELECT PET_SIZE_NAME,
+			   PET_KIND_NAME
+		FROM ENTER_GRADE E
+		JOIN PET_SIZE S ON E.PET_SIZE_NO = S.PET_SIZE_NO
+		JOIN PET_KIND K ON S.PET_KIND_NO = K.PET_KIND_NO
+		WHERE E.LOCATION_NO = #{locationNo}
+	</select> -->
+	
+	<select id="selectOperationTime" resultMap="operationTime">
+		SELECT DAYS,
+			   START_TIME,
+			   END_TIME,
+			   REST_STATUS
+		FROM OPERATION_TIME
+		WHERE LOCATION_NO = #{locationNo}
+		AND DAYS IN (#{currentDay}, '체크인/체크아웃')
+		LIMIT 1
+	</select>
+	
+<!-- 	<select id="selectPickCount" resultType="_int">
+		SELECT COUNT(*) AS PICK_COUNT
+		FROM PICK
+		WHERE LOCATION_NO = #{locationNo}
+	</select> -->
+	
+	<select id="selectUserPick" resultType="_int">
+		SELECT COUNT(*) AS PICK
+		FROM PICK
+		WHERE USER_NO = #{userNo}
+		AND LOCATION_NO = #{locationNo}
+	</select>
+	
+	<insert id="insertUserPick">
+		INSERT INTO PICK
+		VALUES (
+				nextval('SEQ_PICK'), 
+				#{userNo},
+				#{locationNo}
+				)
+	</insert>
+	<delete id="deleteUserPick">
+		DELETE FROM PICK
+		WHERE USER_NO = #{userNo}
+		AND LOCATION_NO = #{locationNo}
+	</delete>
+	
+	<select id="selectLocationPickCount" resultType="_int">
+		SELECT COUNT(*) AS COUNT
+		FROM PICK
+		WHERE LOCATION_NO = #{locationNo}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- bossPage 임시 매퍼 -->
+	
+	<!-- <resultMap type="CouponKind" id="couponKindResult">
+         <result column="COUPON_NO" property="couponNo"/>
+         <result column="COUPON_CONTENT" property="couponContent"/>
+         <result column="COUPON_EXPIRATION_PERIOD" property="couponExpirationPeriod"/>
+         <result column="STATUS" property="status"/>
+         <result column="COUNT" property="count"/>
+         <result column="USED_COUNT" property="usedCount"/>
+         <result column="LOCATION_NO" property="locationNo"/>
+   	</resultMap>
+   	
+   	<select id="selectCouponKindList" resultMap="couponKindResult">
+   		SELECT C.COUPON_NO,
+			   COUPON_CONTENT,
+			   COUPON_EXPIRATION_PERIOD,
+			   C.COUNT,
+			   H.USED_COUNT,
+			   C.LOCATION_NO
+		
+		FROM COUPON C
+		
+		JOIN LOCATION L
+		ON C.LOCATION_NO = L.LOCATION_NO
+		JOIN MEMBER M
+		ON L.USER_NO = M.USER_NO
+		
+		LEFT JOIN (SELECT HV.COUPON_NO,
+					 COUNT(*) AS USED_COUNT
+			  FROM (
+			  		SELECT HC.COUPON_NO,
+						   HC.HAVING_COUPON_NO
+					FROM HAVING_COUPON HC
+					WHERE HC.STATUS = TRUE
+					) AS HV
+			  GROUP BY HV.COUPON_NO
+			 ) AS H
+		ON C.COUPON_NO = H.COUPON_NO
+		
+		WHERE M.USER_NO = CAST(#{loginUserNo} AS INTEGER)
+		AND C.STATUS = TRUE
+		
+		ORDER BY COUPON_NO
+   	</select>
+   	
+   	<select id="selectLocationNo" resultType="_int">
+        	SELECT LOCATION_NO
+        	FROM LOCATION
+        	WHERE USER_NO = CAST(#{loginUserNo} AS INTEGER)
+    </select>
+   	
+   	<insert id="insertCouponKind">
+   		INSERT INTO COUPON 
+   						(
+   						COUPON_NO, 
+   						COUPON_CONTENT, 
+   						COUPON_EXPIRATION_PERIOD, 
+   						LOCATION_NO, 
+						COUNT
+						)
+				VALUES (
+						nextval('SEQ_CUPON'), 
+						#{couponContent}, 
+						CAST(#{couponExpirationPeriod} AS INTEGER),
+						CAST(#{locationNo} AS INTEGER), 
+						0
+						)
+   	</insert>
+   	
+   	<update id="updateCouponKind">
+   		UPDATE COUPON
+           SET COUPON_CONTENT = #{couponContent},
+           	   COUPON_EXPIRATION_PERIOD = CAST(#{couponExpirationPeriod} AS INTEGER)
+         WHERE COUPON_NO = #{couponNo}
+   	</update>
+   	
+   	<select id="selectCouponKind" resultMap="couponKindResult">
+   		SELECT C.COUPON_NO,
+			   COUPON_CONTENT,
+			   COUPON_EXPIRATION_PERIOD,
+			   C.COUNT,
+			   H.USED_COUNT,
+			   C.LOCATION_NO
+		
+		FROM COUPON C
+		
+		JOIN LOCATION L
+		ON C.LOCATION_NO = L.LOCATION_NO
+		
+		LEFT JOIN (SELECT HV.COUPON_NO,
+						  COUNT(*) AS USED_COUNT
+				   FROM (
+				  		 SELECT HC.COUPON_NO,
+							    HC.HAVING_COUPON_NO
+						   FROM HAVING_COUPON HC
+						  WHERE HC.STATUS = TRUE
+						) AS HV
+				  GROUP BY HV.COUPON_NO
+			 ) AS H
+		ON C.COUPON_NO = H.COUPON_NO
+		
+		WHERE C.COUPON_NO = #{couponNo}
+		AND C.STATUS = TRUE
+   	</select>
+   	
+   	<update id="deleteCouponKind">
+   		UPDATE COUPON
+   		   SET STATUS = false
+   		 WHERE COUPON_NO = #{couponNo}
+   	</update> -->
+   	
+   	
+   	
+   	
+   	<!-- community 게시글 임시 매퍼 -->
+	
+<!-- 	<resultMap type="BoardEnroll" id="boardEnrollResult">
+         <result column="BOARD_NO" property="boardNo"/>
+         <result column="BOARD_TITLE" property="boardTitle"/>
+         <result column="BOARD_CONTENT" property="boardContent"/>
+         <result column="COUNT" property="count"/>
+         <result column="CREATE_DATE" property="createDate"/>
+         <result column="EDIT_DATE" property="editDate"/>
+         <result column="STATUS" property="status"/>
+         <result column="USER_NO" property="userNo"/>
+         <result column="BOARD_CATEGORY_NO" property="boardCategoryNo"/>
+   	</resultMap>
+   	
+   	<resultMap type="BoardFileInfo" id="boardFileInfoResult">
+         <result column="PIC_NO" property="picNo"/>
+         <result column="ORIGIN_NAME" property="originName"/>
+         <result column="CHANGE_NAME" property="changeName"/>
+         <result column="FILE_PATH" property="filePath"/>
+         <result column="FILE_LEVEL" property="fileLevel"/>
+         <result column="USER_NO" property="userNo"/>
+         <result column="BOARD_NO" property="boardNo"/>
+   	</resultMap>
+   	<insert id="insertBoard">
+   		INSERT INTO BOARD(
+   						BOARD_NO,
+   						BOARD_TITLE,
+   						BOARD_CONTENT,
+   						USER_NO,
+   						BOARD_CATEGORY_NO
+   						)
+   					VALUES(
+   						nextval('SEQ_BORD'),
+   						#{boardTitle},
+   						#{boardContent},
+   						#{userNo},
+   						#{boardCategoryNo}
+   						)
+   	</insert>
+   	
+   	<insert id="insertBoardAttachment">
+   		INSERT INTO PICTURE(
+   							PIC_NO, 
+   							ORIGIN_NAME, 
+   							CHANGE_NAME, 
+   							FILE_PATH,
+							BOARD_NO
+							)
+					 VALUES(
+							nextval('SEQ_PIC'),
+							#{originName},
+							#{changeName},
+							#{filePath},
+							currval('SEQ_BORD')
+							)
+							
+   	</insert> -->
+   	
+   	
+   	
+   	
+   	
+   	
+   	
+   	<!-- 핸드폰 문자 인증 -->
+   	<!-- <resultMap type="PhoneSmsVo" id="phoneResult">
+         <result column="PHONE" property="phone"/>
+         <result column="CERTIFY_CODE" property="certifyCode"/>
+   	</resultMap>
+   	
+   	<select id="checkPhoneNumber" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+   		FROM MEMBER
+   		WHERE USER_PHONE = #{userPhone}
+   	</select>
+   	
+   	<select id="selectCertifyCode" resultType="_int">
+   		SELECT COUNT(*) AS COUNT
+   		FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</select>
+   	
+   	<delete id="deleteCertifyCode">
+   		DELETE FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</delete>
+   	
+   	<insert id="insertCertifyCode">
+   		INSERT INTO CERTIFY_CODE (PHONE, CERTIFY_CODE)
+   		VALUES (#{phone}, #{certifyCode})
+   	</insert>
+   	
+   	 <select id="checkCertifyCode" resultMap="phoneResult">
+   		SELECT PHONE,
+   			   CERTIFY_CODE
+   		FROM CERTIFY_CODE
+   		WHERE PHONE = #{phone}
+   	</select> -->
+</mapper>

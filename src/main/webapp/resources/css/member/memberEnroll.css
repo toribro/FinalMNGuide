@@ -1,0 +1,39 @@
+.before-check-button{
+    color: var(--border-color);
+    cursor: inherit;
+}
+
+.after-check-button{
+    color: black;
+    cursor: pointer;
+}
+
+.before-check-message{
+    color: red;
+}
+
+.after-check-message{
+    color: black;
+}
+
+.double-check-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.double-check-box>input{
+    width: 70%;
+    margin-bottom: 10px;
+}
+
+.double-check-box>button{
+    margin-bottom: 10px;
+    border-radius: var(--inner-border-radius);
+    background-color: #efefef;
+}
+
+.double-check-box>button{
+    height: 60px;
+}

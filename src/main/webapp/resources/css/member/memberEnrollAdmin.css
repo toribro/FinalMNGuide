@@ -1,0 +1,173 @@
+*{
+    text-align: center;
+    /* border: 1px solid rgb(208, 240, 253); */
+}
+
+option{
+    text-align: left;
+}
+
+.minibox-mini-title-bold{
+    font-weight: bold;
+    font-size: 18px;
+    margin: 15px 0px;
+}
+
+.minibox-wrap hr{
+    margin: 2px 0px 10px 0px;
+}
+
+#check-agree-title{
+    margin: 25px 0px 15px 0px;
+}
+
+#check-number{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+#check-number>input{
+    width: 65%;
+    margin-bottom: 10px;
+}
+
+#check-number>button{
+    height: 60px;
+    background-color: inherit;
+    color: var(--border-color);
+    cursor: inherit;
+}
+
+#check-number>div{
+    color: red;
+    font-weight: 500;
+    position: absolute;
+    right: 190px;
+    top: 17px;
+}
+
+#plus-time{
+    text-align: right;
+    font-size: 16px;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+#plus-time:hover{
+    color: var(--main-color);
+}
+
+.check-agree-box{
+   text-align: left;
+}
+
+#check-phone-button{
+    margin-bottom: 30px;
+}
+
+#checked-phone-number{
+    background-color: #efefef;
+}
+
+#checked-phone-text{
+    width: 100%;
+    border: none;
+    background-color: #efefef;
+    border-radius: var(--inner-border-radius);
+    margin-bottom: 30px;
+    cursor: inherit;
+}
+
+.select-button{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.select-button>div{
+    width: 35%;
+    height: 60px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--inner-border-radius);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.select-button>div:hover{
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
+
+#email-enroll{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+#email-enroll>input{
+    width: 35%;    
+    margin: 0px;
+}
+
+#email-select-box{
+    width: 10%;
+    margin: 0px;
+    border-radius: 100px;
+    background-color: #efefef;
+    /* background-image: url(../../member/email.png); */
+}
+
+#email-select-box>option{
+    text-align: left;
+}
+
+#enroll-button{
+    border-radius: 100px;
+    cursor: inherit;
+}
+
+#check-boss-info{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+#check-boss-info>input{
+    width: 65%;
+    margin-bottom: 10px;
+}
+
+#check-boss-info>button{
+    margin-bottom: 10px;
+    border-radius: var(--inner-border-radius);
+    background-color: #efefef;
+}
+
+#check-boss-info>button{
+    height: 60px;
+}
+
+#checked-boss-info{
+    width: 100%;
+    border: none;
+    background-color: #efefef;
+    border-radius: var(--inner-border-radius);
+    margin-bottom: 30px;
+    cursor: inherit;
+}
+
+#radio-f, #radio-m, #radio-kind, #input-email, #input-address{
+    display: none;
+}
+
+#id-check{
+    background-color: inherit;
+    color: var(--border-color);
+    cursor: inherit;
+}

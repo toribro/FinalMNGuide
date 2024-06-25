@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ 
+ 
+<mapper namespace="mainMapper">
+	<resultMap type="Member" id="memberResult">
+		<result column="USER_NO" property="userNo"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="USER_GENDER" property="userGender"/>
+		<result column="USER_EMAIL" property="userEmail"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="USER_BIRTHDAY" property="userBirthday"/>
+		<result column="USER_PHONE" property="userPhone"/>
+		<result column="USER_KIND" property="userKind"/>
+</resultMap>
+   <resultMap type="Location" id="location">
+	<result column="LOCATION_NO" property="locationNo"/>
+	<result column="LOCATION_NAME" property="locationName"/>
+	<result column="LOCATION_PHONE" property="locationPhone"/>
+	<result column="EXPLANATION" property="explanation"/>
+	<result column="LOCATION_STAR" property="locationStar"/>
+	<result column="RESERVATION_LINK" property="reservationLink"/>
+	<result column="ADDRESS" property="address"/>
+	<result column="GOODS" property="goods"/>
+	<result column="GOODS_PRICE" property="goodPrice"/>
+	<result column="ROOM_INFO" property="roomInfo"/>
+	<result column="DAYS" property="day"/>
+	<result column="CAPACITY" property="capacity"/>
+	<result column="CATEGORY_NAME" property="locationCategoryNo"/>
+	<result column="START_TIME" property="startTime"/>
+	<result column="END_TIME" property="endTime"/>
+	<result column="REST_STATUS" property="restStatus"/>
+	<result column="KIND_NAME" property="kindName"/>
+  </resultMap>
+    <resultMap type="Attachment" id="attachmentResult">
+		<result column="PIC_NO" property="picNo"/>
+		<result column="ORIGIN_NAME" property="originName"/>
+		<result column="CHANGE_NAME" property="changeName"/>
+		<result column="FILE_PATH" property="filePath"/>
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="LOCATION_OPTION_NO" property="locationOptionNo"/>
+		<result column="REVIEW_NO" property="reviewNo"/>
+		<result column="USER_NO" property="userNo"/>
+		<result column="PET_NO" property="petNo"/>
+		<result column="BOARD_NO" property="boardNo"/>
+   </resultMap>
+   <resultMap type="EnterGrade" id="enterGradeResult">
+		<result column="ENTER_NO" property="enterNo"/>
+		<result column="LOCATION_NO" property="locationNo"/>
+		<result column="PET_SIZE_NAME" property="petSizeNo"/>
+		<result column="PET_KIND_NAME" property="petKindName"/>
+   </resultMap>
+   <resultMap type="Board" id="boardResult">
+		<result column="BOARD_NO" property="boardNo"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="COUNT" property="count"/>
+		<result column="CREATE_DATE" property="createDate"/>
+		<result column="EDIT_DATE" property="editDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="USER_NICKNAME" property="userNo"/>
+		<result column="BOARD_CATEGORY_NAME" property="boardCategoryNo"/>
+		<result column="REPLY_COUNT" property="replyCount"/>
+		<result column="GOOD_COUNT" property="goodCount"/>
+   </resultMap>
+   <resultMap type="Shorts" id="shortsResult">
+		<result column="SHORTS_NO" property="shortsNo"/>
+		<result column="SHORTS_CONTENT" property="shortsContent"/>
+		<result column="COUNT" property="count"/>
+		<result column="ENROLL_DATE" property="enrollDate"/>
+		<result column="MODIFY_DATE" property="modifyDate"/>
+		<result column="STATUS" property="status"/>
+		<result column="USER_NICKNAME" property="userNo"/>
+   </resultMap>
+
+	<select id="selectLocationTop" resultMap="location">
+		SELECT *
+		FROM (
+		SELECT LOCATION_NO,
+			   LOCATION_NAME,
+			   LOCATION_STAR,
+			   ADDRESS,
+			   CATEGORY_NAME
+		  FROM LOCATION LO
+		  JOIN LOCATION_CATEGORY LC
+		 	   ON LO.LOCATION_CATEGORY_NO = LC.LOCATION_CATEGORY_NO
+		 WHERE STATUS = 'true'
+		<choose>
+			<when test="locNum == 1">
+				AND LC.CATEGORY_NAME = '식당'
+			</when>
+			<when test="locNum == 2">
+				AND LC.CATEGORY_NAME = '카페'
+			</when>
+			<when test="locNum == 3">
+				AND LC.CATEGORY_NAME = '숙소'
+			</when>
+		</choose>
+		ORDER BY LOCATION_STAR DESC)
+		LIMIT 1
+	</select>	
+	
+	<!-- 
+	<select id="selectAttachmentList" resultMap="attachmentResult">
+		SELECT PIC_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH
+		FROM PICTURE
+		WHERE LOCATION_NO = #{locationNo}
+		AND STATUS = 'true'
+	</select>	 -->
+	<select id="selectAttachmentLocation" resultMap="attachmentResult">
+		SELECT PIC_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH
+		FROM PICTURE
+		WHERE LOCATION_NO = #{locationNo}
+		AND FILE_LEVEL = 1
+		LIMIT 1
+	</select>
+	
+	<select id="selectAttachmentShorts" resultMap="attachmentResult">
+		SELECT PIC_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH
+		FROM PICTURE
+		WHERE SHORTS_NO = #{shortsNo}
+		AND FILE_LEVEL = 1
+	</select>
+	<!-- 어떤 객체인지를 아예 동적으로 처리해줄 수 있는 방법은 없나? -->
+	
+	<select id="selectEnterGradeList" resultMap="enterGradeResult">
+		SELECT PET_SIZE_NAME
+		FROM ENTER_GRADE E
+		JOIN PET_SIZE S ON E.PET_SIZE_NO = S.PET_SIZE_NO
+		WHERE E.LOCATION_NO = #{locationNo}
+	</select>	
+	
+	
+	<select id="ajaxSelectBoardCountList" resultMap="boardResult">
+		SELECT *
+		  FROM (SELECT BOARD_NO,
+					   BOARD_TITLE,
+					   USER_NICKNAME,
+					   COUNT
+				  FROM BOARD B
+				  JOIN MEMBER M ON M.USER_NO = B.USER_NO
+				 ORDER BY COUNT DESC)
+		LIMIT 5
+	</select>
+	<select id="selectGoodCountList" resultMap="boardResult">
+		SELECT *
+		FROM (SELECT BOARD_NO,
+				     COUNT(*) AS GOOD_COUNT
+			    FROM GOOD
+			   GROUP BY BOARD_NO
+			   HAVING BOARD_NO != 0
+			ORDER BY GOOD_COUNT DESC)
+		LIMIT 5
+	</select>
+	<select id="ajaxSelectBoardMain" resultMap="boardResult">
+		SELECT BOARD_NO,
+			   BOARD_TITLE,
+			   USER_NICKNAME
+		  FROM BOARD B
+		  JOIN MEMBER M ON M.USER_NO = B.USER_NO
+		  WHERE BOARD_NO = #{boardNo}
+	</select>
+	
+	<select id="selectReplyCountList" resultMap="boardResult">
+		SELECT *
+		FROM (SELECT BOARD_NO,
+				     COUNT(*) AS REPLY_COUNT
+			    FROM REPLY
+			   GROUP BY BOARD_NO
+			   HAVING BOARD_NO != 0
+			ORDER BY REPLY_COUNT DESC)
+		LIMIT 5
+	</select>
+	
+	<select id="selectReplyCount" resultType="_int">
+		SELECT COUNT(*) AS REPLY_COUNT
+		FROM REPLY
+		WHERE BOARD_NO = #{boardNo}
+			   
+	</select>
+	
+	<select id="ajaxSelectShortsList" resultMap="shortsResult">
+		SELECT *
+		FROM (SELECT SHORTS_NO,
+					 SHORTS_CONTENT,
+					 S.ENROLL_DATE,
+					 USER_NICKNAME
+				FROM SHORTS S
+				JOIN MEMBER M
+				  ON S.USER_NO = M.USER_NO
+			   WHERE S.STATUS = true
+			ORDER BY COUNT DESC)
+		LIMIT 3
+			   
+	</select>
+	
+	<select id="ajaxSelectPetCount" resultType="_int">
+		SELECT COUNT(*) AS PET_COUNT
+		FROM PET 
+		WHERE USER_NO = #{userNo}
+	</select>
+	
+
+	<!-- 
+	<select id="ajaxSelectBoardGoodList" resultMap="boardResult">
+		SELECT *
+		FROM (SELECT *
+			    FROM (SELECT BOARD_NO,
+						     COUNT(*) AS GOOD_COUNT
+					    FROM BOARD B
+					    JOIN GOOD G ON B.BOARD_NO = G.BOARD_NO)
+			ORDER BY GOOD_COUNT)
+		LIMIT 5
+	</select>	 -->
+	<!-- 
+	<select id="ajaxSelectBoardMainList" resultMap="boardResult">
+		SELECT *
+		  FROM (SELECT BOARD_NO,
+					   BOARD_TITLE,
+					   USER_NAME,
+					   REPLY_COUNT
+				  FROM BOARD B
+				  JOIN MEMBER M ON M.USER_NO = B.USER_NO
+				  JOIN (SELECT BOARD_NO,
+							   COUNT(*) AS REPLY_COUNT
+						  FROM REPLY
+					  GROUP BY BOARD_NO
+						HAVING BOARD_NO = #{boardNo}) R
+						    ON B.BOARD_NO = R.BOARD_NO
+			<choose>
+				<when test="type == 1">
+					ORDER BY COUNT DESC)
+				</when>
+				<when test="type == 2">
+					JOIN (SELECT BOARD_NO,
+								 COUNT(*) AS GOOD_COUNT
+							FROM GOOD
+						GROUP BY BOARD_NO
+						  HAVING BOARD_NO = #{boardNo}) G
+						      ON B.BOARD_NO = G.BOARD_NO
+					ORDER BY GOOD_COUNT DESC)
+				</when>
+				<when test="type == 3">
+					ORDER BY REPLY_COUNT DESC)
+				</when>
+			</choose>
+		LIMIT 5
+	</select>	
+	 -->
+</mapper>
