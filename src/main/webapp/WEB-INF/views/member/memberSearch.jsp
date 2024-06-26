@@ -33,14 +33,7 @@
                 가입 시 사용한 전화번호를 입력하세요.
             </div>
 
-            <c:choose>
-                <c:when test="${type eq 1}">
-                    <form action="">
-                </c:when>
-                <c:otherwise>
-                    <form action="">
-                </c:otherwise>
-            </c:choose>
+            <form action="searchUserInfo.me" method="POST">
                 <!-- <div class="minibox-mini-title">
                     <span>이름</span>
                     <span class="required-color">*</span>
@@ -65,13 +58,13 @@
                         <span class="error-message-nomargin"></span>
                     </div>
                     <div id="check-number">
-                        <input type="text" class="minibox-input" placeholder="인증번호 6자리 숫자">
+                        <input type="text" name="certifyCode" class="minibox-input" placeholder="인증번호 6자리 숫자">
                         <button type="button" class="common-button white-button" onclick="checkPhoneNumber()">인증번호 요청</button>
                         <!-- <div>2:00</div> -->
                     </div>
-                    
+                    <input type="text" name="type" style="display: none;" value="${type}">
                     <!-- <div id="plus-time">시간 연장</div> -->
-                <button type="submit" id="enroll-button" class="common-button pink-button minibox-full-button" disabled>확인</button>
+                <button type="submit" id="enroll-button" class="common-button pink-button minibox-full-button">확인</button>
             </form>
         </div>
 	</div>

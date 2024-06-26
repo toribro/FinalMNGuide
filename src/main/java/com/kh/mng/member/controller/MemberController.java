@@ -208,22 +208,56 @@ public class MemberController {
 	    }
 	}
 	
-	
-	@PostMapping("searchUserId")
-	public String searchUserId(String userPhone, String certifyCode, HttpSession session) {
-//		PhoneSmsVo psv = memberService.checkCertifyCode(userPhone);
-//		if (psv != null && bcryptPasswordEncoder.matches(certifyCode, psv.getCertifyCode())) {
-//			// 인증번호 삭제 메소드 추가
-//			return "";
-//		} else {
-//			session.setAttribute("alertMsg", "인증번호가 일치하지 않습니다. 다시 시도해주세요.");
-//			return "NNNNN";
-//		}
-		return "";
+	// 인증번호 일치 확인 후 아이디 혹은 비밀번호 찾기
+	@PostMapping("searchUserInfo.me")
+	public String searchUserInfo(String userPhone, String certifyCode, String type, HttpSession session) {
+		PhoneSmsVo psv = memberService.checkCertifyCode(userPhone);
+		
+		if (type.equals("1")) {
+			if (psv != null && bcryptPasswordEncoder.matches(certifyCode, psv.getCertifyCode())) {
+				// 인증번호 삭제 메소드 추가
+				Member m = memberService.selectUserByPhone(userPhone);
+				
+				if (m != null) {
+					session.setAttribute("alertMsg", "해당 번호로 가입된 아이디입니다. " + m.getUserId());
+					return "member/memberLogin";
+				} else {
+					session.setAttribute("alertMsg", "아이디 정보를 불러오는 데 실패했습니다.");
+					return "redirect:/searchMemberForm.mee?type=1";
+				}
+			} else {
+				session.setAttribute("alertMsg", "인증번호가 일치하지 않습니다. 다시 시도해주세요.");
+				return "redirect:/searchMemberForm.mee?type=1";
+			}
+		} else {
+			if (psv != null && bcryptPasswordEncoder.matches(certifyCode, psv.getCertifyCode())) {
+				// 인증번호 삭제 메소드 추가
+				Member m = memberService.selectUserByPhone(userPhone);
+				session.setAttribute("signUpId", m.getUserId());
+				return "member/memberChangePwd";
+			} else {
+				session.setAttribute("alertMsg", "인증번호가 일치하지 않습니다. 다시 시도해주세요.");
+				return "redirect:/searchMemberForm.mee?type=2";
+			}
+		}
 	}
 	
-	@PostMapping("changeUserPwd")
-	public String changeUserPwd() {
-		return "";
+	@PostMapping("updatePwd.me")
+	public String updatePwd(String signUpId, String userPwd, HttpSession session) {
+		String encPwd = bcryptPasswordEncoder.encode(userPwd);
+		Member m = new Member();
+		m.setUserId(signUpId);
+		m.setUserPwd(encPwd);
+		
+		int result = memberService.updatePwd(m);
+		
+		if (result > 0) {
+			session.removeAttribute("signUpId");
+			session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다.");
+			return "member/memberLogin";
+		} else {
+			session.setAttribute("alertMsg", "비밀번호 변경에 실패했습니다.");
+			return "redirect:/searchMemberForm.mee?type=2";
+		}
 	}
 }

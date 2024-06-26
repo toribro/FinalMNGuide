@@ -75,6 +75,14 @@ public class MemberDao {
 	public PhoneSmsVo checkCertifyCode(SqlSessionTemplate sqlSession, String phone) {
 		return sqlSession.selectOne("memberMapper.checkCertifyCode", phone);
 	}
+	
+	public Member selectUserByPhone(SqlSessionTemplate sqlSession, String userPhone) {
+		return sqlSession.selectOne("memberMapper.selectUserByPhone", userPhone);
+	}
+	
+	public int updatePwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.updateMemberPwd", m);
+	}
 
 	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.updateMember", m);
