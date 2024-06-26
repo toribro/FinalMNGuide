@@ -169,6 +169,31 @@
    		WHERE PHONE = #{phone}
    	</select>
    	
+   	<select id="selectUserByPhone" resultMap="memberResult">
+   		SELECT USER_NO,
+			   USER_ID,
+			   USER_PWD,
+			   USER_NAME,
+			   USER_NICKNAME,
+			   USER_GENDER,
+			   USER_EMAIL,
+			   ENROLL_DATE,
+			   MODIFY_DATE,
+			   USER_BIRTHDAY,
+			   USER_PHONE,
+			   USER_KIND
+		  FROM MEMBER
+		 WHERE USER_PHONE = #{userPhone}
+		   AND STATUS = 'true'
+   	</select>
+   	
+   	<update id="updateMemberPwd">
+   		UPDATE MEMBER
+   		SET USER_PWD = #{userPwd}
+   		WHERE USER_ID = #{userId}
+   		AND STATUS = true
+   	</update>
+   	
    	
    	
 

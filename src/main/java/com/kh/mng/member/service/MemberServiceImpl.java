@@ -1,6 +1,5 @@
 package com.kh.mng.member.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -9,12 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.mng.bosspage.model.vo.BossLocation;
-import com.kh.mng.bosspage.model.vo.LocationEnterGrade;
 import com.kh.mng.common.model.vo.ProfileImg;
 import com.kh.mng.common.phonesms.PhoneSmsVo;
 import com.kh.mng.community.model.vo.Shorts;
 import com.kh.mng.location.model.dao.DetailDao;
-import com.kh.mng.location.model.vo.EnterGrade;
 import com.kh.mng.location.model.vo.Location;
 import com.kh.mng.location.model.vo.MyPageEnter;
 import com.kh.mng.location.model.vo.MyPageReview;
@@ -119,6 +116,17 @@ public class MemberServiceImpl implements MemberService {
 	public PhoneSmsVo checkCertifyCode(String phone) {
 		return memberDao.checkCertifyCode(sqlSession, phone);
 	}
+	
+	@Override
+	public Member selectUserByPhone(String userPhone) {
+		return memberDao.selectUserByPhone(sqlSession, userPhone);
+	}
+	
+	@Override
+	public int updatePwd(Member m) {
+		return memberDao.updatePwd(sqlSession, m);
+	}
+	
 
 	@Override
 	public int updateMember(Member m) {
