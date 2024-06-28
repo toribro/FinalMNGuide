@@ -14,7 +14,8 @@
 
             <div class="wrapper chat-wrapper">
                 <div class="main chat-main">
-                    
+                    <div class="chat-grid chat-list-area" onclick="location.href='http://localhost:3000?prompt=소심함'">반려견 행동성향에 관한 AI 챗봇상담(클릭)</div><br>
+
                     <div class="chat-list">
                         <div class="title t">채팅방목록</div>
                         <div class="over-flow">
