@@ -462,6 +462,29 @@ function activeBossEnroll(){
 }
 
 
+// 사업자 등록 번호 인증
+function certifyBusinessNo(){
+    let businessNo = document.querySelector('[name=businessNo]').value;
+    ajaxCertifyBusinessNo({businessNo: businessNo}, drawSuccessBusinessNo);
+}
+
+// 사업자 등록 번호 인증 ajax 성공 시
+function drawSuccessBusinessNo(result){
+    let message = document.querySelector('#business-no-message')
+
+    if (result == "NNNNY"){
+        document.querySelector('#check-admin-button').style.display = 'none';
+        document.querySelector('#checked-boss-info').style.display = 'block';
+        document.querySelector('[name="businessNo"]').dataset.check = 'true';
+        message.innerHTML = "";
+
+        activeBossEnroll();
+    } else if (result == "NNNNN"){
+        message.innerHTML = "유효한 사업자 등록 번호가 아닙니다.";
+    }
+}
+
+
 
 // 우편번호 주소 api
 function showAddress(){

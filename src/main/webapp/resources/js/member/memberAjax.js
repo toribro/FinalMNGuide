@@ -56,3 +56,17 @@ function ajaxCheckCertifyCode(data, callback){
         }
     })
 }
+
+// 사업자 등록 번호 인증
+function ajaxCertifyBusinessNo(data, callback){
+    $.ajax({
+        url: contextPath + "/certifyBusinessNo.me", 
+        data: data,
+        success: function (result) {
+            callback(result);
+        },
+        error: function () {
+            console.log("정보를 불러오는데 실패 했습니다.");
+        }
+    })
+}
