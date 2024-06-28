@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -55,28 +56,9 @@ public class MemberController {
 	
 	// 로그인 메소드
 	@PostMapping("login.me")
-	public ModelAndView memberLogin(Member m, ModelAndView mv, HttpSession session, HttpServletResponse response) {
+	public ModelAndView memberLogin(Member m, String saveId, ModelAndView mv, HttpSession session, HttpServletResponse response) {
 		Member loginUser = memberService.loginMember(m);
-//		// 아이디가 없을 때
-//				if (loginUser == null) {
-//					model.addAttribute("errorMsg", "아이디가 일치하지 않습니다.");
-//					return "member/memberLogin";
-//				// 비밀번호가 맞지 않을 때
-//				} else if (!bcryptPasswordEncoder.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-//					model.addAttribute("errorMsg", "비밀번호가 일치하지 않습니다.");
-//					return "member/memberLogin";
-//				// 성공 시
-//				} else {
-//					// 일반 회원인 경우
-//					if(loginUser.getUserKind().equals("N")) {
-//						session.setAttribute("loginUser", loginUser);
-//						return "redirect:/";	
-//					// 사장 회원인 경우
-//					} else {
-//						session.setAttribute("loginUser", loginUser);
-//						return "bosspage/bossmainpage";
-//					}
-//				}
+
 		// 아이디가 없을 때
 		if (loginUser == null) {
 			mv.addObject("errorMsg", "아이디가 일치하지 않습니다.");
@@ -87,6 +69,12 @@ public class MemberController {
 			mv.setViewName("member/memberLogin");
 		// 성공 시
 		} else {
+			Cookie ck = new Cookie("saveId", loginUser.getUserId());
+			if (saveId == null) {
+				ck.setMaxAge(0);
+			}
+			response.addCookie(ck);
+			
 			// 일반 회원인 경우
 			if(loginUser.getUserKind().equals("N")) {
 				session.setAttribute("loginUser", loginUser);
