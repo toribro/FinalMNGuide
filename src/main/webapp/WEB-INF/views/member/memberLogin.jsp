@@ -21,12 +21,28 @@
             </div>
 
             <form action="<%=contextPath%>/login.me" method="POST" id="login-form">
-                <input type="text" name="userId" class="minibox-input" placeholder="아이디를 입력하세요">
+                <c:choose>
+                    <c:when test="${not empty cookie.saveId}">
+                        <input type="text" name="userId" value="${cookie.saveId.value}" class="minibox-input" placeholder="아이디를 입력하세요">
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" name="userId" class="minibox-input" placeholder="아이디를 입력하세요">
+                    </c:otherwise>
+                </c:choose>
+
                 <input type="password" name="userPwd" class="minibox-input" placeholder="비밀번호를 입력하세요">
 
                 <div>
                     <div>
-                        <input type="checkbox" id="save-id" class="checkbox-color-pink">
+                        <c:choose>
+                            <c:when test="${not empty cookie.saveId}">
+                                <input type="checkbox" name="saveId" id="save-id" class="checkbox-color-pink" checked>
+                            </c:when>
+                            <c:otherwise>
+                                <input type="checkbox" name="saveId" id="save-id" class="checkbox-color-pink">
+                            </c:otherwise>
+                        </c:choose>
+
                         <label for="save-id">아이디 저장</label>
                     </div>
                     <div class="error-message-nomargin">${errorMsg}</div>
