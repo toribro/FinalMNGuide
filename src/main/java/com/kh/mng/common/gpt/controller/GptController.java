@@ -41,6 +41,11 @@ public class GptController {
 	private String apiKey;
 	
 	
+	@GetMapping(value="gpt.view")
+	public String gptView(@RequestParam(value="prompt",defaultValue="none")String prompt) {
+		
+		return "gpt/gpt";
+	}
 	
 	@ResponseBody
 	@GetMapping(value="chat",produces="application/json; charset=UTF-8")
