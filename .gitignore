@@ -6,9 +6,8 @@ classes/
 Servers/
 WebContent/
 img/
-
 video/
-
+api-key.properties
 application.properties
 certifyPhone.properties
 *.mp4

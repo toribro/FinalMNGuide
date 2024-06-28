@@ -13,7 +13,10 @@
 	
 	
 	<!-- 핸드폰 인증 관련 API 정보 포함한 properties 등록 -->
-	<context:property-placeholder location="classpath:certifyPhone.properties" file-encoding="UTF-8"/>
+	<context:property-placeholder order="1" ignore-unresolvable="true"  location="classpath:certifyPhone.properties" file-encoding="UTF-8"/>
+	
+	<!-- openai apikey -->
+	<context:property-placeholder order="2" ignore-unresolvable="true" location="classpath:api-key.properties" file-encoding="UTF-8"/>
 	
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<annotation-driven />
