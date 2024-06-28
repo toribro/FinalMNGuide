@@ -80,6 +80,10 @@ option{
     cursor: inherit;
 }
 
+#check-admin-button{
+    margin-bottom: 30px;
+}
+
 .select-button{
     display: flex;
     justify-content: space-around;

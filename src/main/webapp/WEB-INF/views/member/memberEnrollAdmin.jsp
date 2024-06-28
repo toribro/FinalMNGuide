@@ -117,43 +117,40 @@
                 <div id="checked-phone-text" class="common-button" style="display: none;">휴대폰번호 인증이 완료되었습니다.</div>
 
 
-                <div class="minibox-mini-title minibox-mini-title-bold">사업자 정보 <!--인증--></div>
+                <div class="minibox-mini-title minibox-mini-title-bold">사업자 정보</div>
                 
-                <!-- <form action=""> -->
-                    <div class="minibox-mini-title">
-                        <span>사업자등록번호</span>
-                        <span class="required-color">*</span>
-                        <span class="error-message-margin"></span>
-                    </div>
-                    <input type="text" name="businessNo" class="minibox-input" placeholder="000-00-00000">
+                <div class="minibox-mini-title">
+                    <span>사업자등록번호</span>
+                    <span class="required-color">*</span>
+                    <span id="business-no-message" class="error-message-margin"></span>
+                </div>
+                <input type="text" name="businessNo" data-check="false" class="minibox-input" placeholder="- 없이 입력하세요. (ex) 1112233333)">
 
-                    <div class="minibox-mini-title">
-                        <span>상호명</span>
-                        <span class="required-color">*</span>
-                        <span class="error-message-margin"></span>
-                    </div>
-                    <input type="text" name="locationName" class="minibox-input" placeholder="상호명을 입력하세요.">
+                <button type="button" id="check-admin-button" class="common-button pink-button minibox-full-button" onclick="certifyBusinessNo()">사업자 정보 인증</button>
 
-                    <div class="minibox-mini-title">
-                        <span>소재지</span>
-                        <span class="required-color">*</span>
-                        <span class="error-message-margin"></span>
-                    </div>
+                <div id="checked-boss-info" class="common-button" style="display: none">사업자 정보 인증이 완료되었습니다.</div>
 
-                    <div id="check-boss-info">
-                        <input type="text" id="address-zipCode" class="minibox-input" placeholder="우편번호 입력">
-                        <button type="button" class="common-button white-button" onclick="showAddress()">우편번호 검색</button>
-                    </div>
-                    <input type="text" name="address" id="address-content" class="minibox-input" onkeyup="changeAddress()" placeholder="">
-                    <!-- <input type="text" id="address-detail" class="minibox-input" onkeyup="changeAddress()" placeholder="상세 주소를 입력하세요."> -->
+                <div class="minibox-mini-title">
+                    <span>상호명</span>
+                    <span class="required-color">*</span>
+                    <span class="error-message-margin"></span>
+                </div>
+                <input type="text" name="locationName" class="minibox-input" placeholder="상호명을 입력하세요.">
 
-                    <!-- <input type="text" name="address" id="input-address"> -->
+                <div class="minibox-mini-title">
+                    <span>소재지</span>
+                    <span class="required-color">*</span>
+                    <span class="error-message-margin"></span>
+                </div>
 
-                    <!-- <button type="submit" id="check-admin-button" class="common-button pink-button minibox-full-button">사업자 정보 인증</button> -->
-                <!-- </form> -->
+                <div id="check-boss-info">
+                    <input type="text" id="address-zipCode" class="minibox-input" placeholder="우편번호 입력">
+                    <button type="button" class="common-button white-button" onclick="showAddress()">우편번호 검색</button>
+                </div>
+                <input type="text" name="address" id="address-content" class="minibox-input" onkeyup="changeAddress()" placeholder="">
+                <!-- <input type="text" id="address-detail" class="minibox-input" onkeyup="changeAddress()" placeholder="상세 주소를 입력하세요."> -->
 
-                <!-- <div id="checked-boss-info" class="common-button">사업자 정보 인증이 완료되었습니다.</div> -->
-
+                <!-- <input type="text" name="address" id="input-address"> -->
 
                 <div class="minibox-mini-title minibox-mini-title-bold">사용자 정보 입력</div>
                 

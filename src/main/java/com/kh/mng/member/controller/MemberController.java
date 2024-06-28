@@ -1,9 +1,19 @@
 package com.kh.mng.member.controller;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,6 +24,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.kh.mng.common.phonesms.PhoneSmsVo;
 import com.kh.mng.location.model.vo.Location;
 import com.kh.mng.member.model.vo.Member;
@@ -24,6 +36,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class MemberController {
+	
+	@Value("${businessNo.apiKey}")
+	private String businessNoApiKey;
 	
 	@Autowired
 	private MemberServiceImpl memberService;
@@ -142,6 +157,70 @@ public class MemberController {
 			return "member/memberEnrollCommon";
 		}
 	}
+	
+	@ResponseBody
+	@GetMapping("certifyBusinessNo.me")
+	public String certifyBusinessNo(String businessNo) {
+		
+		String url = "https://api.odcloud.kr/api/nts-businessman/v1/status";
+		url += "?serviceKey="+businessNoApiKey;
+		url += "&returnType=JSON";
+		
+		String data = "{\"b_no\": [\"" + businessNo + "\"]}";
+		
+		String businessNoResult = null;
+
+			try {
+				URL requestUrl = new URL(url);
+				HttpURLConnection urlConnection =(HttpURLConnection)requestUrl.openConnection();
+				urlConnection.setRequestMethod("POST");
+				urlConnection.setDoOutput(true);
+				urlConnection.setRequestProperty("Content-Type", "application/json charset:UTF-8");
+				urlConnection.setRequestProperty("Accept", "application/json charset:UTF-8");
+				
+				OutputStream os= urlConnection.getOutputStream();
+				byte[] input = data.getBytes("utf-8");
+				os.write(input,0,input.length);
+				
+				int responseCode = urlConnection.getResponseCode();
+				
+				String responseText = "";
+		        String line = "";
+		        StringBuffer response =new StringBuffer();
+		        
+			    BufferedReader br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
+				while((line = br.readLine())!=null) {
+						response.append(line);
+				}
+				
+			    br.close();
+			    
+			    String result = response.toString();
+				JsonObject totalObj = JsonParser.parseString(result).getAsJsonObject();
+				
+				if (totalObj.get("match_cnt") != null) {
+					businessNoResult = totalObj.get("match_cnt").getAsString();	
+				} else {
+					businessNoResult = "0";
+				}
+				
+				
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+				
+			} catch(ProtocolException e) {
+				e.printStackTrace();
+			} catch(IOException e) {
+				e.printStackTrace();
+			}
+			
+			if (Integer.parseInt(businessNoResult) > 0) {
+				return "NNNNY";
+			} else {
+				return "NNNNN";
+			}
+		}
+	
 	
 	@RequestMapping("searchMemberForm.me")
 	public String memberSearchForm() {
