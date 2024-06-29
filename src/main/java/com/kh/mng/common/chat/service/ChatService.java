@@ -111,6 +111,11 @@ public class ChatService {
 		
 		return  chatLocationInfo;
 	}
+
+	public int deleteUserChats(UserTarget userMasterInfo) {
+		
+		return chatDao.deleteChats(sqlSession,userMasterInfo);
+	}
 	
 	
 }

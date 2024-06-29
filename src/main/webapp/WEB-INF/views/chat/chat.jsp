@@ -23,7 +23,7 @@
 				<input id="master-No" type="text" value="${loginUser.userNo}" hidden>
 				<div class="chat-list">
 					<div class="title t">채팅문의</div>
-					<div class="over-flow">
+					<div id="chat-div"class="over-flow">
 
                         <c:forEach var="userList" items="${chatUserList}">
                             
@@ -83,11 +83,16 @@
 						</div>
 						<div id="chattingUser" class="title"></div>
 						<c:if test="${master.equals('NNNNN')}">
-							<div style="width:350px ;">&nbsp;&nbsp;</div>
+							<div style="width:300px ;">&nbsp;&nbsp;</div>
 							<div style="float:right">
 								<a onclick="location.href='${contextPath}/userchat.view'" style="cursor: pointer;">채팅목록으로</a>&nbsp;&nbsp;
-								<a onclick="moveToLocation()" style="cursor: pointer;">장소로이동</a>
+								<a onclick="moveToLocation()" style="cursor: pointer;">장소로이동</a>&nbsp;
+								<a onclick="deleteChat()" style="cursor: pointer; color:red">나가기</a>
 							</div>
+						</c:if>
+						<c:if  test="${!master.equals('NNNNN')}">
+							<div style="width:300px ;">&nbsp;</div>
+							<div style="float:right"><a onclick="location.reload(true)" style="cursor: pointer;">새로고침</a></div>
 						</c:if>
 					</div>
 

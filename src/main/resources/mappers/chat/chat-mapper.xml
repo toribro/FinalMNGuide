@@ -153,5 +153,12 @@
     	UPDATE CHAT SET NOTIFY = FALSE
     	WHERE CHAT_NO=#{chatNo}
     </update>
+    
+    <delete id="deleteChats">
+    	DELETE FROM CHAT
+    	  WHERE (USER_NO = #{userNo} and TARGET_NO = #{targetNo})
+    		   or (USER_NO = #{targetNo} and TARGET_NO =#{userNo})
+    	
+    </delete>
   
   </mapper>
