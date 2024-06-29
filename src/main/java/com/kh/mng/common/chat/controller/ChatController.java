@@ -57,6 +57,8 @@ public class ChatController {
 		    
 			//채팅 데이터베이스에 사장님 목록 가져오기 (target이 자신인것만 채팅 목록에 띄우기 위해) 
 		    MasterInfo userInfo= chatService.selectMasterInfo(locationNo);
+		    
+		    //사장님정보 저장
 		    masterUserInfo.setTargetNo(userInfo.getMasterNo());
 		    masterUserInfo.setUserNo(loginUser.getUserNo());
 			 
@@ -120,7 +122,32 @@ public class ChatController {
 	}
 	
 	
+	//채팅 목록 삭제 (나가기 버튼을 누르면 장소정보받아 사장님 아이디 가져오고 userNo target지정후 삭제
 	
+	@GetMapping(value="delete.chat")
+	public String deleteChat(@RequestParam(value="locationNo") int locationNo,HttpSession session) {
+		Member loginUser =((Member)session.getAttribute("loginUser"));
+	    UserTarget userMasterInfo =new UserTarget();
+		
+		
+		//채팅 데이터베이스에 사장님 목록 가져오기 (target이 자신인것만 채팅 목록에 띄우기 위해) 
+	    MasterInfo masterInfo= chatService.selectMasterInfo(locationNo);
+	    
+	    //유저정보와 타겟정보(사장님정보담기)
+	    userMasterInfo.setTargetNo(masterInfo.getMasterNo());
+		userMasterInfo.setUserNo(loginUser.getUserNo());
+		
+		int count=chatService.deleteUserChats(userMasterInfo);
+		
+		if(count>0) {
+			 session.setAttribute("alertMsg", "채팅방을 나갔습니다.");
+		}else {
+			 session.setAttribute("alertMsg", "실패");
+		}
+	    
+	    
+	    return "redirect:/userchat.view";
+	}
 
 	
 }

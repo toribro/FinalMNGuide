@@ -15,8 +15,8 @@
 
             <div class="wrapper chat-wrapper">
                 <div class="main chat-main">
-                    <div class="chat-grid chat-list-area" >
-                        <div onclick="moveGpt()">반려견 행동성향에 관한 AI 챗봇상담(클릭)</div>
+                    <div class=" chat-grid  chat-list-area"  >
+                        <div onclick="moveGpt()"style="width:80%">반려견 행동성향에 관한 AI 챗봇상담(클릭)</div>
                         <br>
                         <div>반려견 성향 선택
                             <select id="kind">
@@ -30,25 +30,29 @@
                     </div><br><br>
                     <div class="chat-list">
                         <div class="title t">장소채팅방목록</div>
+                        <hr>
                         <div class="over-flow">
             
                             <c:forEach var="chatList" items="${locationInfo}">
                                 
-                                <div  class="chat-grid chat-list-area" onclick="location.href='chatPage.cp?locationNo=${chatList.locationNo}'" style="cursor: pointer;">
-                                    <div class="profile-area">
-                                        <div class="img-div">
-                                            <img src="resources/img/default/default_profile.jpg">
+                                <div  class="chat-grid chat-list-area">
+                                    <div onclick="location.href='chatPage.cp?locationNo=${chatList.locationNo}'" style="width:90%; height:100%; ">
+                                        <div class="profile-area">
+                                            <div class="img-div">
+                                                <img src="resources/img/default/default_profile.jpg">
+                                            </div>
+                                            <div class="profile-list">
+                                            <div class="title">${chatList.locationName} &nbsp; 사장님 </div>
+                                            </div>
                                         </div>
-                                        <div class="profile-list">
-                                           <div class="title">${chatList.locationName} &nbsp; 사장님 </div>
+                                        
+                                        <div class="notice">
+                                        
                                         </div>
-                                    </div>
-                                    
-                                    <div class="notice">
-                                    
-                                    </div>
+                                   </div>
+                                   <div><a style="color:red"  onclick="deleteChat('${chatList.locationNo}')">나가기</a></div>
                                 </div>
-            
+                               
                             </c:forEach>
                     </div>
                 </div>

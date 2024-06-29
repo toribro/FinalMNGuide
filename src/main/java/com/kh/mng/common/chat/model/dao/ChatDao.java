@@ -72,4 +72,9 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectlocationNo",userNo);
 	}
 
+	public int deleteChats(SqlSessionTemplate sqlSession, UserTarget userMasterInfo) {
+		
+		return sqlSession.delete("chatMapper.deleteChats",userMasterInfo);
+	}
+
 }

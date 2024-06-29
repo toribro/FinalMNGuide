@@ -297,3 +297,11 @@ function onloadChatList(data,callback){
 function moveToLocation(){
     location.href=contextPath+"/detail?locationNo="+locationNo;
 }
+
+function deleteChat(){
+    if(confirm("나가시겠습니까?")){
+        location.href='delete.chat?locationNo='+locationNo
+      }else{
+        return false;
+      }
+}
