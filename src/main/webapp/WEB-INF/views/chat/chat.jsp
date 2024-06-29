@@ -23,7 +23,7 @@
 				<input id="master-No" type="text" value="${loginUser.userNo}" hidden>
 				<div class="chat-list">
 					<div class="title t">채팅문의</div>
-					<div class="over-flow">
+					<div id="chat-div"class="over-flow">
 
                         <c:forEach var="userList" items="${chatUserList}">
                             
@@ -91,7 +91,7 @@
 							</div>
 						</c:if>
 						<c:if  test="${!master.equals('NNNNN')}">
-							<div style="width:450px ;">&nbsp;</div>
+							<div style="width:300px ;">&nbsp;</div>
 							<div style="float:right"><a onclick="location.reload(true)" style="cursor: pointer;">새로고침</a></div>
 						</c:if>
 					</div>

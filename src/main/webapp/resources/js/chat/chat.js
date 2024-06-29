@@ -40,10 +40,17 @@ function init(path,masterKind){
             alert("웹소켓 연결 실패")
         }
     
-        //메세지 보내기...
+        //메세지 받기..
         socket.onmessage=function(ev){
             const now =new Date();
             const recevie =JSON.parse(ev.data);
+                
+            if(!document.querySelector("#chatRoom"+recevie.userNo)){
+                drawUserList(recevie);
+            }
+          
+
+
             //유저목록 count 증가 시킨다. 
             if(document.querySelector("#notifyCount"+recevie.userNo)===null){
                 let notifyCount=document.createElement("div");
@@ -117,6 +124,11 @@ function openChatRoom(roomNo,targetId,targetNo){
         }
 
         else{
+
+            //자신한테 오는 메세지가 아닐때 만약에 새로참가한 유저이면 유저리스트 생성
+            if(!document.querySelector("#chatRoom"+recevie.userNo)){
+                drawUserList(recevie);
+            }
 
             //자신한테 오는 메세지가 아니면 카운트표시만 증가시킨다.
             //유저목록 count 증가 시킨다. 
@@ -270,6 +282,41 @@ function drawChatList(chatList){
 
 
 }
+
+
+//유저채팅 목록 그리기
+function drawUserList(userList){
+   const chatDiv=document.querySelector("#chat-div");
+   let userListContent="";
+  
+   userListContent=`
+        <div  id="chatRoom${userList.userNo}" class="chat-grid chat-list-area" onclick="chooseChatRoom(1,'${userList.userNo}')">
+								<div class="profile-area">
+									<div class="img-div">
+										<img src="resources/img/default/default_profile.jpg">
+									</div>
+									<div class="profile-list">
+										<input id="userId${userList.userNo}" type="text"  value="${userList.id}" hidden>
+										<input id="userNo${userList.userNo}" type="text"  value="${userList.userNo}" hidden>
+										<div id="userNickName${userList.userNo}" class="title">${userList.nick}</div>
+										<div id="content${userList.userNo}">${userList.msg}</div>
+									</div>
+								</div>
+								
+								<!--실시간 처리-->
+								<div id="notice${userList.userNo}" class="notice">
+									<div id=date${userList.userNo}  class="date">${userList.time}</div>
+								
+									<div id="notifyCount${userList.userNo}" class="notify">0</div>
+									
+								</div>
+							</div>
+   
+   
+   `
+   chatDiv.innerHTML+= userListContent;
+}
+
 
 function onloadChatList(data,callback){
  
