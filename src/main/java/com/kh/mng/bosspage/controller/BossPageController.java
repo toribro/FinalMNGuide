@@ -45,7 +45,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class bossPageController {
+public class BossPageController {
 
     @Autowired
     private BossPageService bossPageService;
@@ -152,10 +152,14 @@ public class bossPageController {
 
             BossLocation location = bossPageService.getLocationInfo(userNo);
 
+            if (location != null && "숙소".equals(location.getLocationCategoryNo())) {
+                return "redirect:/bossAccommodationinfo.ba";
+            }
+
             model.addAttribute("location", location);
             model.addAttribute("userNo", userNo);
 
-            return "bosspage/bosslocation"; 
+            return "bosspage/bosslocation";
         } else {
             return "redirect:/";
         }
@@ -241,7 +245,6 @@ public class bossPageController {
         return ResponseEntity.ok(response);
     }
 
-
     @ResponseBody
     @GetMapping(value = "/getLocationInfo.bm", produces = "application/json; charset=UTF-8")
     public ResponseEntity<Map<String, Object>> getLocationInfo(HttpSession session) {
@@ -317,43 +320,35 @@ public class bossPageController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("잘못된 요청");
         }
     }
-    
+
     private String saveFile(MultipartFile upfile, HttpSession session, String path) {
-		// 파일명 수정 후 서버에 업로드하기("imgFile.jpg => 202404231004305488.jpg")
-		String originName = upfile.getOriginalFilename();
+        // 파일명 수정 후 서버에 업로드하기("imgFile.jpg => 202404231004305488.jpg")
+        String originName = upfile.getOriginalFilename();
 
-		// 년월일시분초
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        // 년월일시분초
+        String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 
-		// 5자리 랜덤값
-		int ranNum = (int) (Math.random() * 90000) + 10000;
+        // 5자리 랜덤값
+        int ranNum = (int) (Math.random() * 90000) + 10000;
 
-		// 확장자
-		String ext = originName.substring(originName.lastIndexOf("."));
+        // 확장자
+        String ext = originName.substring(originName.lastIndexOf("."));
 
-		// 수정된 첨부파일명
-		String changeName = currentTime + ranNum + ext;
+        // 수정된 첨부파일명
+        String changeName = currentTime + ranNum + ext;
 
-		// 첨부파일을 저장할 폴더의 물리적 경로(session)
-		String savePath = session.getServletContext().getRealPath(path);
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+        // 첨부파일을 저장할 폴더의 물리적 경로(session)
+        String savePath = session.getServletContext().getRealPath(path);
+        try {
+            upfile.transferTo(new File(savePath + changeName));
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-		return changeName;
-
-	}
-	
-    
-    
-    
-
-
-
+        return changeName;
+    }
 
     @GetMapping("/getPictures")
     @ResponseBody
