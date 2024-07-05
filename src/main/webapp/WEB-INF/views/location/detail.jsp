@@ -275,7 +275,7 @@
 							<div class="section hospital-area">
 								<div class="title">동물병원</div>
 								<div class="content">
-									<div id="hostpial_map" style="width:300px;height:500px;"></div>
+									<div id="hostpial_map" style="width:100%;height:500px;"></div>
 								</div>
 							</div>
 						</div>

@@ -12,3 +12,10 @@
     background-color: var(--white-color);
     white-space: nowrap;
 }
+@media screen and (min-width:768px) and (max-width:1023px) {
+	.footer{width:var(--min_pc-width)}
+}
+
+@media screen and (max-width:767px) {
+	.footer {width:var(--max_tablet-width)}
+}

@@ -111,7 +111,7 @@
                             <div id="board-content" class="board-content">
                                 <!--게시판 영역-->
                                 <c:forEach var="b" items="${boards}">
-                                    <div class="grid-box board-area" onclick="location.href='${contextPath}/detailView.bo?bno=${b.boardNo}'">
+                                    <div class="board-area" onclick="location.href='${contextPath}/detailView.bo?bno=${b.boardNo}'">
                                         <div class="board-flex-div">
                                             <div class="content-box">
                                                 <div class="profile">

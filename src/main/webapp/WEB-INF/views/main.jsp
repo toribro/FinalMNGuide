@@ -75,7 +75,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f595fad336a38c5fdd5a3f12c81c8cdb&lib
 					<img src="resources/img/main/cat1.jpg" alt="">
 					<div class="gugi-icon-title">커뮤니티</div>
 				</div>
-				<div onclick="location.href='<%=contextPath%>/shortsView.bo'">
+				<div onclick="location.href='<%=contextPath%>/shortsContent.sh'">
 					<img src="resources/img/main/dog2.jpg" alt="">
 					<div class="gugi-icon-title">쇼츠</div>
 				</div>
@@ -87,8 +87,8 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f595fad336a38c5fdd5a3f12c81c8cdb&lib
 
 			<!-- 추천 컨텐츠 -->
 			<div id="search-ranking" class="gray-round-box">
-				<span>반려동물과 좋은 추억을 남길 장소를 추천해드려요 </span>
-				<div>
+				<div>반려동물과 좋은 추억을 남길 장소를 추천해드려요</div>
+				<div style="overflow:hidden">
 					<img id="place-img" src="" alt="">
 					
 					<!-- 추천 컨텐츠 세 개를 전부 감싸는 박스 -->

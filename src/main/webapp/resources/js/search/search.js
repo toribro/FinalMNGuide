@@ -348,6 +348,8 @@ function drawSearchPage(locationInfo){
                     opTimeText.dataset.status = loc.opTime.restStatus;
                     opTimeText.dataset.category = loc.locationCategoryNo;
                 } else if (loc.opTime.restStatus){
+                    console.log('00:00 인가?')
+                    console.log(loc.opTime.restStatus)
                     opTimeText.dataset.start = '00:00:00';
                     opTimeText.dataset.end = '00:00:00';
                     opTimeText.dataset.status = loc.opTime.restStatus;
@@ -405,10 +407,11 @@ function drawSearchPage(locationInfo){
 // 운영시간 출력 함수
 function operationTime(){
     let day = new Date();
-
+    console.log(day)
     let year = day.getFullYear();
     let month = day.getMonth();
     let date = day.getDate();
+    console.log(year + ' ' + month + ' ' + date)
 
     day = day.setTime(day.getTime());
 
@@ -419,6 +422,8 @@ function operationTime(){
         let end = "";
         start = opTime.dataset.start;
         end = opTime.dataset.end;
+
+        console.log(opTime)
 
         // 장소 카테고리가 숙소인 경우 (체크인/체크아웃)
         if (opTime.dataset.category == '숙소'){
@@ -445,7 +450,10 @@ function operationTime(){
                                         end.substr(3, 2),
                                         end.substr(6, 2));
                 endTime = endTime.setTime(endTime.getTime())
-            
+                    console.log(startTime)
+                    console.log(day)
+                    console.log(endTime)
+                    
                 if (day >= startTime && day <= endTime){
                     opTime.innerHTML = '영업 중 ' + end.substr(0, 5) + ' 종료'
                 } else {
