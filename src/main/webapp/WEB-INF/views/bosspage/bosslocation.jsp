@@ -34,12 +34,12 @@
                         <input type="tel" name="가게전화번호" id="store-phone" style="background: white;" placeholder="(ex.지역번호)-0000-0000">
                     </div>
                     <div id="operating">
-                        <p>운영시간</p>
+                        <p>운영시간(*필수*)</p>
                         <div id="operating-hours-container"></div>
                     </div>
                     <div id="storeinfo">
-                        <p>상세 설명</p>
-                        <textarea id="store-description" style="border-radius: 15px;" placeholder="*장소에 대한 설명과 반려동물 출입 시 도움이 될 만한 정보를 적어주세요. (ex)테이블 밀집도, 케이지 필요 여부 등."></textarea>
+                        <p>상세 설명(필수*)</p>
+                        <textarea id="store-description" style="border-radius: 15px;" placeholder="*장소에 대한 설명과 반려동물 풀입 시 도움이 될 만한 정보를 적어주세요. (ex)테이블 밀집도, 케이지 필요 여부 등."></textarea>
                     </div>
                     <div>
                         <p>반려동물 종류 및 크기(*필수*)</p>
