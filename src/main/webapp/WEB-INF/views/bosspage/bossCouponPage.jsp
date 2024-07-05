@@ -25,7 +25,7 @@
                 <%@ include file="../bosspage/bossmanubar.jsp" %>
             </div>
     
-            <!-- 등록된 쿠폰 있는 경우 -->
+            <!-- 등록된 쿠폰 있는 경우! -->
             <div class="privacy-page">
                 <div class="privacy-top">쿠폰 관리</div>
             
