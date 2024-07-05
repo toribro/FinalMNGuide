@@ -1,3 +1,4 @@
+
 // 페이지 초기화 함수
 function initializePage() {
     // 장소 정보를 로드
@@ -10,14 +11,14 @@ function initializePage() {
     setupEventListeners();
     // 업종에 따른 섹션 숨기기
     hideProductRegistrationIfNeeded();
-}
+}    
 
 function hideProductRegistrationIfNeeded() {
     var locationCategory = document.getElementById("location-category").innerText;
     if (locationCategory === "병원") {
         document.getElementById("product-registration-section").style.display = "none";
-    }
-}
+    }    
+}    
 
 // 이벤트 리스너 설정 함수
 function setupEventListeners() {
@@ -30,14 +31,14 @@ function setupEventListeners() {
             "<img class='delete-productimg' src='resources/img/bosspage/-.png'>" +
             "</button>" +
             "</div>");
-        $("#product-registration").before(newProductForm);
-    });
+        $("#product-registration").before(newProductForm);    
+    });    
 
     // 상품 삭제 버튼 클릭 이벤트 설정
     $(document).off('click', '.delete-product').on('click', '.delete-product', function() {
         $(this).closest(".product-registration").remove();
-    });
-}
+    });    
+}    
 
 // 장소 정보 저장 함수
 function saveLocationInfo() {
@@ -55,21 +56,21 @@ function saveLocationInfo() {
         const endTime = element.querySelector('.close-time').value;
         const restStatus = element.querySelector('input[name="휴무"]').checked;
         operationTimes.push({ day, startTime, endTime, restStatus });
-    });
-
+    });    
+    
     // 반려동물 크기 정보를 배열로 수집
     const petSizes = [];
     document.querySelectorAll('input[name="animal-type"]:checked').forEach(element => {
         petSizes.push(element.value);
-    });
-
+    });    
+    
     // 상품 정보를 배열로 수집
     const products = [];
     document.querySelectorAll('.product-registration').forEach(element => {
         const productName = element.querySelector('.product-name').value;
         const commodityPrice = element.querySelector('.commodity-price').value;
         products.push({ productName, commodityPrice });
-    });
+    });    
 
     // 장소 정보 객체 생성
     const locationInfo = {
@@ -80,7 +81,7 @@ function saveLocationInfo() {
         operationTimes: operationTimes,
         petSizes: petSizes,
         products: products // 상품 정보 추가
-    };
+    };    
 
     // 장소 정보 저장을 위한 AJAX 요청
     $.ajax({
@@ -95,14 +96,14 @@ function saveLocationInfo() {
             } else {
                 alert("장소정보 업데이트에 실패했습니다: " + response.message);
                 $('.upload-bt').prop('disabled', false); // 버튼 다시 활성화
-            }
-        },
+            }    
+        },    
         error: function(xhr, status, error) {
             alert("장소정보 업데이트에 실패했습니다: " + error);
             $('.upload-bt').prop('disabled', false); // 버튼 다시 활성화
-        }
-    });
-}
+        }    
+    });    
+}    
 
 
 
@@ -111,7 +112,7 @@ function uploadImages(locationNo) {
     console.log("uploadImages called with locationNo:", locationNo);
     const imageInputs = document.querySelectorAll('.company-file');
     let uploadSuccess = true;
-
+    
     imageInputs.forEach(input => {
         if (input.files.length === 1) {
             const file = input.files[0];
@@ -128,24 +129,24 @@ function uploadImages(locationNo) {
                 contentType: false,
                 success: function(response) {
                     console.log("파일 업로드 성공:", response);
-                },
+                },    
                 error: function(xhr, status, error) {
                     console.error("파일 업로드 실패:", error);
                     console.log("xhr:", xhr);
                     console.log("status:", status);
                     console.log("error:", error);
                     uploadSuccess = false;
-                }
-            });
-        }
-    });
+                }    
+            });    
+        }    
+    });    
 
     if (uploadSuccess) {
         alert("장소정보 업데이트가 완료되었습니다.");
     } else {
         alert("이미지 업로드 중 일부 파일에 실패했습니다.");
-    }
-}
+    }    
+}    
 
 // 장소 정보 로드 함수
 function loadLocationInfo() {
@@ -155,60 +156,60 @@ function loadLocationInfo() {
         success: function(response) {
             if (response.locationPhone) {
                 document.getElementById("store-phone").value = response.locationPhone;
-            }
+            }    
             if (response.explanation) {
                 document.getElementById("store-description").value = response.explanation;
-            }
+            }    
             if (response.reservationLink) {
                 document.getElementById("reservation-link-input").value = response.reservationLink;
-            }
+            }    
             if (response.animalTypes) {
                 response.animalTypes.forEach(type => {
                     document.querySelector(`input[name="animal-type"][value="${type}"]`).checked = true;
-                });
-            }
+                });    
+            }    
             if (response.operationTimes) {
                 response.operationTimes.forEach(time => {
                     const element = document.querySelector(`.operating-hours p:contains('${time.day}')`).parentElement;
                     element.querySelector('.open-time').value = time.startTime;
                     element.querySelector('.close-time').value = time.endTime;
                     element.querySelector('input[name="휴무"]').checked = time.restStatus;
-                });
-            }
-        },
+                });    
+            }    
+        },    
         error: function(xhr, status, error) {
             alert("장소정보 로드에 실패했습니다: " + error);
-        }
-    });
-}
+        }    
+    });    
+}    
 
 // 운영 시간 요소 생성 함수
 function createOperatingHoursElement(day) {
     return `
-        <div class="operating-hours">
+    <div class="operating-hours">
             <p>${day}</p>
             <p>휴무</p>
             <input type="checkbox" name="휴무">
             <select class="open-time">
-                ${[...Array(24).keys()].map(hour => `<option value="${String(hour).padStart(2, '0')}:00">${String(hour).padStart(2, '0')}:00</option>`).join('')}
-            </select>
+            ${[...Array(24).keys()].map(hour => `<option value="${String(hour).padStart(2, '0')}:00">${String(hour).padStart(2, '0')}:00</option>`).join('')}
+            </select>    
             <p style="margin-right: 0;margin-left: 20px;">~</p>
             <select class="close-time">
-                ${[...Array(24).keys()].map(hour => `<option value="${String(hour).padStart(2, '0')}:00">${String(hour).padStart(2, '0')}:00</option>`).join('')}
-            </select>
-        </div>
-    `;
-}
+            ${[...Array(24).keys()].map(hour => `<option value="${String(hour).padStart(2, '0')}:00">${String(hour).padStart(2, '0')}:00</option>`).join('')}
+            </select>    
+            </div>    
+            `;    
+        }    
 
-// 운영 시간 요소 추가 함수
-function addOperatingHoursElements() {
+        // 운영 시간 요소 추가 함수
+        function addOperatingHoursElements() {
     const days = ['월', '화', '수', '목', '금', '토', '일'];
     const container = document.getElementById('operating-hours-container');
     container.innerHTML = '';
     days.forEach(day => {
         container.innerHTML += createOperatingHoursElement(day);
-    });
-}
+    });    
+}    
 
 // 이미지 파일 입력 이벤트 초기화 함수
 function initializeLocationPage() {
@@ -217,9 +218,9 @@ function initializeLocationPage() {
     imageInputs.forEach(input => {
         input.addEventListener('change', (ev) => {
             loadImg(ev.target);
-        });
-    });
-}
+        });    
+    });    
+}    
 
 // 이미지 로드 함수
 function loadImg(inputFile) {
@@ -230,9 +231,72 @@ function loadImg(inputFile) {
             const companyImg = document.querySelector(`label[for=${inputFile.id}] img`);
             companyImg.src = ev.target.result;
             companyImg.style.display = 'block';
-        };
+        };    
     } else {
         const companyImg = document.querySelector(`label[for=${inputFile.id}] img`);
         companyImg.src = "resources/img/myPage/+.png";
+    }    
+}    
+
+
+function initializePage(path){
+    /*객실 모달창 열기*/
+    const modal = document.querySelector('.rooms-modal');
+    const roomOpenModal = document.querySelector('.roomOpen-modal');
+    const closeModalBtn = document.querySelector('.closeModal-bt');
+
+    roomOpenModal.addEventListener("click", () => {
+        modal.style.display = "flex";
+    })
+
+    closeModalBtn.addEventListener("click", () => {
+        modal.style.display = "none";
+    });
+
+    /*객실 이미지 업로드*/
+
+    const registrationupload = document.querySelectorAll('.registration-upload');
+
+    for (let uploadImg of registrationupload) {
+        uploadImg.onclick = (ev) => {
+            ev.stopPropagation();
+            ev.preventDefault();
+
+            console.log(uploadImg)
+            const companyImg = document.getElementById(uploadImg.dataset.target);
+            companyImg.onchange = (ev) => {
+                loadImg(ev.target, uploadImg.dataset.target);
+            }
+            companyImg.click();
+        }; 
     }
+
+    function loadImg(inputFile, id){
+        //inputFile : 현재 변화가 생긴 input type=file 요소객체
+        //id : 현재 선택된 input id
+        
+        //inputFile.files[0] => 선택된 파일이 담겨있다.
+        //inputFile.files.length -> 1
+        console.log(inputFile.files.length)
+
+        if (inputFile.files.length == 1){//파일을 하나 선택했다. => 미리보기
+            //파일을 읽어들일 FileReader객체생성
+            const reader = new FileReader();
+
+            //파일을 읽어들이는 메소드
+            //해당파일을 읽어들이는 순간 해당 파일만의 고유한 url부여
+            reader.readAsDataURL(inputFile.files[0]);
+
+            //파일 읽어들이기 완료했을 때 실행할 함수 정의
+            reader.onload = function(ev){
+                // console.log(ev.target.result) => 읽어들인 파일의 고유한 url
+                const companyImg = document.querySelector(`label[for=${id}] img`);
+                companyImg.src = ev.target.result;
+            }
+        } else { // 선택된 파일을 취소한 경우 => 미리보기 지워준다.
+            const companyImg = document.querySelector(`label[for=${id}] img`);
+            companyImg.src = path + "/resources/img/myPage/+.png";
+        }
+    }
+    
 }
