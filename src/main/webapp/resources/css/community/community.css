@@ -80,6 +80,7 @@
     row-gap: 80px;
     align-items: center;
     padding:30px;
+    overflow: auto;
 }
 
 
@@ -180,7 +181,7 @@
   }
 /*내용 넘치면 안넘어가게*/
 .community-main .content{
-    width:900px;
+    /* width:900px; */
     height:80px;
     -webkit-line-clamp:2;
     overflow: hidden;
