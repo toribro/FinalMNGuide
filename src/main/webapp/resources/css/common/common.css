@@ -28,7 +28,16 @@
 	/*공통 테두리*/
 	--outer-border-radius:10px;
 	--inner-border-radius:15px;
+
+	/*반응형 변수선언*/
+	/*1024일때*/
+	--max_pc-width:1920px;
+	--min_pc-width:1023px;
+
+
+	--max_tablet-width:767px;
 }
+
 
 *,
 *::before, *::after {
@@ -44,6 +53,7 @@
 	padding: 0;
 }
 
+
 /*태그 스타일 적용*/
 ol,ul,li{
 	list-style:none
@@ -58,6 +68,14 @@ ol,ul,li{
 	/* white-space: nowrap; */
 }
 
+@media screen and (min-width:767px) and (max-width:1023px) {
+	.wrapper{width:var(--min_pc-width)}
+}
+
+@media screen and (max-width:767px) {
+	.wrapper{width:var(--max_tablet-width)}
+}
+
 /*main태그 */
 .main{
 	/*width:calc(100% - 600px);*/
@@ -65,6 +83,14 @@ ol,ul,li{
 	margin:0 auto;
 	/* white-space: nowrap; */
 	
+}
+
+@media screen and (min-width:768px) and (max-width:1023px) {
+	.main{width:var(--min_pc-width)}
+}
+
+@media screen and (max-width:767px) {
+	.main{width:var(--max_tablet-width)}
 }
 
 /*----------------------*/

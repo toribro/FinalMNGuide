@@ -11,7 +11,13 @@
     background-color: var(--white-color);
  
 }
+@media screen and (min-width:768px) and (max-width:1023px){
+	#header{width:var(--min_pc-width)}
+}
 
+@media screen and (max-width:767px) {
+	#header{width:var(--max_tablet-width)}
+}
 /* 로고 섹션 */
 #header-logo {
     font-weight: bold;
