@@ -697,4 +697,22 @@ public class CommunityController {
 //		return communityService.likeShorts(forisLike);
 //		return new Gson().toJson(replyList);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	// 쇼츠 페이지
+	@GetMapping("shortsContent.sh")
+	public String shortsContent() {
+		return "community/shortsContent";
+	}
 }
