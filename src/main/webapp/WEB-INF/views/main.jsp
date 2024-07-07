@@ -75,7 +75,7 @@ src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f595fad336a38c5fdd5a3f12c81c8cdb&lib
 					<img src="resources/img/main/cat1.jpg" alt="">
 					<div class="gugi-icon-title">커뮤니티</div>
 				</div>
-				<div onclick="location.href='<%=contextPath%>/shortsView.bo'">
+				<div onclick="location.href='<%=contextPath%>/shortsContent.sh'">
 					<img src="resources/img/main/dog2.jpg" alt="">
 					<div class="gugi-icon-title">쇼츠</div>
 				</div>
