@@ -7,16 +7,18 @@
         <title>Insert title here</title>
 
         <%@ include file="../common/common-file.jsp" %>
+        <link rel="stylesheet" href="resources\css\bosspage\bossAccommodationinfo.css" />
         <link rel="stylesheet" href="resources/css/bosspage/bosspage.css" />
         <link rel="stylesheet" href="resources/css/bosspage/locationinfo.css" />
         <link rel="stylesheet" href="resources/css/common/common.css" />
         <script src="resources/js/bosspage/bosslocation.js"></script>
+        <script src="resources\js\bosspage\bossAccommodationinfo.js"></script>
         <script>
             var contextPath = "<%= request.getContextPath() %>";
         </script>
     </head>
 
-    <body onload="initializePage()">
+    <body onload="bosspageInit()">
         <%@ include file="../common/header.jsp" %>
         <div id="bossmainpage-wrap" class="wrapper">
             <div class="bossmainpage">
@@ -37,64 +39,9 @@
                                 <input type="tel" name="가게전화번호" id="store-phone" style="background: white;"
                                     placeholder="(ex.지역번호)-0000-0000">
                             </div>
-                            <div id="operating">
+                            <div id="checkin_out_hours">
                                 <p>체크인 / 아웃 시간</p>
-                                <div id="operating-hours">
-                                    <p style="margin-left:0px">체크인</p>
-                                    <select class="opne-time" style="margin-left: 0px; margin-top: 13px;">
-                                        <option value="">00:00</option>
-                                        <option value="">01:00</option>
-                                        <option value="">02:00</option>
-                                        <option value="">03:00</option>
-                                        <option value="">04:00</option>
-                                        <option value="">05:00</option>
-                                        <option value="">06:00</option>
-                                        <option value="">07:00</option>
-                                        <option value="">08:00</option>
-                                        <option value="">09:00</option>
-                                        <option value="">10:00</option>
-                                        <option value="">11:00</option>
-                                        <option value="">12:00</option>
-                                        <option value="">13:00</option>
-                                        <option value="">14:00</option>
-                                        <option value="">15:00</option>
-                                        <option value="">16:00</option>
-                                        <option value="">17:00</option>
-                                        <option value="">18:00</option>
-                                        <option value="">19:00</option>
-                                        <option value="">20:00</option>
-                                        <option value="">21:00</option>
-                                        <option value="">22:00</option>
-                                        <option value="">23:00</option>
-                                    </select>
-                                    <p style="margin-left: 60px;">체크아웃</p>
-                                    <select class="close-time" style="margin-left: 0px; margin-top: 13px;">
-                                        <option value="">00:00</option>
-                                        <option value="">01:00</option>
-                                        <option value="">02:00</option>
-                                        <option value="">03:00</option>
-                                        <option value="">04:00</option>
-                                        <option value="">05:00</option>
-                                        <option value="">06:00</option>
-                                        <option value="">07:00</option>
-                                        <option value="">08:00</option>
-                                        <option value="">09:00</option>
-                                        <option value="">10:00</option>
-                                        <option value="">11:00</option>
-                                        <option value="">12:00</option>
-                                        <option value="">13:00</option>
-                                        <option value="">14:00</option>
-                                        <option value="">15:00</option>
-                                        <option value="">16:00</option>
-                                        <option value="">17:00</option>
-                                        <option value="">18:00</option>
-                                        <option value="">19:00</option>
-                                        <option value="">20:00</option>
-                                        <option value="">21:00</option>
-                                        <option value="">22:00</option>
-                                        <option value="">23:00</option>
-                                    </select>
-                                </div>
+                                <div id="in-out-hours"></div>
                             </div>
                             
                             <div id="storeinfo">
@@ -227,11 +174,11 @@
                         </div>
                         <div>
                             <table>
-                                <div id="operating">
-                                    <p>체크인 / 체크아웃 시간</p>
-                                    <div id="operating-hours">
+                                <div id="checkin_out_hours">
+                                    <p>체크인 / 아웃 시간</p>
+                                    <div class="in-out-hours">
                                         <p style="margin-left:0px">체크인</p>
-                                        <select class="opne-time" style="margin-left: 0px; margin-top: 13px;">
+                                        <select class="check-in-time" style="margin-left: 0px; margin-top: 13px;">
                                             <option value="">00:00</option>
                                             <option value="">01:00</option>
                                             <option value="">02:00</option>
@@ -257,8 +204,8 @@
                                             <option value="">22:00</option>
                                             <option value="">23:00</option>
                                         </select>
-                                        <p style="margin-left: 60px;">체크아웃</p>
-                                        <select class="close-time" style="margin-left: 0px; margin-top: 13px;">
+                                        <p style="margin-left: auto;">체크아웃</p>
+                                        <select class="check-out-time" style="margin-left: 0px; margin-top: 13px;">
                                             <option value="">00:00</option>
                                             <option value="">01:00</option>
                                             <option value="">02:00</option>
